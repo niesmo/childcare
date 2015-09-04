@@ -18,8 +18,6 @@ Package.onUse(function(api) {
 
 	// Files that will be added to the api
 	var clientFiles = [
-		'lib/routing/waitlist.js',
-		'lib/routing/home.js',
 		'client/templates/home.html',
 		'client/main.html',
 		'client/templates/app/layouts/layout.html',
@@ -29,7 +27,8 @@ Package.onUse(function(api) {
 	api.addFiles(clientFiles, 'client');
 
 	var libFiles = [
-    'lib/routing/waitlist.js'
+    'lib/routing/waitlist.js',
+		'lib/routing/home.js'
   ];
   api.addFiles(libFiles);
 

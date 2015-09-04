@@ -1,3 +1,4 @@
 Router.route("/",{
-	name:"home"
+	name:"home",
+	layoutTemplate: 'Layout'
 });
