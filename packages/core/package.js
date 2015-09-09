@@ -23,12 +23,14 @@ Package.onUse(function(api) {
 		'client/templates/app/layouts/layout.html',
 		'client/templates/app/navbars/navbar.html',
 		'client/templates/waitlist/waitlist.html',
+		'client/templates/applications/applications.html'
 	];
 	api.addFiles(clientFiles, 'client');
 
 	var libFiles = [
     'lib/routing/waitlist.js',
-		'lib/routing/home.js'
+		'lib/routing/home.js',
+		'lib/routing/applications.js'
   ];
   api.addFiles(libFiles);
 
