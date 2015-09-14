@@ -1,4 +1,4 @@
-<template name="Navbar">
+<template name="navbar">
 	<nav class="navbar navbar-default">
 		<div class="container">
 			<div class="navbar-header">
@@ -6,9 +6,9 @@
 			</div>
 			<div>
 				<ul class="nav navbar-nav">
-					<li><a href="/">Home</a></li>
-					<li><a href="waitlist">Waitlists</a></li>
-					<li><a href="applications">Applications</a></li> 
+					<li><a href="{{ pathFor 'home' }}">Home</a></li>
+					<li><a href="{{ pathFor 'waitlist' }}">Waitlists</a></li>
+					<li><a href="{{ pathFor 'application'}}">Applications</a></li> 
 					<li><a href="#">Classrooms</a></li>
 				</ul>
 			</div>
