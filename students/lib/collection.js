@@ -4,20 +4,20 @@ var Schemas = {};
 
 Schemas.Student = new SimpleSchema({
     firstName: {
-        type: String,
-        label: "First Name",
-        max: 45
+      type: String,
+      label: "First Name",
+      max: 45
     },
     middleName: {
-        type: String,
-        label: "Middle Name",
-        max: 45,
-        optional: true
+      type: String,
+      label: "Middle Name",
+      max: 45,
+      optional: true
     },
     lastName: {
-        type: String,
-        label: "Last Name",
-        max: 45
+      type: String,
+      label: "Last Name",
+      max: 45
     },
     dateOfBirth: {
       type: Date,
@@ -61,7 +61,7 @@ Schemas.Student = new SimpleSchema({
     },
 
     createdAt: {
-        type: Date
+      type: Date
     },
 });
 

@@ -4,9 +4,9 @@ var Schemas = {};
 
 Schemas.Classroom = new SimpleSchema({
     name: {
-        type: String,
-        label: "Name",
-        max: 45
+      type: String,
+      label: "Name",
+      max: 45
     },
 
     /**
@@ -20,9 +20,13 @@ Schemas.Classroom = new SimpleSchema({
     },
 
     capacity: {
-        type: Number,
-        label: "Capacity",
-        optional: true
+      type: Number,
+      label: "Capacity",
+      optional: true
+    },
+
+    teacherId: {
+      type: SimpleSchema.RegEx.Id
     },
 
     createdAt: {
