@@ -56,9 +56,9 @@ Schemas.Student = new SimpleSchema({
     },
 
     classId:{
-      type: simpleSchema.Regex.Id,
+      type: SimpleSchema.RegEx.Id,
       optional: true
-    }
+    },
 
     createdAt: {
         type: Date
