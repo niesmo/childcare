@@ -32,7 +32,7 @@ Schemas.Student = new SimpleSchema({
      */
     status:{
       type: String,
-      label: "Status",
+      label: "Status"
     },
 
     /**
@@ -50,10 +50,15 @@ Schemas.Student = new SimpleSchema({
      * 2. MEMBER    ->  Student of a member of the organization
      * 3. EXISTING  ->  Already a member student (their parent have another student here)
      */
-    type:{
+    type: {
       type: String,
-      label: "Type",
+      label: "Type"
     },
+
+    classId:{
+      type: simpleSchema.Regex.Id,
+      optional: true
+    }
 
     createdAt: {
         type: Date
