@@ -38,6 +38,17 @@ Schemas.ActionItem = new SimpleSchema({
         label: "Priority",
         optional: true
     },
+	
+	/**
+     * Type of the Action Item. Can take the values of:
+     * 1. TODDLER
+     * 2. INFANT
+     * 3. OTHER
+     */
+    type: {
+        type: String,
+        label: "Type"
+    },
 
     createdBy: {
         type: SimpleSchema.RegEx.Id

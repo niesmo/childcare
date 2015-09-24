@@ -1,18 +1,40 @@
 <template name="home">
-	<h2>Welcome To Our Lady of Bethlehem School and Childcare</h2>
-	<h3> Please Login to view waitlist information </h3>
-	<body>
-		<h3> Action Items </h3>
+
+<body>
+	<div class="container">
+	<h3>Welcome To Our Lady of Bethlehem School and Childcare</h3>
+		<h4> Action Items </h4>
 		<ul>
 			<li><h4>Infant</h4></li>
 				<ul>
-					<li><strong>Jane Doe is Staff, move to top of Waitlist</strong> Submitted by:User1 at 11:33pm 09/08/2015</li>
-					<li><strong>Robby Jones can not move to Toddler until successfully potty trained</strong> Submitted by:User2 at 9:32am 09/04/2015</li>
+					<form class="new-infantTask">
+						<input type="text" name="text" placeholder="Type to add new Infant Task"/>
+					</form>
+				</ul>
+				<ul>
+					{{#each infantTasks}}
+						{{> infantTask}}
+					{{/each}}
 				</ul>
 			<li><h4>Toddler</h4></li>
 				<ul>
-					<li><strong>Check John Smith's Application</strong> Submitted by:User1 at 11:35pm 09/08/2015</li>
+					<form class="new-toddlerTask">
+						<input type="text" name="text" placeholder="Type to add new Toddler Task"/>
+					</form>
+				</ul>
+				<ul>
+					{{#each toddlerTasks}}
+						{{> toddlerTask}}
+					{{/each}}
 				</ul>
 		</ul>
-	</body>
+	</div>
+</body>
+</template>
+
+<template name="infantTask">
+  <li>{{text}}</li>
+</template>
+<template name="toddlerTask">
+  <li>{{text}}</li>
 </template>
