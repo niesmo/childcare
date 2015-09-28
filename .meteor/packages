@@ -11,3 +11,4 @@ iron:router
 accounts-password
 aldeed:autoform
 http
+useraccounts:iron-routing

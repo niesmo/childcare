@@ -15,12 +15,12 @@ Template.register.events({
       alert("Passwords dont matach");
       return;
     }
-    Accounts.createUser({
-      email: email,
-      password: password
-    }, accountsErrorHandler);
+
+    // call the method to create the user
+    Meteor.call("registerUser", email, password, accountsErrorHandler);
   }
 });
+
 
 /**
  * This function will be called when a new user is created
@@ -28,7 +28,7 @@ Template.register.events({
  * @param  {[type]} error [description]
  * @return {[type]}       [description]
  */
-function accountsErrorHandler(error){
+function accountsErrorHandler(error, result){
   if(error){
     console.log(error);
   }
@@ -36,3 +36,4 @@ function accountsErrorHandler(error){
     Router.go('home');
   }
 }
+
