@@ -9,3 +9,4 @@ aldeed:collection2
 twbs:bootstrap
 iron:router
 accounts-password
+useraccounts:iron-routing
