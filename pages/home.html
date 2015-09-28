@@ -1,40 +1,6 @@
 <template name="home">
-
-<body>
 	<div class="container">
-	<h3>Welcome To Our Lady of Bethlehem School and Childcare</h3>
-		<h4> Action Items </h4>
-		<ul>
-			<li><h4>Infant</h4></li>
-				<ul>
-					<form class="new-infantTask">
-						<input type="text" name="text" placeholder="Type to add new Infant Task"/>
-					</form>
-				</ul>
-				<ul>
-					{{#each infantTasks}}
-						{{> infantTask}}
-					{{/each}}
-				</ul>
-			<li><h4>Toddler</h4></li>
-				<ul>
-					<form class="new-toddlerTask">
-						<input type="text" name="text" placeholder="Type to add new Toddler Task"/>
-					</form>
-				</ul>
-				<ul>
-					{{#each toddlerTasks}}
-						{{> toddlerTask}}
-					{{/each}}
-				</ul>
-		</ul>
+		<h3>Welcome To Our Lady of Bethlehem School and Childcare</h3>
+		{{> actionItems}}
 	</div>
-</body>
-</template>
-
-<template name="infantTask">
-  <li>{{text}}</li>
-</template>
-<template name="toddlerTask">
-  <li>{{text}}</li>
 </template>
