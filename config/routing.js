@@ -10,10 +10,11 @@ Router.onBeforeAction(function(pause) {
   if (!Meteor.user()) {
     Router.go('signin');
   }
-
-  this.next();
-
-}, {except: ['singin']});
+  else{
+    this.next();
+  }
+  
+}, {except: ['signin']});
 
 Router.plugin('ensureSignedIn', {
     except: ['signin']
