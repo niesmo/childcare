@@ -59,7 +59,7 @@ Meteor.startup(function(){
               firstName: newStudent.name.first,
               lastName: newStudent.name.last,
               dateOfBirth: newStudent.dob,
-              image: "http://api.adorable.io/avatars/150" + newStudent.salt,
+              image: "http://api.adorable.io/avatars/150/" + newStudent.salt,
               group: group,
               status: status,
               type: studentTypes[Math.floor(Math.random()*3)],
