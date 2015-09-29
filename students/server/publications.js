@@ -4,4 +4,8 @@ Meteor.publish("waitlistedStudents", function(){
 
 Meteor.publish('enrolledStudents', function(){
   return Students.find({status: "ENROLLED"});
-})
+});
+
+Meteor.publish('applicationStudents', function(){
+  return Students.find({status: "APPLICATION"});
+});

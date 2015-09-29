@@ -1,9 +1,57 @@
 <template name="Waitlist">
-	<h2>Waitlist</h2>
 
-	<ul>
-		<li>Some random names</li>
-		<li>Some random names</li>
-		<li>Some random names</li>
-	</ul>
+
+    <h2>Infant Waitlist</h2>
+    <table class="waitlistTable" width="80%">
+        <tr>
+        <th>Last Name</th>
+        <th>First Name</th>
+        <th>DOB</th>
+        <th>Days of week requested</th>
+
+        <th>Details</th>
+
+
+        </tr>
+        {{#each infants}}
+            {{> infantsList}}
+        {{/each}}
+	</table>
+    <br>
+    <h2>Toddler Waitlist</h2>
+    <table class="waitlistTable" width="80%">
+        <tr>
+            <th>Last Name</th>
+            <th>First Name</th>
+            <th>DOB</th>
+            <th>Days of week requested</th>
+
+            <th>Details</th>
+
+
+        </tr>
+        {{#each infants}}
+            {{> infantsList}}
+        {{/each}}
+    </table>
+
+
+
+</template>
+
+<template name="infantsList">
+    <tr>
+        <td>{{lastName}}</td>
+        <td>{{firstName}}</td>
+        <td>{{dateOfBirth.toDateString}}</td>
+        <td>{{DOW_WAITING}}</td>
+
+        <td>{{details}}</td>
+
+
+        <td><input type="submit" class="remove" value="delete"/></td>
+    </tr>
+</template>
+<template name="toddlerList">
+
 </template>

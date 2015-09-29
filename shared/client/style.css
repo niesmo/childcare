@@ -1,0 +1,14 @@
+.waitlistTable{
+    font-size: 14pt;
+    border-collapse: collapse;
+
+}
+.applicant{
+    border-radius: 20px;
+    border: 2px solid black;
+    padding: 10px;
+    width: 480px;
+}
+td{
+    padding-bottom: 1.5em;
+}
