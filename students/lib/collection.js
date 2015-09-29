@@ -3,124 +3,97 @@ Students = new Mongo.Collection('students');
 var Schemas = {};
 
 Schemas.Student = new SimpleSchema({
-  firstName: {
-    type: String,
-    label: "First Name",
-    max: 45
-  },
+    firstName: {
+      type: String,
+      label: "First Name",
+      max: 45
+    },
+    middleName: {
+      type: String,
+      label: "Middle Name",
+      max: 45,
+      optional: true
+    },
+    lastName: {
+      type: String,
+      label: "Last Name",
+      max: 45
+    },
+    dateOfBirth: {
+      type: Date,
+      label: "Date of Birth"
+    },
 
-  middleName: {
-    type: String,
-    label: "Middle Name",
-    max: 45,
-    optional: true
-  },
+    /**
+     * status would can only be values of
+     * 1. "WAITLIST"
+     * 2. "APPLICATION"
+     * 3. "ENROLLED"
+     */
+    status:{
+      type: String,
+      label: "Status"
+    },
 
-  lastName: {
-    type: String,
-    label: "Last Name",
-    max: 45
-  },
+    /**
+     * order will capture the order of the student in the current waitlist
+     */
+    order:{
+      type: Number,
+      label: "Order",
+      optional: true
+    },
 
-  dateOfBirth: {
-    type: Date,
-    label: "Date of Birth"
-  },
+    /**
+     * type will only get the values of
+     * 1. REGULAR   ->  First time students
+     * 2. MEMBER    ->  Student of a member of the organization
+     * 3. EXISTING  ->  Already a member student (their parent have another student here)
+     */
+    type: {
+      type: String,
+      label: "Type"
+    },
+    DOW_WAITING: {
+       type:String,
+       label: "DOW_WAITING",
+        optional: true
 
-  image:{
-    type: SimpleSchema.RegEx.Url,
-    label: "Image",
-    optional: true
-  },
+    },
+    DOW_ENROLLED: {
+        type:String,
+        label: "DOW_WAITING",
+        optional: true
 
-  /**
-   * Group can only be
-   * 1. TODDLER
-   * 2. INFANT
-   */
-  group: {
-    type: String,
-    label: "Class",
-    allowedValues: ['TODDLER', 'INFANT'],
-    autoform:{
-      options:[
-        {label: "Toddler", value: "TODDLER"},
-        {label: "Infant", value: "INFANT"}
-      ]
+    },
+    details:{
+      type:String,
+        label:"details",
+        optional:true
+    },
+    /*
+    Infant or Toddler
+     */
+    group: {
+        type:String,
+        label:"group",
+        optional:false
+    },
+    startOrMoveDate:{
+        type: Date,
+        label:"startOrMoveDate",
+        optional:true
+    },
+
+    classId:{
+      type: SimpleSchema.RegEx.Id,
+      optional: true
+    },
+
+
+    createdAt: {
+      type: Date
     }
-  },
-
-  /**
-   * status would can only be values of
-   * 1. "WAITLIST" -> for the kids how have paid the fee and have been approved by someone at OLB
-   * 2. "APPLICATION" -> for the kids who only have filled out the application
-   * 3. "ENROLLED" -> the kids who are currently attending OLB
-   */
-  status:{
-    type: String,
-    label: "Status",
-    allowedValues: ['WAITLIST', 'APPLICATION', 'ENROLLED'],
-    autoform:{
-      options:[
-        {label: "Waitlist", value: "WAITLIST"},
-        {label: "Application", value: "APPLICATION"},
-        {label: "Enrolled", value: "ENROLLED"}
-      ],
-      omit: true
-    }
-  },
-
-  /**
-   * order will capture the order of the student in the current waitlist
-   */
-  order:{
-    type: Number,
-    label: "Order",
-    optional: true,
-    autoform:{
-      omit: true
-    }
-  },
-
-  /**
-   * type will only get the values of
-   * 1. REGULAR   ->  First time students
-   * 2. MEMBER    ->  Student of a member of the organization
-   * 3. EXISTING  ->  Already a member student (their parent have another student here)
-   */
-  type: {
-    type: String,
-    label: "Type",
-    allowedValues: ['REGULAR', 'MEMBER', 'EXISTING'],
-    autoform:{
-      options:[
-        {label: "Regular", value: "REGULAR"},
-        {label: "Member", value: "MEMBER"},
-        {label: "Existing", value: "EXISTING"}
-      ],
-      omit: true
-    }
-  },
-
-  paidApplicationFee:{
-    type: Boolean,
-    label: "Application Fee"
-  },
-
-  classId:{
-    type: SimpleSchema.RegEx.Id,
-    optional: true,
-    autoform:{
-      omit: true
-    }
-  },
-
-  createdAt: {
-    type: Date,
-    autoform:{
-      omit: true
-    }
-  }
 });
 
 Students.attachSchema(Schemas.Student);

@@ -1,75 +1,61 @@
 Parents = new Mongo.Collection('parents');
-StudentParents = new Mongo.Collection('studentParents');
 
 var Schemas = {};
 
 Schemas.Parent = new SimpleSchema({
-  firstName: {
+    firstName: {
+        type: String,
+        label: "First Name",
+        max: 45
+    },
+    middleName: {
+        type: String,
+        label: "Middle Name",
+        max: 45,
+        optional: true
+    },
+    lastName: {
+        type: String,
+        label: "Last Name",
+        max: 45
+    },
+    dateOfBirth: {
+      type: Date,
+      label: "Date of Birth",
+        optional:true
+    },
+
+    email: {
+      type: SimpleSchema.RegEx.Email,
+      label: "Email",
+      max: 200
+    },
+
+    // TODO: if we need more than one phone number, we need to incorporate that
+    phoneNumber: {
       type: String,
-      label: "First Name",
-      max: 45
-  },
-  
-  middleName: {
-      type: String,
-      label: "Middle Name",
-      max: 45,
+      label: "Phone Number",
+      max:20
+    },
+    address:{
+        type:String,
+        label:"address",
+        optional:true
+    },
+
+    isPrimary: {
+      type: Boolean,
+      label: "Is Primary",
       optional: true
-  },
+    },
 
-  lastName: {
-      type: String,
-      label: "Last Name",
-      max: 45
-  },
+    studentId: {
+      type: SimpleSchema.RegEx.Id,
+    },
 
-  dateOfBirth: {
-    type: Date,
-    label: "Date of Birth"
-  },
-
-  image:{
-    type: SimpleSchema.RegEx.Url,
-    label: "Image",
-    optional: true
-  },
-
-  email: {
-    type: SimpleSchema.RegEx.Email,
-    label: "Email",
-    max: 200
-  },
-
-  // TODO: if we need more than one phone number, we need to incorporate that
-  phoneNumber: {
-    type: String,
-    label: "Phone Number",
-    max:20
-  },
-
-  isPrimary: {
-    type: Boolean,
-    label: "Is Primary",
-    optional: true
-  },
-
-  createdAt: {
-    type: Date,
-    autoform:{
-      omit: true
+    createdAt: {
+        type: Date
     }
-  }
-});
-
-// Many to Many relationship between parent and student
-Schemas.StudentParent = new SimpleSchema({
-  parentId:{
-    type: SimpleSchema.RegEx.Id
-  },
-  studentId:{
-    type: SimpleSchema.RegEx.Id
-  }
 });
 
 Parents.attachSchema(Schemas.Parent);
-StudentParents.attachSchema(Schemas.StudentParent);
