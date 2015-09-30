@@ -2,4 +2,6 @@ img.student-avatar{
   width: 150px;
   height: 150px;
   border-radius: 50%;
+  border: gray solid 2px;
+  cursor: pointer;
 }
