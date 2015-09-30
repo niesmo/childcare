@@ -1,0 +1,24 @@
+<template name="applicationDetail">
+  <li>
+    <div class="applicant">
+      <ul class='list-unstyled'>
+        <li><b>First Name: </b>{{firstName}}</li>
+        <li><b>Last Name: </b>{{lastName}}</li>
+        <li><b>Parents First Name: </b>{{#each parent this._id}}{{firstName}}{{/each}}</li>
+        <li><b>Parents Last Name: </b>{{#each parent this._id}}{{lastName}}{{/each}}</li>
+        <li><b>Address: </b>{{#each parent this._id}}{{address}}{{/each}}</li>
+        <li><b>Phone Number: </b>{{#each parent this._id}}{{phoneNumber}}{{/each}}</li>
+        <li><b>Email: </b>{{#each parent this._id}}{{email}}{{/each}}</li>
+        <li><b>DOW Requested: </b>{{DOW_WAITING}}</li>
+        <li><b>Date Of Birth: </b>{{dateOfBirth}}</li>
+        <li><b>Class: </b>{{group}}</li>
+        <li><b>Affiliation: </b>{{type}}</li>
+      </ul>
+      <br>
+      <form class="form-inline" role="form">
+        <Input class="form-control" type="submit" onclick="this.parentNode.value='add';" value="Accept and add to Waitlist"/> &nbsp;
+        <Input class="form-control" type="submit" onclick="this.parentNode.value='remove';" value="Decline Application"/>
+      </form>
+    </div>
+  </li>
+</template>

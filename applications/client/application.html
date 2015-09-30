@@ -1,0 +1,10 @@
+<template name="application">
+  <h1>Applications</h1>
+  <br>
+  <ol>
+    {{#each applicant}}
+    {{> applicationDetail}}
+    <br />
+    {{/each}}
+  </ol>
+</template>
