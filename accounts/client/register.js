@@ -11,8 +11,8 @@ Template.register.events({
     // checking to see if the passwords are the same
     if(password !== passwordConfirm){
       // TODO: add actual error handling here
-      // dont just alert the error
-      alert("Passwords dont matach");
+      // do not just alert the error
+      alert("Passwords do not match");
       return;
     }
 
