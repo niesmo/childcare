@@ -1,0 +1,14 @@
+dd.student-name{
+  text-transform: capitalize;
+}
+
+img.parent-avatar-thumbnail{
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: gray solid 2px;
+}
+
+dt.parent-row{
+  margin-top: 15px;
+}

@@ -1,7 +1,7 @@
 Meteor.startup(function(){
   // add the classes
   var classroomIds = [];
-  var parentCount = 10;
+  var parentCount = 50;
 
   if(Classrooms.find().count() === 0){
     [
@@ -22,8 +22,6 @@ Meteor.startup(function(){
     });
   }
 
-  // console.log(classroomIds);
-
   // add all the parents
   // 
   var studentGroups = ['TODDLER', 'INFANT'];
@@ -33,7 +31,7 @@ Meteor.startup(function(){
     for(var i=0;i<parentCount;i++){
       HTTP.get("https://randomuser.me/api/", {headers:{dataType: 'json'}}, function(err, data){
         var person = EJSON.parse(data.content).results[0].user;
-        console.log(person);
+
         var parent = {
           firstName: person.name.first,
           lastName: person.name.last,
@@ -63,7 +61,7 @@ Meteor.startup(function(){
               group: group,
               status: status,
               type: studentTypes[Math.floor(Math.random()*3)],
-              classId: (group == "INFANT")?0:1,
+              classId: (group == "INFANT")?classroomIds[0]:classroomIds[1],
               paidApplicationFee: (status == "APPLICATION")?false:true,
               createdAt: new Date()
             };
