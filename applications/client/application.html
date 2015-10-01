@@ -1,10 +1,11 @@
 <template name="application">
   <h1>Applications</h1>
-  <br>
-  <ol>
-    {{#each applicant}}
-    {{> applicationDetail}}
-    <br />
-    {{/each}}
-  </ol>
+  <div class="row">
+    <div class="col-md-8">
+      {{#each applicant}}
+        {{> applicationDetail}}
+        <hr />
+      {{/each}}
+    </div>
+  </div>
 </template>

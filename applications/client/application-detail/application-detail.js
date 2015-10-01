@@ -1,19 +1,36 @@
+Template.applicationDetail.onCreated(function(){
+  Meteor.subscribe("parents");
+});
+
 Template.applicationDetail.helpers({
+  /**
+   * [parent description]
+   * @param  {[type]} id [description]
+   * @return {[type]}    [description]
+   */
   parent: function(id){
     return Parents.find({studentId: id});
   }
 });
+
 Template.applicationDetail.events({
-  "submit form": function(event) {
+  /**
+   * [description]
+   * @param  {[type]} event [description]
+   * @return {[type]}       [description]
+   */
+  "click button.accept": function(event){
     event.preventDefault();
-    var action = event.target.value;
-    if(action=='add'){
-      //accept submit
-      Meteor.call('addToWaitlist', this._id);
-    }
-    if(action=='remove'){
-      //remove submit
-      alert("remove under construction");
-    }
+    Meteor.call('addToWaitlist', this._id);
+  },
+
+  /**
+   * [description]
+   * @param  {[type]} event [description]
+   * @return {[type]}       [description]
+   */
+  "click button.decline": function(event) {
+    event.preventDefault();
+    alert("remove under construction");
   }
 });

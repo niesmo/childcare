@@ -1,4 +1,9 @@
 Template.applicationForm.events({
+  /**
+   * [description]
+   * @param  {[type]} event [description]
+   * @return {[type]}       [description]
+   */
   "submit form": function(event){
     event.preventDefault();
 
@@ -7,8 +12,12 @@ Template.applicationForm.events({
     var plname = event.target.plname.value;
     var pfname = event.target.pfname.value;
     var DOB = event.target.DOB.value;
-    var address = event.target.address.value;
-    var phone = event.target.phoneNumber.value;
+
+    var address = event.target.street.value;
+    address += " " + event.target.city.value;
+    address += " " + event.target.state.value;
+
+    var phone = event.target['phone-number'].value;
     var email = event.target.email.value;
 
     var days="";
@@ -33,6 +42,7 @@ Template.applicationForm.events({
     var group = $(event.target).find('input:radio[name=group]:checked').val();
     Meteor.call('insertStudent', lname, fname, DOB, days, details, "APPLICATION", type, group, function(error, result){
       if(error){
+        // TODO: Do some real error checking
         console.log(error.reason);
         return;
       }

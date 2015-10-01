@@ -1,0 +1,48 @@
+<template name="waitlist">
+  <h2>Infant Waitlist</h2>
+  <div class="row">
+    <div class="col-md-10">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Last Name</th>
+            <th>First Name</th>
+            <th>DOB</th>
+            <th>Days of week requested</th>
+            <th>Details</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each infants}}
+            {{> waitlistStudentRow}}
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
+
+  <h2>Toddler Waitlist</h2>
+  <div class="row">
+    <div class="col-md-10">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Last Name</th>
+            <th>First Name</th>
+            <th>DOB</th>
+            <th>Days of week requested</th>
+            <th>Details</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each toddlers}}
+            {{> waitlistStudentRow}}
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</template>

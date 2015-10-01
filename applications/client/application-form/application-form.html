@@ -1,82 +1,110 @@
 <template name="applicationForm">
-<h2>Application Form</h2><br>
+  <h2>Application Form</h2><br>
 
-    <div class="container">
-    <form class="form-inline" role="form">
+  <div class="row">
+    <div class="col-md-12">
+      <form role="form">
+        <h3>Parent's Information</h3>
+        <!-- First name and last name -->
+        <div class="row">
+          
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="plname">Parent Last Name</label>
+              <input type="text" class="form-control" name="plname" id="plname"/>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="pfname">Parent First Name</label>
+              <input type="text" class="form-control" name="pfname"/>
+            </div>
+          </div>
+        </div>
+
+        <!-- Parent Address -->
         <div class="form-group">
-            <p style="font-size:14pt;">Parent Last Name</p>
-            <input type="text" class="form-control" id="plname" style="width:412px;"/>
+          <label for="address">Street Address</label>
+          <input class="form-control" type="text" name="street" id="street"/>
         </div>
-        <div class="form-group" style="margin-left: 15px;">
-            <p style="font-size:14pt;">Parent First Name</p>
-            <input type="text" class="form-control" name="pfname"  style="width:412px;"/>
-        </div>
-        <br><hr>
+
         <div class="form-group">
-            <p style="font-size:14pt;">Home Address</p>
-            <Input  class="form-control" type="text" name="address" style="width:300px;"/>
+          <label for="city">City</label>
+          <input class="form-control" type="text" name="city" id="city"/>
         </div>
-        <div class="form-group" style="margin-left: 15px;">
-            <p style="font-size:14pt;">Email Address</p>
-            <Input class="form-control" type="text" name="email" style="width:300px;"/>
-        </div>
-        <div class="form-group" style="margin-left: 15px;">
-            <p style="font-size:14pt;">Phone Number</p>
-            <Input class="form-control" type="text" name="phoneNumber" placeholder="(xxx)xxx-xxxx"/><br>
-        </div>
-        <br><hr>
+
         <div class="form-group">
-            <p style="font-size:14pt;">Child's Last Name</p>
-            <input class="form-control" type="text" name="lname" id="lname" style="width:300px;"/>
-        </div>
-        <div class="form-group" style="margin-left: 15px;">
-            <p style="font-size:14pt;">Child's First Name</p>
-            <input type="text" class="form-control" name="fname" id="fname" style="width:300px;"/>
-        </div>
-        <div class="form-group" style="margin-left: 15px;">
-            <p style="font-size:14pt;">Date Of Birth</p>
-            <Input class="form-control" type="text" name="DOB"/>
+          <label for="state">State</label>
+          <input class="form-control" type="text" name="state" id="state"/>
         </div>
 
-        <br><hr>
-        <div class="form-group" style="float:left;">
-            <p style="font-size:14pt;">Days</p>
-
-            <Input class="checkbox" type="checkbox" name="Days" value="M" id="M">Monday
-            &nbsp;
-            <Input class="checkbox" type="checkbox" name="Days" value="T" id="T">Tuesday
-            &nbsp;
-            <Input class="checkbox" type="checkbox" name="Days" value="W" id="W">Wednesday<br>
-            <Input class="checkbox" type="checkbox" name="Days" value="TH" id="TH">Thursday
-            <Input class="checkbox" type="checkbox" name="Days" value="F" id="F">Friday<br>
-
-        </div>
-        <div class="form-group" style="float:left; margin-left: 20px;">
-            <p style="font-size:14pt;">Affiliation</p>
-
-
-            <input class="radio" type="radio" name="type" value="Member" id="MEMBER">Child of Employee<br>
-            <input class="radio" type="radio" name="type" value="Existing" id="EXISTING">Current Family<br>
-            <input class="radio" type="radio" name="type" value="Regular" id="REGULAR">New Family
+        <!-- Parents Email -->
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input class="form-control" type="email" name="email" id="email"/>
         </div>
 
-        <div class="form-group" style="float:left; margin-left: 20px;">
-            <p style="font-size:14pt;">Group</p>
-            <input class="radio" type="radio" name="group" value="Infant" id="INFANT">Infant<br>
-            <input class="radio" type="radio" name="group" value="Toddler" id="TODDLER">Toddler
+        <!-- Parents phone number -->
+        <div class="form-group">
+          <label for="phone-number">Phone Number</label>
+          <input class="form-control" type="text" name="phone-number" id="phone-number" placeholder="(xxx)xxx-xxxx"/>
         </div>
 
-        <div style="clear:both;"></div>
-        <hr>
-        <p style="font-size:14pt;">Details</p>
-        <textarea class="form-control" rows="3" cols="100" name="details"></textarea>
-        <br><br>
-        <Input style="clear:both;" class="form-control" type="submit" value="Submit Form"/>
-        <br><br>
+        <h3>Child's Information</h3>
+        <!-- Student First and Last Name -->
+        <div class="form-group">
+          <lable for="lname">Child's Last Name</lable>
+          <input class="form-control" type="text" name="lname" id="lname" />
+        </div>
 
+        <div class="form-group">
+          <label for="fname">Child's First Name</label>
+          <input type="text" class="form-control" name="fname" id="fname"/>
+        </div>
 
-    </form>
+        <!-- Student DOB -->
+        <div class="form-group">
+          <label for='dob'>Date Of Birth</label>
+          <input class="form-control" type="text" name="DOB" id="dob" />
+        </div>
 
+        <h3>Details</h3>
+        <!-- Days -->
+        <div class="form-group">
+          <h4>Days</h4>
+
+          <div class="checkbox-inline"><label for="m"><input class="checkbox" type="checkbox" name="days" value="M" id="m" /> Monday</label></div>
+          <div class="checkbox-inline"><label for="t"><input class="checkbox" type="checkbox" name="days" value="T" id="t" /> Tuesday</label></div>
+          <div class="checkbox-inline"><label for="w"><input class="checkbox" type="checkbox" name="days" value="W" id="w" /> Wednesday</label></div>
+          <div class="checkbox-inline"><label for="th"><input class="checkbox" type="checkbox" name="days" value="TH" id="th" /> Thursday</label></div>
+          <div class="checkbox-inline"><label for="f"><input class="checkbox" type="checkbox" name="days" value="F" id="f" /> Friday</label></div>
+        </div>
+
+        <!-- Affiliation -->
+        <div class="form-group">
+          <h4>Affiliation</h4>
+
+          <div class="radio-inline"><label for="member"><input class="radio" type="radio" name="type" value="Member" id="member"> Child of Employee</label></div>
+          <div class="radio-inline"><label for="existing"><input class="radio" type="radio" name="type" value="Existing" id="existing"> Current Family</label></div>
+          <div class="radio-inline"><label for="regular"><input class="radio" type="radio" name="type" value="Regular" id="regular"> New Family</label></div>
+        </div>
+
+        <!-- Group -->
+        <div class="form-group">
+          <h4>Group</h4>
+
+          <div class="radio-inline"><label for="infant"><input class="radio" type="radio" name="group" value="Infant" id="infant"> Infant</label></div>
+          <div class="radio-inline"><label for="toddler"><input class="radio" type="radio" name="group" value="Toddler" id="toddler"> Toddler</label></div>
+        </div>
+
+        <!-- Details -->
+        <label for="details">Details</label>
+        <textarea class="form-control" name="details" id="details"></textarea>
+        
+        <br />
+        <input class="btn btn-primary" type="submit" value="Submit Application" />
+      </form>
     </div>
-
+  </div>
 </template>
