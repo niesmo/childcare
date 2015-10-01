@@ -9,4 +9,12 @@ This is the repo for our capstone project
 	<li><a href="https://atmospherejs.com/aldeed/collection2">Collection2</a></li>
 	<li><a href="https://atmospherejs.com/twbs/bootstrap">Bootstrap</a></li>
 	<li><a href="https://atmospherejs.com/iron/router">Router</a></li>
+	<li><a href="https://atmospherejs.com/useraccounts/iron-routing">useraccounts:iron-routing</a></li>
+	<li><a href="https://atmospherejs.com/meteor/accounts-password">accounts-password</a></li>
+	<li><a href="https://atmospherejs.com/aldeed/collection2">aldeed:collection2</a></li>
+	<li><a href="https://atmospherejs.com/aldeed/autoform">aldeed:autoform</a></li>
+	<li><a href="https://atmospherejs.com/reywood/publish-composite">reywood:publish-composite</a><li>
+	<li><a href="https://atmospherejs.com/meteor/check">check</a></li>
+	<li><a href="https://atmospherejs.com/meteor/http">http</a></li>
 </ul>
+<p>There are more packages that are added to the project, you can see a list of them in the .meteor/packages file</p>
