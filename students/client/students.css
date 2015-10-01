@@ -1,0 +1,9 @@
+#infants, #toddlers{
+  padding-top: 20px;
+}
+
+.students-tabpanels{
+  height: 500px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}

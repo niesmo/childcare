@@ -1,18 +1,22 @@
 <template name="students">
-  {{> studentDetail selectedStudent}}
-  <div class="row">
-    <div class="col-md-12">
-      <h3>Infants</h3>
-      <hr />
-      {{> studentsList students=infants}}
-    </div>
+  <div class="student-detail">
+    {{> studentDetail selectedStudent}}  
   </div>
 
-  <div class="row">
-    <div class="col-md-12">
-      <h3>Toddlers</h3>
-      <hr />
-      {{> studentsList students=toddlers}}
+  <div class="enrolled-students">
+    
+    <ul class="nav nav-tabs" role="tablist">
+      <li role="presentation" class="active"><a href="#infants" aria-controls="infants" role="tab" data-toggle="tab">Infants</a></li>
+      <li role="presentation"><a href="#toddlers" aria-controls="toddlers" role="tab" data-toggle="tab">Toddlers</a></li>
+    </ul>
+
+    <div class="tab-content students-tabpanels">
+      <div role="tabpanel" class="tab-pane active" id="infants">
+        {{> studentsList students=infants}}
+      </div>
+      <div role="tabpanel" class="tab-pane" id="toddlers">
+        {{> studentsList students=toddlers}}
+      </div>
     </div>
-  </div> 
+  </div>
 </template>
