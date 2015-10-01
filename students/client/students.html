@@ -6,17 +6,17 @@
   <div class="enrolled-students">
     
     <ul class="nav nav-tabs" role="tablist">
-      <li role="presentation" class="active"><a href="#infants" aria-controls="infants" role="tab" data-toggle="tab">Infants</a></li>
-      <li role="presentation"><a href="#toddlers" aria-controls="toddlers" role="tab" data-toggle="tab">Toddlers</a></li>
+      {{#each classrooms}}
+        <li role="presentation" class="tab-classroom-type {{isActive @index}}" classroom-id="{{_id}}"><a href="#{{toLower type}}" aria-controls="{{toLower type}}" role="tab" data-toggle="tab">{{toLower type}}</a></li>
+      {{/each}}
     </ul>
 
     <div class="tab-content students-tabpanels">
-      <div role="tabpanel" class="tab-pane active" id="infants">
-        {{> studentsList students=infants}}
-      </div>
-      <div role="tabpanel" class="tab-pane" id="toddlers">
-        {{> studentsList students=toddlers}}
-      </div>
+      {{#each classrooms}}
+        <div role="tabpanel" class="tab-pane classroom-students-tab {{isActive @index}}" id="{{toLower type}}" data-id="{{@index}}">
+          {{> studentsList studentInClass _id}}
+        </div>
+      {{/each}}
     </div>
   </div>
 </template>

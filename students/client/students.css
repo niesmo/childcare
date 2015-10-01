@@ -1,4 +1,4 @@
-#infants, #toddlers{
+.classroom-students-tab{
   padding-top: 20px;
 }
 
@@ -6,4 +6,8 @@
   height: 500px;
   overflow-x: hidden;
   overflow-y: auto;
+}
+
+.tab-classroom-type{
+  text-transform: capitalize;
 }
