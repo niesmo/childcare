@@ -1,0 +1,8 @@
+img.student-avatar.small{
+  width: 35px;
+  display: inline-block;
+}
+
+li.student-list-item{
+  margin-bottom: 10px;
+}

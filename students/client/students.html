@@ -11,9 +11,9 @@
       {{/each}}
     </ul>
 
-    <div class="tab-content students-tabpanels">
+    <div class="tab-content">
       {{#each classrooms}}
-        <div role="tabpanel" class="tab-pane classroom-students-tab {{isActive @index}}" id="{{toLower type}}" data-id="{{@index}}">
+        <div role="tabpanel" class="tab-pane classroom-students-tab {{isActive @index}}" id="{{toLower type}}">
           {{> studentsList studentInClass _id}}
         </div>
       {{/each}}
