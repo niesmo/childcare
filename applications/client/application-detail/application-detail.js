@@ -4,18 +4,19 @@ Template.applicationDetail.onCreated(function(){
 
 Template.applicationDetail.helpers({
   /**
-   * [parent description]
-   * @param  {[type]} id [description]
-   * @return {[type]}    [description]
+   * [Returns parent(s) with given id as their studentId]
+   * @param  {[SimpleSchema.RegEx.Id]} id [id of current student]
+   * @return {[Parent]}    [ returns all parents with studentId=id]
    */
   parent: function(id){
-    return Parents.find({studentId: id});
+
+    return Parents.find({studentId:id});
   }
 });
 
 Template.applicationDetail.events({
   /**
-   * [description]
+   * [Calls addToWaitlist passing id of current student]
    * @param  {[type]} event [description]
    * @return {[type]}       [description]
    */
@@ -25,7 +26,7 @@ Template.applicationDetail.events({
   },
 
   /**
-   * [description]
+   * [remove student and parent(s) with current id]
    * @param  {[type]} event [description]
    * @return {[type]}       [description]
    */

@@ -54,12 +54,32 @@ Schemas.Student = new SimpleSchema({
       type: String,
       label: "Type"
     },
+    /**
+     * Days of the week on waitlist for
+     * Will be a single string containing:
+     * M : Monday
+     * T: Tuesday
+     * W : Wendsday
+     * TH : Thursday
+     * F : Friday
+     * In order
+     */
     DOW_WAITING: {
        type:String,
        label: "DOW_WAITING",
         optional: true
 
     },
+    /**
+     * Days of the week enrolled  for
+     * Will be a single string containing:
+     * M : Monday
+     * T: Tuesday
+     * W : Wendsday
+     * TH : Thursday
+     * F : Friday
+     * In order
+     */
     DOW_ENROLLED: {
         type:String,
         label: "DOW_WAITING",
@@ -79,6 +99,9 @@ Schemas.Student = new SimpleSchema({
         label:"group",
         optional:false
     },
+    /**
+     * Date the student is requested to start or move
+     */
     startOrMoveDate:{
         type: Date,
         label:"startOrMoveDate",

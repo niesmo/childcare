@@ -20,8 +20,8 @@ Schemas.Parent = new SimpleSchema({
         max: 45
     },
     dateOfBirth: {
-      type: Date,
-      label: "Date of Birth",
+        type: Date,
+        label: "Date of Birth",
         optional:true
     },
 

@@ -20,7 +20,7 @@ Meteor.methods({
       studentId: id,
       createdAt: new Date() // current time
     });
-
+    return id;
   },
 
   /**
