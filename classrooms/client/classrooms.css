@@ -1,0 +1,7 @@
+.student-in-classroom-list{
+  margin-top:45px;
+  border-left: 1px solid lightgray;
+  height: 500px;
+  overflow-y:auto;
+  overflow-x:hidden;
+}

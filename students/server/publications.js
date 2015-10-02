@@ -6,7 +6,7 @@ Meteor.publish('enrolledStudents', function(){
   return Students.find({status: "ENROLLED"});
 });
 
-Meteor.publishComposite('enrolledStudentsWithParent', {
+Meteor.publishComposite('enrolledStudentsFullInformation', {
   // must return a cursor
   find: function(){
     return Students.find({status: 'ENROLLED'});

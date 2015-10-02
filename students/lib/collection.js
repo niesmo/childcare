@@ -2,6 +2,31 @@ Students = new Mongo.Collection('students');
 
 var Schemas = {};
 
+Schemas.Day = new SimpleSchema({
+  day: {
+    type: String,
+    label: 'Day',
+    allowedValues: ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY'],
+    autoform:{
+      options:[
+        {label: "Monday", value: "MONDAY"},
+        {label: "Tuesday", value: "TUESDAY"},
+        {label: "Wednesday", value: "WEDNESDAY"},
+        {label: "Thursday", value: "THURSDAY"},
+        {label: "Friday", value: "FRIDAY"},
+        {label: "Saturday", value: "SATURDAY"},
+        {label: "Sunday", value: "SUNDAY"},
+      ]
+    }
+  },
+
+  flexible: {
+    type: Boolean,
+    label: "Flexible",
+    optional: true
+  }
+});
+
 Schemas.Student = new SimpleSchema({
   firstName: {
     type: String,
@@ -105,6 +130,18 @@ Schemas.Student = new SimpleSchema({
   paidApplicationFee:{
     type: Boolean,
     label: "Application Fee"
+  },
+
+  daysEnrolled: {
+    type: [Schemas.Day],
+    label: "Days Enrolled",
+    optional: true
+  },
+
+  daysWaitlisted: {
+    type: [Schemas.Day],
+    label: "Days Waitlisted",
+    optional: true
   },
 
   classId:{

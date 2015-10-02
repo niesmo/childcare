@@ -1,8 +1,10 @@
 /** Subscribe to all the publications when the template is created */
 Template.students.onCreated(function(){
   // this.subscribe('enrolledStudents');
-  this.subscribe('enrolledStudentsWithParent');
+  this.subscribe('enrolledStudentsFullInformation');
+  this.subscribe('classrooms');
 });
+
 
 Template.students.helpers({
   selectedStudent: function(){
@@ -14,19 +16,19 @@ Template.students.helpers({
   },
 
   /**
-   * This helper sends data to the template about all the infants
-   * @return {Meteor.cursor} The cursor to the db
+   * gets all the classrooms
+   * @return {Meteor.cursor} the cursor to the db
    */
-  infants: function () {
-    return Students.find({group: "INFANT"});
+  classrooms: function(){
+    return Classrooms.find();
   },
-
 
   /**
-   * This helper sends data to the template about all the toddlers
-   * @return {Meteor.cursor} The cursor to the db
+   * This function will get all the students that are in the class with the ID passed
+   * @param  {String} classId the ID of the classroom in the DB
+   * @return {Meteor.cursor}         The cursor to the DB
    */
-  toddlers: function () {
-    return Students.find({group: "TODDLER"});
-  },
+  studentInClass: function(classId){
+    return Students.find({classId: classId});
+  }
 });

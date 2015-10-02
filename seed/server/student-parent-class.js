@@ -51,6 +51,17 @@ Meteor.startup(function(){
           HTTP.get("https://randomuser.me/api/", {headers:{dataType: 'json'}}, function(err, data){
             var newStudent = EJSON.parse(data.content).results[0].user;
 
+            // generating the days the student is about to be waitlisted and then enrolled
+            var numberOfDays = Math.floor(Math.random()*5)+1;
+            var randomDays = getRandom(daysOfWeek, numberOfDays);
+            var days = [];
+            for(var k=0,len=randomDays.length;k<len;k++){
+              days.push({
+                day: randomDays[k],
+                flexible: (Math.random() > 0.5)? true:false
+              });
+            }
+
             var status = studentStatus[Math.floor(Math.random()*3)];
             var group = studentGroups[Math.floor(Math.random()*2)];
             var student = {
@@ -63,6 +74,8 @@ Meteor.startup(function(){
               type: studentTypes[Math.floor(Math.random()*3)],
               classId: (group == "INFANT")?classroomIds[0]:classroomIds[1],
               paidApplicationFee: (status == "APPLICATION")?false:true,
+              daysWaitlisted: days,
+              daysEnrolled: (status == "ENROLLED")?days: null,
               createdAt: new Date()
             };
 
@@ -79,3 +92,21 @@ Meteor.startup(function(){
     }
   }
 });
+
+
+var daysOfWeek = ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY'];
+
+// http://stackoverflow.com/questions/19269545/how-to-get-n-no-elements-randomly-from-an-array
+function getRandom(arr, n) {
+  var result = new Array(n),
+    len = arr.length,
+    taken = new Array(len);
+  if (n > len)
+    throw new RangeError("getRandom: more elements taken than available");
+  while (n--) {
+    var x = Math.floor(Math.random() * len);
+    result[n] = arr[x in taken ? taken[x] : x];
+    taken[x] = --len;
+  }
+  return result;
+}

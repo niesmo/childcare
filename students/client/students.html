@@ -1,18 +1,22 @@
 <template name="students">
-  {{> studentDetail selectedStudent}}
-  <div class="row">
-    <div class="col-md-12">
-      <h3>Infants</h3>
-      <hr />
-      {{> studentsList students=infants}}
-    </div>
+  <div class="student-detail">
+    {{> studentDetail selectedStudent}}  
   </div>
 
-  <div class="row">
-    <div class="col-md-12">
-      <h3>Toddlers</h3>
-      <hr />
-      {{> studentsList students=toddlers}}
+  <div class="enrolled-students">
+    
+    <ul class="nav nav-tabs" role="tablist">
+      {{#each classrooms}}
+        <li role="presentation" class="tab-classroom-type {{isActive @index}}" classroom-id="{{_id}}"><a href="#{{toLower type}}" aria-controls="{{toLower type}}" role="tab" data-toggle="tab">{{toLower type}}</a></li>
+      {{/each}}
+    </ul>
+
+    <div class="tab-content">
+      {{#each classrooms}}
+        <div role="tabpanel" class="tab-pane classroom-students-tab {{isActive @index}}" id="{{toLower type}}">
+          {{> studentsList studentInClass _id}}
+        </div>
+      {{/each}}
     </div>
-  </div> 
+  </div>
 </template>
