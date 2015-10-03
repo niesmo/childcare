@@ -8,6 +8,13 @@ Template.actionItems.helpers({
   },
   toddlerTasks: function () {
     return ActionItems.find({type:"TODDLER"}, {sort: {createdAt: 1}});
+  },
+  selectedActionItem: function(){
+    var id = Session.get('selectedActionItem');
+    if(!id) return undefined;
+
+    var actionItem = ActionItems.findOne({Title: id});
+    return actionItem;
   }
 });
 
@@ -27,7 +34,7 @@ Template.actionItems.events({
     });
 
     // clear the form
-    tpl.$(".new-task").reset();
+    tpl.reset();
   },
 
   "submit .new-infantTask": function (event) {
@@ -56,5 +63,12 @@ Template.actionItems.events({
 
     // Clear form
     event.target.text.value = "";
+  },
+  'click td.action-item': function (e, tpl) {
+    // find the id of the selected student
+    var id = e.target.id;
+
+    // set the session value to that student
+    Session.set('selectedActionItem', id);
   }
 });
