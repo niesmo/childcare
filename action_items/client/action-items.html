@@ -1,5 +1,28 @@
 <template name="actionItems">
-<h3> Action Items </h3>
+<!--<h3> Action Items </h3>-->
+{{> actionItemDetail}}
+
+<div class="row">
+    <form class="new-task col-md-6">
+      <!-- Task Type -->
+      <div class="row">
+        <div class="form-group col-md-6">
+          <select class="form-control" id="type">
+            <option value="INFANT">Infant</option>
+            <option value="TODDLER">Toddler</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Task Description -->
+      <div class="form-group">
+        <textarea id="description" class="form-control" placeholder="Description"></textarea>  
+      </div>
+
+      <input type="submit" class="btn btn-primary" value="Add Task" />
+    </form>
+  </div>
+
   <h4>Infant</h4>
   <ul>
     {{#each infantTasks}}
@@ -14,31 +37,4 @@
     {{/each}}
   </ul>
 
-  <div class="row">
-    <form class="new-task col-md-6">
-      <!-- Task Type -->
-      <div class="row">
-        <div class="form-group col-md-6">
-          <select class="form-control" id="type">
-            <option value="INFANT">Infant</option>
-            <option value="TODDLER">Toddler</option>
-          </select>
-        </div>
-      </div>
-
-      <!-- Task Title -->
-      <div class="row">
-        <div class="form-group col-md-6">
-          <input type="text" id="title" class="form-control" placeholder="Title"/>
-        </div>
-      </div>
-
-      <!-- Task Description -->
-      <div class="form-group">
-        <textarea id="description" class="form-control" placeholder="Description"></textarea>  
-      </div>
-
-      <input type="submit" class="btn btn-primary" value="Add Task" />
-    </form>
-  </div>
 </template>

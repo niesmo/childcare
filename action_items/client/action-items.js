@@ -4,10 +4,10 @@ Template.actionItems.onCreated(function(){
 
 Template.actionItems.helpers({
   infantTasks: function () {
-    return ActionItems.find({type:"INFANT"}, {sort: {createdAt: -1}});
+    return ActionItems.find({type:"INFANT"}, {sort: {createdAt: 1}});
   },
   toddlerTasks: function () {
-    return ActionItems.find({type:"TODDLER"}, {sort: {createdAt: -1}});
+    return ActionItems.find({type:"TODDLER"}, {sort: {createdAt: 1}});
   }
 });
 
