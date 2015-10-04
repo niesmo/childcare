@@ -4,7 +4,7 @@ Template.application.onCreated(function(){
 
 Template.application.helpers({
   /**
-   * Returns all students with status->Application
+   * Returns all students with status equal to Application
    * @returns {*}
    */
   applicant: function () {

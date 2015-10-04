@@ -1,12 +1,12 @@
 Meteor.methods({
   /**
    * [Insert into parent collection]
-   * @param  {{parent object}} parent {object with all t
-   * @param  {[type]} lname   [description]
-   * @param  {[type]} fname   [description]
-   * @param  {[type]} email   [description]
-   * @param  {[type]} phone   [description]
-   * @param  {[type]} address [description]
+   * @param  {{parent object}} parent [object containting all required information of a parent containing variables below]
+   * @var  {[string]} lname   [Last name of parent]
+   * @var  {[string]} fname   [First name of parent]
+   * @var  {[string]} email   [email address]
+   * @var  {[string]} phone   [phone number]
+   * @var  {[string]} address [home address]
    * @return {[SimpleSchema.RegEx.Id]} id  [id of parent inserted]
    */
   'insertParent': function (parent) {
@@ -23,37 +23,40 @@ Meteor.methods({
   },
 
   /**
-   * [description]
-   * @param  {[type]} id [description]
+   * [removes parent with id passed]
+   * @param  {[SimpleSchema.RegEx.Id]} id [parent id]
    * @return {[type]}    [description]
    */
   'removeParent': function (id) {
     Parents.remove(id);
-    // code goes here
+
   },
   /**
-   * [description]
-   * @param  {[type]} lname   [description]
-   * @param  {[type]} fname   [description]
-   * @param  {[type]} DOB     [description]
-   * @param  {[type]} days    [description]
-   * @param  {[type]} details [description]
-   * @param  {[type]} status  [description]
-   * @param  {[type]} type    [description]
-   * @param  {[type]} group   [description]
-   * @return {[type]}         [description]
+   * [insert given data into student collection]
+   * @param {{student object}} student [student object containing data for the following object variables]
+   * @var  {[string]} lname   [last name of student]
+   * @var  {[string]} fname   [first name of student]
+   * @var  {[date]} DOB     [student date of birth]
+   * @var  {[string]} group   [group the student is in, will be TODDLER or INFANT]
+   * @param {{details object}} details [details object containing data for the following object variables]
+   * @var  {[string]} status  [status of student, will be APPLICATION, WAITLIST or ENROLLED]
+   * @var  {[array of type day (defined in student collection)]} days    [days of the week requested]
+   * @var  {[string]} details [any added student details]
+   * @param  {[type]} type    [type of student, will be REGULAR, MEMBER or EXISTING]
+   *
+   * @return {[SimpleSchema.RegEx.Id]} id    [id of student inserted]
    */
-  'insertStudent': function (lname, fname, DOB, days, details, status, type, group) {
+  'insertStudent': function (student,details) {
 
     var id =  Students.insert({
-      lastName: lname,
-      firstName: fname,
-      dateOfBirth: DOB,
-      DOW_WAITING: days,
-      details: details,
-      status: status,
-      type: type,
-      group: group,
+      lastName: student.lname,
+      firstName: student.fname,
+      dateOfBirth: student.DOB,
+      DOW_WAITING: details.days,
+      details: details.details,
+      status: student.status,
+      type: details.type,
+      group: student.group,
       createdAt: new Date() // current time
     });
 
@@ -61,8 +64,8 @@ Meteor.methods({
   },
   
   /**
-   * [description]
-   * @param  {[type]} id [description]
+   * [removes student with passed id]
+   * @param  {[SimpleSchema.RegEx.Id]} id [id of student to be removed]
    * @return {[type]}    [description]
    */
   'removeStudent': function (id) {
@@ -71,10 +74,19 @@ Meteor.methods({
 
   /**
    * [description]
-   * @param  {[type]} id [description]
+   * @param  {[SimpleSchema.RegEx.Id]} id [id of student to be added to waitlist]
    * @return {[type]}    [description]
    */
   'addToWaitlist': function(id){
     Students.update({_id: id},{$set:{status:"WAITLIST"}});
+  },
+  /**
+   *[Adds student id and parent id to the studentParent collection]
+   * @param  {{SimpleSchema.RegEx.Id}} studentId [id of student associated with parent]
+   * @param {{SimpleSchema.RegEx.Id}} parentId  [id of parent associated with student]
+   * @returns {{SimpleSchema.RegEx.Id}} id [id of value insterted]
+    */
+  'addStudentParent': function(studentId, parentId){
+    StudentParent.insert({studentId:studentId, parentId:parentId, createdAt: new Date()});
   }
 });

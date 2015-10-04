@@ -7,7 +7,7 @@ Template.applicationForm.events({
   "submit form": function(event){
     event.preventDefault();
 
-
+    //retrieve data from form
     var lname = event.target.lname.value;
     var fname = event.target.fname.value;
     var plname = event.target.plname.value;
@@ -41,34 +41,32 @@ Template.applicationForm.events({
         days[i]={"day":"FRIDAY"};
         i++;
     }
-      alert(days[0].day);
+
     var requestedStart = event.target.sdate.value;
     var type = $(event.target).find('input:radio[name=type]:checked').val();
     var details = event.target.details.value;
     var group = $(event.target).find('input:radio[name=group]:checked').val();
-
-   var par = new Parent();
-
     var studentObj = ({lname:lname},{fname:fname},{DOB:DOB},{group:group}, {status:"APPLICATION"});
     var parentObj=({plname:plname},{pfname:pfname},{address:address},{email:email},{phone:phone});
     var detailsObj=({days:days}, {type:type}, {details:details},{requestedStart:requestedStart});
+
     //Inserts student, returns student id
-    alert(doc.pfname);
-    Meteor.call('insertStudent', studentObj, detailsObj, function(error, sId){
+      Meteor.call('insertStudent', studentObj, detailsObj, function(error, sId){
       if(error){
         // TODO: Do some real error checking
         console.log(error.reason);
         return;
       }
       
-      // Use student id to insert into parent, returns parent id
-      Meteor.call('insertParent',parentObj,function(error, pId){
-        if(error){
-          //error checking
-            return;
-        }
+        // Use student id to insert into parent, returns parent id
+        Meteor.call('insertParent',parentObj,function(error, pId){
+            if(error){
+            //error checking
+                return;
+            }
 
-      });
+
+        });
     });
 
     //clear all html values
