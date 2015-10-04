@@ -1,0 +1,119 @@
+<template name="applicationForm">
+  <h2>Application Form</h2><br>
+
+  <div class="row">
+    <div class="col-md-12">
+      <form role="form">
+        <h3>Parent's Information</h3>
+        <!-- First name and last name -->
+        <div class="row">
+          
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="plname">Parent Last Name</label>
+              <input type="text" class="form-control" name="plname" id="plname"/>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="pfname">Parent First Name</label>
+              <input type="text" class="form-control" name="pfname"/>
+            </div>
+          </div>
+        </div>
+
+        <!-- Parent Address -->
+        <div class="form-group">
+          <label for="address">Street Address</label>
+          <input class="form-control" type="text" name="street" id="street"/>
+        </div>
+
+        <div class="form-group">
+          <label for="city">City</label>
+          <input class="form-control" type="text" name="city" id="city"/>
+        </div>
+
+        <div class="form-group">
+          <label for="state">State</label>
+          <input class="form-control" type="text" name="state" id="state"/>
+        </div>
+
+        <!-- Parents Email -->
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input class="form-control" type="email" name="email" id="email"/>
+        </div>
+
+        <!-- Parents phone number -->
+        <div class="form-group">
+          <label for="phone-number">Phone Number</label>
+          <input class="form-control" type="text" name="phone-number" id="phone-number" placeholder="(xxx)xxx-xxxx"/>
+        </div>
+
+        <h3>Child's Information</h3>
+        <!-- Student First and Last Name -->
+        <div class="form-group">
+          <lable for="lname">Child's Last Name</lable>
+          <input class="form-control" type="text" name="lname" id="lname" />
+        </div>
+
+        <div class="form-group">
+          <label for="fname">Child's First Name</label>
+          <input type="text" class="form-control" name="fname" id="fname"/>
+        </div>
+
+        <!-- Student DOB -->
+        <div class="form-group">
+          <label for='dob'>Date Of Birth</label>
+          <input class="form-control" type="text" name="DOB" id="dob" />
+        </div>
+
+
+
+        <h3>Details</h3>
+
+          <!--Requested start Date -->
+          <div class="form-group">
+              <label for="sdate">Desired Start Date</label>
+              <input class="form-control" type="text" name="sdate" id="sdate" />
+          </div>
+
+        <!-- Days -->
+        <div class="form-group">
+          <h4>Days</h4>
+
+          <div class="checkbox-inline"><label for="m"><input class="checkbox" type="checkbox" name="days" value="M" id="m" /> Monday</label></div>
+          <div class="checkbox-inline"><label for="t"><input class="checkbox" type="checkbox" name="days" value="T" id="t" /> Tuesday</label></div>
+          <div class="checkbox-inline"><label for="w"><input class="checkbox" type="checkbox" name="days" value="W" id="w" /> Wednesday</label></div>
+          <div class="checkbox-inline"><label for="th"><input class="checkbox" type="checkbox" name="days" value="TH" id="th" /> Thursday</label></div>
+          <div class="checkbox-inline"><label for="f"><input class="checkbox" type="checkbox" name="days" value="F" id="f" /> Friday</label></div>
+        </div>
+
+        <!-- Affiliation -->
+        <div class="form-group">
+          <h4>Affiliation</h4>
+
+          <div class="radio-inline"><label for="member"><input class="radio" type="radio" name="type" value="MEMBER" id="member"> Child of Employee</label></div>
+          <div class="radio-inline"><label for="existing"><input class="radio" type="radio" name="type" value="EXISTING" id="existing"> Current Family</label></div>
+          <div class="radio-inline"><label for="regular"><input class="radio" type="radio" name="type" value="REGULAR" id="regular"> New Family</label></div>
+        </div>
+
+        <!-- Group -->
+        <div class="form-group">
+          <h4>Group</h4>
+
+          <div class="radio-inline"><label for="infant"><input class="radio" type="radio" name="group" value="INFANT" id="infant"> Infant</label></div>
+          <div class="radio-inline"><label for="toddler"><input class="radio" type="radio" name="group" value="TODDLER" id="toddler"> Toddler</label></div>
+        </div>
+
+        <!-- Details -->
+        <label for="details">Details</label>
+        <textarea class="form-control" name="details" id="details"></textarea>
+        
+        <br />
+        <input class="btn btn-primary" type="submit" value="Submit Application" />
+      </form>
+    </div>
+  </div>
+</template>

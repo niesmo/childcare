@@ -1,0 +1,18 @@
+<template name="applicationDetail">
+  <dl class="dl-horizontal">
+      <dt>First Name</dt><dd>{{firstName}}</dd>
+      <dt>Last Name</dt><dd>{{lastName}}</dd>
+      <dt>Date of Birth</dt><dd>{{dateOfBirth}}</dd>
+      <dt>Class</dt><dd>{{group}}</dd>
+      <dt>Affiliation</dt><dd>{{type}}</dd>
+      {{#each parent _id}}
+      <dt>Parents</dt><dd>{{lastName}}</dd>
+      <dt>Address</dt><dd>{{address}}</dd>
+      <dt>Phone Number</dt><dd>{{phoneNumber}}</dd>
+      <dt>Email</dt><dd>{{email}}</dd>
+      {{/each}}
+      <dt>Days of Week Requested</dt><dd>{{DOW_WAITING}}</dd>
+  </dl>
+  <button class="btn btn-success accept" >Accept and add to Waitlist</button>
+  <button class="btn btn-danger decline">Decline Application</button>
+</template>

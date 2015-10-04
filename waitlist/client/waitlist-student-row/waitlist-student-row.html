@@ -1,0 +1,12 @@
+<template name="waitlistStudentRow">
+
+  <tr>
+      <td><button class="glyphicon glyphicon-pencil"></button></td>
+      <td>{{lastName}}</td>
+    <td>{{firstName}}</td>
+    <td>{{dateOfBirth.toDateString}}</td>
+    <td>{{DOW_WAITING}}</td>
+    <td>{{details}}</td>
+    <td><button class="btn btn-danger remove">Delete</button></td>
+  </tr>
+</template>
