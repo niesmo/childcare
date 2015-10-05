@@ -13,8 +13,26 @@ Meteor.methods({
       description: task.description,
       type: task.type,
       createdBy: Meteor.user().emails[0].address,
-      createdAt: date
+      createdAt: date,
+	  isCompleted: "FALSE",
+	  //completedBy: "",
+	  //completedAt: date
     });
+  },
+  completeTask: function(taskId){
+  // Check the different variables passed
+    // Use the Check Package https://atmospherejs.com/meteor/check
+	var compDate=new Date();
+	compDate=compDate.toString('hh:mm MM-DD-YYYY');
+	console.log(compDate);
+	//created by
+    return ActionItems.update(taskId,({
+        $set: { completedBy:Meteor.user().emails[0].address}
+		},{
+		$set: { completedAt:compDate}
+		},{
+		$set: { isCompleted:"TRUE"}
+		}));
   },
 
 

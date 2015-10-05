@@ -4,16 +4,19 @@ Template.actionItems.onCreated(function(){
 
 Template.actionItems.helpers({
   infantTasks: function () {
-    return ActionItems.find({type:"INFANT"}, {sort: {createdAt: 1}});
+    return ActionItems.find({type:"INFANT",isCompleted:"FALSE"}, {sort: {createdAt: 1}});
   },
   toddlerTasks: function () {
-    return ActionItems.find({type:"TODDLER"}, {sort: {createdAt: 1}});
+    return ActionItems.find({type:"TODDLER",isCompleted:"FALSE"}, {sort: {createdAt: 1}});
+  },
+  completedTasks: function () {
+    return ActionItems.find({isCompleted:"TRUE"}, {sort: {createdAt: -1}});
   },
   selectedActionItem: function(){
     var id = Session.get('selectedActionItem');
     if(!id) return undefined;
 
-    var actionItem = ActionItems.findOne({Title: id});
+    var actionItem = ActionItems.findOne({title: id});
     return actionItem;
   }
 });
@@ -70,5 +73,9 @@ Template.actionItems.events({
 
     // set the session value to that student
     Session.set('selectedActionItem', id);
+  },
+  'click button.action-item': function (e, tpl) {
+	console.log(this._id);
+    Meteor.call("completeTask",this._id);
   }
 });

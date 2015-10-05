@@ -33,9 +33,10 @@
   <tbody>
 	{{#each infantTasks}}
 		<tr>
-			<td>{{description}}</td>
+			<td id="{{title}}" class="action-item">{{description}}</td>
 			<td>{{createdBy}}</td>
 			<td>{{createdAt}}</td>
+			<td><button type="button" class="action-item">Complete Action</button></td>
 		</tr>
 	{{/each}}
   </tbody></table>
@@ -45,9 +46,24 @@
   <tbody>
 	{{#each toddlerTasks}}
 		<tr>
-			<td id="{{Title}}" class="action-item">{{description}}</td>
+			<td id="{{title}}" class="action-item">{{description}}</td>
 			<td>{{createdBy}}</td>
 			<td>{{createdAt}}</td>
+			<td><button type="button" class="action-item">Complete Action</button></td>
+		</tr>
+	{{/each}}
+  </tbody></table>
+  
+  <h4>Completed</h4>
+  <table class="table table-striped">
+  <tbody>
+	{{#each completedTasks}}
+		<tr>
+			<td id="{{title}}" class="action-item">{{description}}</td>
+			<td>{{createdBy}}</td>
+			<td>{{createdAt}}</td>
+			<td>{{completedBy}}</td>
+			<td>{{completedAt}}</td>
 		</tr>
 	{{/each}}
   </tbody></table>
