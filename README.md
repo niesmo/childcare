@@ -18,3 +18,8 @@ This is the repo for our capstone project
 	<li><a href="https://atmospherejs.com/meteor/http">http</a></li>
 </ul>
 <p>There are more packages that are added to the project, you can see a list of them in the .meteor/packages file</p>
+
+# Meteor Account Information
+username: olb
+email: admin@olb.com
+password: *********
