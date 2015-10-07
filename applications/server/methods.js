@@ -16,6 +16,14 @@ Meteor.methods({
         "You must select at least one day of the week.");
     }
 
+    // check if the start date is not before today
+    if(new Date(application.startDate) < new Date()){
+      throw new Meteor.error("Start date in the past",
+        "You must select a start date in the future");
+    }
+
+
+    var imageId = Random.id();
     // TODO: Blocks the Thread
     // insert the parent
     var parentId = Parents.insert({
@@ -24,6 +32,7 @@ Meteor.methods({
       address: application.parent.address.street + " " + application.parent.address.city + " " + application.parent.address.state,
       phoneNumber: application.parent.phone,
       email: application.parent.email,
+      image: "http://api.adorable.io/avatars/100/"+ imageId +".png",
       createdAt: new Date()
     });
 
@@ -37,7 +46,9 @@ Meteor.methods({
       });
     });
 
-    // inser the student
+    imageId = Random.id();
+
+    // insert the student
     var studentId = Students.insert({
       firstName: application.student.firstName,
       lastName: application.student.lastName,
@@ -47,6 +58,7 @@ Meteor.methods({
       type: application.type.toUpperCase(),
       paidApplicationFee: false,
       daysRequested: days,
+      image: "http://api.adorable.io/avatars/100/"+ imageId +".png",
       createdAt: new Date()
     });
 
@@ -84,19 +96,16 @@ Meteor.methods({
     var order = 1;
     var lastInGroup = Students.findOne({status: "WAITLIST", group: student.group, type: student.type}, {sort: {order:-1}});
     if(lastInGroup){
-      console.log("1. First Last in group IF");
       order = lastInGroup.order + 1;
     }
     else{
       var where = {status: "WAITLIST", group: student.group};
       if(student.type === "EXISTING"){
-        console.log("2. Else and if Existing");
         where['type'] = "MEMBER";
       }
 
       var lastOtherGroup = Students.findOne(where, {sort: {order:-1}});
       if(lastOtherGroup){
-        console.log(lastOtherGroup);
         order = lastOtherGroup.order + 1;
       }
     }
