@@ -11,4 +11,10 @@ Template.navbar.events({
     Meteor.logout();
     Router.go('signin');
   }
+
+  /*
+  $:("#newPasswordButton").click(function(){
+    $("#profileModal").modal("hide");
+  })
+*/
 });
