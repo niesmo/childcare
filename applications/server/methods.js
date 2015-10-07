@@ -65,6 +65,55 @@ Meteor.methods({
       studentParentId: studentParentId
     };
   },
+
+  /**
+   * This function will more an application from the APPLICATION status to a WAITLIST status
+   * 1a. change the status
+   * 1b. set the daysWaitlisted = daysRequested
+   * 1c. set the paidApplicationFee = true
+   * 2. set the order according the current list
+   * 3. update the orders of the applications affected
+   *  
+   * @param  {String} studentId Id of the student that is about to be moved from the application to waitlist
+   * @return {[type]}         [description]
+   */
+  'applicationAccepted': function(studentId){
+    var student = Students.findOne({_id: studentId});
+    
+    // find out what the order for this student should be
+    var order = 1;
+    var lastInGroup = Students.findOne({status: "WAITLIST", group: student.group, type: student.type}, {sort: {order:-1}});
+    if(lastInGroup){
+      console.log("1. First Last in group IF");
+      order = lastInGroup.order + 1;
+    }
+    else{
+      var where = {status: "WAITLIST", group: student.group};
+      if(student.type === "EXISTING"){
+        console.log("2. Else and if Existing");
+        where['type'] = "MEMBER";
+      }
+
+      var lastOtherGroup = Students.findOne(where, {sort: {order:-1}});
+      if(lastOtherGroup){
+        console.log(lastOtherGroup);
+        order = lastOtherGroup.order + 1;
+      }
+    }
+
+    // TODO: Change this to a better efficient way
+    var toBeIncremented = Students.find({status:"WAITLIST", group: student.group, order: {$gte: order}});
+    toBeIncremented.forEach(function (student) {
+      Students.update({_id: student._id}, {$inc: {order: 1}});
+    });
+
+    // THIS WAS NOT WORKING : IT WAS ONLY UPDATING THE LAST ELEMENT
+    // Students.update({status:"WAITLIST", group: student.group, order: {$gte: order}}, {$inc: {order:1}});
+
+    // update the student it self 
+    Students.update({_id: studentId}, {$set: {status: "WAITLIST", order: order, daysWaitlisted: student.daysRequested, paidApplicationFee: true, }});
+  },
+
   /**
    * [Insert into parent collection]
    * @param  {{parent object}} parent [object containting all required information of a parent containing variables below]
@@ -95,8 +144,8 @@ Meteor.methods({
    */
   'removeParent': function (id) {
     Parents.remove(id);
-
   },
+
   /**
    * [insert given data into student collection]
    * @param {{student object}} student [student object containing data for the following object variables]
@@ -138,6 +187,7 @@ Meteor.methods({
   'removeStudent': function (id) {
     Students.remove(id);
   },
+
   /**
    *Increments all student order greater than or equal to order passed
    * @param {{SimpleSchema.RegEx.Id}} id [id of student to increment
@@ -154,6 +204,7 @@ Meteor.methods({
   'addToWaitlist': function(id, order){
     Students.update({_id: id},{$set:{status:"WAITLIST", order:order}});
   },
+
   /**
    *[Adds student id and parent id to the studentParent collection]
    * @param  {{SimpleSchema.RegEx.Id}} studentId [id of student associated with parent]

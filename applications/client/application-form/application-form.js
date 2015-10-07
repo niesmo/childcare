@@ -61,11 +61,11 @@ Template.applicationForm.events({
  * @param  {[type]} err [description]
  * @return {[type]}     [description]
  */
-function createApplicationCallback(res, err){
+function createApplicationCallback(err, res){
   if(err){
     // Do some real error checking and let the use know what happned
-    alert("Something went wrong.");
     console.log(err);
+    alert("Something went wrong.");
   }
 
   if(res.status === 201){
