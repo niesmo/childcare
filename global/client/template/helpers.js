@@ -4,7 +4,7 @@
  * @return {String}     Lower case of the passed in string
  */
 Template.registerHelper('toLower', function (str) {
-    return str.toLowerCase();
+    return (str || "").toLowerCase();
 });
 
 /**

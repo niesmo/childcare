@@ -38,7 +38,7 @@
 		<tr>
 			<td id="ai{{_id}}" class="action-item">{{description}}</td>
 			<td>{{getCreatedByUser _id}}</td>
-			<td>{{createdAt}}</td>
+			<td>{{formatDate createdAt "MMM DD, YYYY"}}</td>
 			<td><button type="button" class="btn btn-success btn-circular btn-sm action-item"><span class="glyphicon glyphicon-check"></span></button></td>
 		</tr>
 	{{/each}}
@@ -51,7 +51,7 @@
 		<tr>
 			<td id="ai{{_id}}" class="action-item">{{description}}</td>
 			<td>{{getCreatedByUser _id}}</td>
-			<td>{{createdAt}}</td>
+			<td>{{formatDate createdAt "MMM DD, YYYY"}}</td>
 			<td><button type="button" class="btn btn-success btn-circular btn-sm action-item"><span class="glyphicon glyphicon-check"></span></button></td>
 		</tr>
 	{{/each}}
@@ -64,10 +64,10 @@
 		<tr>
 			<td id="ai{{_id}}" class="action-item">{{description}}</td>
 			<td>{{getCreatedByUser _id}}</td>
-			<td>{{createdAt}}</td>
-			<td>{{type}}</td>
+			<td>{{formatDate createdAt "MMM DD, YYYY"}}</td>
+			<td class="capitalize">{{toLower type}}</td>
 			<td>{{getCompletedByUser _id}}</td>
-			<td>{{completedAt}}</td>
+			<td>{{formatDate completedAt "MMM DD, YYYY"}}</td>
 		</tr>
 	{{/each}}
   </tbody></table>
