@@ -144,6 +144,11 @@ Schemas.Student = new SimpleSchema({
     optional: true
   },
 
+  daysRequested: {
+    type: [Schemas.Day],
+    label: "Days Requested",
+  },
+
   classId:{
     type: SimpleSchema.RegEx.Id,
     optional: true,
