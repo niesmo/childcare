@@ -30,13 +30,9 @@ Meteor.methods({
 	check(taskId, String);
 	var compDate=new Date();
 	//created by
-    return ActionItems.update(taskId,({
-        $set: { completedBy:Meteor.userId()}
-		},{
-		$set: { completedAt:compDate}
-		},{
-		$set: { isCompleted:true}
-		}));
+    return ActionItems.update(taskId,{
+        $set: { completedBy:Meteor.userId(), completedAt:compDate, isCompleted:true}
+		});
   },
 
 
