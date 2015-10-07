@@ -37,7 +37,6 @@ Template.actionItems.helpers({
     var actionItem = ActionItems.findOne({_id: actionItemID});
     var completedByUser= Meteor.users.findOne(actionItem.completedBy);
     if(completedByUser){
-      console.log(completedByUser);
       return completedByUser.emails[0].address;
     }
   }
