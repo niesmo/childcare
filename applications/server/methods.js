@@ -74,8 +74,7 @@ Meteor.methods({
   },
   /**
    *Increments all student order greater than or equal to order passed
-   * @param {{string}} id [id of student to increment
-   * @param {{int}}
+   * @param {{SimpleSchema.RegEx.Id}} id [id of student to increment
    */
   'incrementOrder': function (id) {
     Students.update({_id:id},{$inc:{order:1}});

@@ -1,3 +1,20 @@
+Template.waitlistStudentRow.onCreated(function(){
+  Meteor.subscribe("waitlistedStudents");
+
+});
+
+Template.waitlistStudentRow.helpers({
+
+  /**
+   *
+   * @param {{SimpleSchema.RegEx.Id}} id [id of student to get days of week requested]
+   */
+  days: function(id){
+    var student = Students.findOne({_id:id});
+    return student.daysWaitlisted;
+  }
+
+});
 Template.waitlistStudentRow.events({
   /**
    *
