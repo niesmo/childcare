@@ -25,7 +25,8 @@ Schemas.Parent = new SimpleSchema({
 
   dateOfBirth: {
     type: Date,
-    label: "Date of Birth"
+    label: "Date of Birth",
+    optional:true
   },
 
   image:{

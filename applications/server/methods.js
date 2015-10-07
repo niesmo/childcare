@@ -13,7 +13,7 @@ Meteor.methods({
 
     var id=Parents.insert({
       lastName: parent.plname,
-      firstName: parent.fname,
+      firstName: parent.pfname,
       email: parent.email,
       phoneNumber: parent.phone,
       address: parent.address,
@@ -95,6 +95,6 @@ Meteor.methods({
    * @returns {{SimpleSchema.RegEx.Id}} id [id of value insterted]
     */
   'insertStudentParent': function(studentId, parentId){
-    StudentParent.insert({studentId:studentId, parentId:parentId});
+    StudentParents.insert({studentId:studentId, parentId:parentId});
   }
 });
