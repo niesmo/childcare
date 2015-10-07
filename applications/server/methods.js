@@ -57,6 +57,7 @@ Meteor.methods({
       status: student.status,
       type: details.type,
       group: student.group,
+      paidApplicationFee:details.paid,
       createdAt: new Date() // current time
     });
 
@@ -71,14 +72,22 @@ Meteor.methods({
   'removeStudent': function (id) {
     Students.remove(id);
   },
+  /**
+   *Increments all student order greater than or equal to order passed
+   * @param {{string}} id [id of student to increment
+   * @param {{int}}
+   */
+  'incrementOrder': function (id) {
+    Students.update({_id:id},{$inc:{order:1}});
+  },
 
   /**
    * [description]
    * @param  {[SimpleSchema.RegEx.Id]} id [id of student to be added to waitlist]
    * @return {[type]}    [description]
    */
-  'addToWaitlist': function(id){
-    Students.update({_id: id},{$set:{status:"WAITLIST"}});
+  'addToWaitlist': function(id, order){
+    Students.update({_id: id},{$set:{status:"WAITLIST", order:order}});
   },
   /**
    *[Adds student id and parent id to the studentParent collection]
@@ -86,7 +95,7 @@ Meteor.methods({
    * @param {{SimpleSchema.RegEx.Id}} parentId  [id of parent associated with student]
    * @returns {{SimpleSchema.RegEx.Id}} id [id of value insterted]
     */
-  'addStudentParent': function(studentId, parentId){
-    StudentParent.insert({studentId:studentId, parentId:parentId, createdAt: new Date()});
+  'insertStudentParent': function(studentId, parentId){
+    StudentParent.insert({studentId:studentId, parentId:parentId});
   }
 });

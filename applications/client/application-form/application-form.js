@@ -46,25 +46,30 @@ Template.applicationForm.events({
     var type = $(event.target).find('input:radio[name=type]:checked').val();
     var details = event.target.details.value;
     var group = $(event.target).find('input:radio[name=group]:checked').val();
-    var studentObj = ({lname:lname},{fname:fname},{DOB:DOB},{group:group}, {status:"APPLICATION"});
-    var parentObj=({plname:plname},{pfname:pfname},{address:address},{email:email},{phone:phone});
-    var detailsObj=({days:days}, {type:type}, {details:details},{requestedStart:requestedStart});
+    var studentObj = ({lname:lname,fname:fname,DOB:DOB,group:group, status:"APPLICATION"});
+    var parentObj=({plname:plname,pfname:pfname,address:address,email:email,phone:phone});
+    var detailsObj=({days:days, type:type, details:details,requestedStart:requestedStart,paid:false});
 
     //Inserts student, returns student id
       Meteor.call('insertStudent', studentObj, detailsObj, function(error, sId){
       if(error){
         // TODO: Do some real error checking
-        console.log(error.reason);
+        alert(error.reason);
         return;
       }
       
-        // Use student id to insert into parent, returns parent id
+        // Insert into parent collection, returns parent id
         Meteor.call('insertParent',parentObj,function(error, pId){
             if(error){
             //error checking
                 return;
             }
-
+            Meteor.call('insertStudentParent', sId, pId, function(error, id){
+                if(error){
+                    //TODO: Error checking
+                    return;
+                }
+            });
 
         });
     });

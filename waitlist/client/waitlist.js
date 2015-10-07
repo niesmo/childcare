@@ -10,7 +10,7 @@ Template.waitlist.helpers({
    * @returns {*}
    */
   infants: function () {
-    return Students.find({status:"WAITLIST", group:"INFANT"},{sort: {createdAt: 1}});
+    return Students.find({status:"WAITLIST", group:"INFANT"},{sort: {order: 1}});
   },
   /**
    * Returns all students where status="WAITLIST" and group="TODDLER"
@@ -18,6 +18,6 @@ Template.waitlist.helpers({
    * @returns {*}
    */
   toddlers: function () {
-    return Students.find({status:"WAITLIST", group:"TODDLER"},{sort: {createdAt: 1}});
+    return Students.find({status:"WAITLIST", group:"TODDLER"},{sort: {order: 1}});
   }
 });
