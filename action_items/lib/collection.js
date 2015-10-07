@@ -38,19 +38,51 @@ Schemas.ActionItem = new SimpleSchema({
         label: "Priority",
         optional: true
     },
+	
+	/**
+     * Type of the Action Item. Can take the values of:
+     * 1. TODDLER
+     * 2. INFANT
+     * 3. OTHER
+     */
+    type: {
+        type: String,
+        label: "Type"
+    },
+
 
     createdBy: {
-        type: SimpleSchema.RegEx.Id
+        type: SimpleSchema.RegEx.Id,
+		label: "Created By"
+    },
+	
+	createdAt: {
+		type: Date,
+		label: "Created At"
+	},
+	
+		/**
+     * Boolean of whether action item is completed or not. Can take the values of:
+     * 1. TRUE
+     * 2. FALSE
+     */
+	isCompleted: {
+        type: Boolean,
+		label: "Is Completed"
     },
 
     completedBy: {
         type: SimpleSchema.RegEx.Id,
+		label: "Completed By",
         optional: true
+		
     },
-
-    createdAt: {
-        type: Date
-    },
+	
+    completedAt: {
+        type: Date,
+		label: "Completed At",
+		optional: true
+    }
 });
 
 ActionItems.attachSchema(Schemas.ActionItem)
