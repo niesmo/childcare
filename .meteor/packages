@@ -8,6 +8,9 @@ aldeed:collection2
 twbs:bootstrap
 iron:router
 accounts-password
+aldeed:autoform
+http
+useraccounts:iron-routing
 standard-minifiers
 meteor-base
 mobile-experience
@@ -23,3 +26,4 @@ ejson
 spacebars
 check
 reywood:publish-composite
+momentjs:moment

@@ -1,0 +1,4 @@
+*.sublime-project
+*.sublime-workspace
+.idea/*
+config/development/settings.json

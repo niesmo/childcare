@@ -1,0 +1,15 @@
+<template name="studentDetail">
+  <h3>Student Detail</h3>
+  <dl class="dl-horizontal">
+    <dt>Name</dt><dd class="student-name">{{firstName}} {{lastName}}</dd>
+    <dt>Age</dt><dd>{{getAge dateOfBirth}}</dd>
+    <dt class="parent-row">Parents</dt>
+    <dd>
+      <ul class="list-inline">
+        {{#each parents}}
+          <li><img class="parent-avatar-thumbnail" src="{{image}}" alt="parent" /></li>
+        {{/each}}
+      </ul>
+    </dd>
+  </dl>
+</template>

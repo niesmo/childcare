@@ -1,0 +1,5 @@
+img.student-avatar{
+  border-radius: 50%;
+  border: gray solid 2px;
+  cursor: pointer;
+}

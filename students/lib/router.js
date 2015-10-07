@@ -1,3 +1,3 @@
-Router.route('/application',{
+Router.route('/students',{
   layoutTemplate: 'layout'
 });

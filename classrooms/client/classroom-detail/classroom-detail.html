@@ -1,0 +1,22 @@
+<template name="classroomDetail">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Student</th>
+        {{#each daysOfWeek}}
+          <th>{{this}}</th>
+        {{/each}}
+      </tr>
+    </thead>
+    <tbody>
+      {{#each student in students}}
+        <tr>
+          <td>{{student.firstName}}</td>
+          {{#each daysOfWeek}}
+            <td class="{{hasClass student}}"></td>
+          {{/each}}
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</template>

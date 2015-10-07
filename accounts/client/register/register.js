@@ -11,16 +11,16 @@ Template.register.events({
     // checking to see if the passwords are the same
     if(password !== passwordConfirm){
       // TODO: add actual error handling here
-      // dont just alert the error
-      alert("Passwords dont matach");
+      // do not just alert the error
+      alert("Passwords do not match");
       return;
     }
-    Accounts.createUser({
-      email: email,
-      password: password
-    }, accountsErrorHandler);
+
+    // call the method to create the user
+    Meteor.call("registerUser", email, password, accountsErrorHandler);
   }
 });
+
 
 /**
  * This function will be called when a new user is created
@@ -28,7 +28,7 @@ Template.register.events({
  * @param  {[type]} error [description]
  * @return {[type]}       [description]
  */
-function accountsErrorHandler(error){
+function accountsErrorHandler(error, result){
   if(error){
     console.log(error);
   }
@@ -36,3 +36,4 @@ function accountsErrorHandler(error){
     Router.go('home');
   }
 }
+
