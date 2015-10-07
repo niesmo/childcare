@@ -11,11 +11,11 @@
 
 
 
-/*
+
 Router.plugin('ensureSignedIn', {
     except: ['signin']
 });
-*/
+
 Router.configure({
   layoutTemplate: 'defaultLayout',
   notFoundTemplate: 'notFound'
