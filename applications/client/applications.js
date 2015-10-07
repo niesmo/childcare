@@ -1,13 +1,13 @@
-Template.application.onCreated(function(){
+Template.applications.onCreated(function(){
   Meteor.subscribe("applicationStudents");
 });
 
-Template.application.helpers({
+Template.applications.helpers({
   /**
    * Returns all students with status equal to Application
    * @returns {*}
    */
-  applicant: function () {
+  applicants: function () {
     return Students.find({status: "APPLICATION"},{sort: {createdAt: 1}});
   }
 });

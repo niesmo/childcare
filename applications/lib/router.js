@@ -1,7 +1,7 @@
 /**
  * The router for application page
  */
-Router.route('/application',{
+Router.route('/applications',{
   layoutTemplate: 'layout'
 });
 

@@ -10,74 +10,130 @@
           
           <div class="col-md-4">
             <div class="form-group">
-              <label for="plname">Parent Last Name</label>
-              <input type="text" class="form-control" name="plname" id="plname" required>
+              <label for="pfname">First Name</label>
+              <div class="input-group">
+                <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                <input type="text" class="form-control" name="pfname" required>
+              </div>
             </div>
           </div>
 
           <div class="col-md-4">
             <div class="form-group">
-              <label for="pfname">Parent First Name</label>
-              <input type="text" class="form-control" name="pfname" required>
+              <label for="plname">Last Name</label>
+              <div class="input-group">
+                <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                <input type="text" class="form-control" name="plname" id="plname" required>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Parent Address -->
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="address">Street Address</label>
+              <div class="input-group">
+                <span class="input-group-addon"><span class="glyphicon glyphicon-map-marker"></span></span>
+                <input class="form-control" type="text" name="street" id="street" required>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="city">City</label>
+              <input class="form-control" type="text" name="city" id="city" required>
+            </div>
+          </div>
+
+          <div class="col-md-2">
+            <div class="form-group">
+              <label for="state">State</label>
+              <input class="form-control" type="text" name="state" id="state" required>
             </div>
           </div>
         </div>
 
-        <!-- Parent Address -->
-        <div class="form-group">
-          <label for="address">Street Address</label>
-          <input class="form-control" type="text" name="street" id="street" required>
-        </div>
+        <div class="row">
+          <!-- Parents Email -->
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <div class="input-group">
+                <span class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></span>
+                <input class="form-control" type="email" name="email" id="email" required>
+              </div>
+            </div>
+          </div>
 
-        <div class="form-group">
-          <label for="city">City</label>
-          <input class="form-control" type="text" name="city" id="city" required>
-        </div>
-
-        <div class="form-group">
-          <label for="state">State</label>
-          <input class="form-control" type="text" name="state" id="state" required>
-        </div>
-
-        <!-- Parents Email -->
-        <div class="form-group">
-          <label for="email">Email Address</label>
-          <input class="form-control" type="email" name="email" id="email" required>
-        </div>
-
-        <!-- Parents phone number -->
-        <div class="form-group">
-          <label for="phone-number">Phone Number</label>
-          <input class="form-control" type="text" name="phone-number" id="phone-number" placeholder="(xxx)xxx-xxxx" required>
+          <!-- Parents phone number -->
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="phone-number">Phone Number</label>
+              <div class="input-group">
+                <span class="input-group-addon"><span class="glyphicon glyphicon-earphone"></span></span>
+                <input class="form-control" type="text" name="phone-number" id="phone-number" placeholder="(xxx)xxx-xxxx" required>
+              </div>
+            </div>
+          </div>
         </div>
 
         <h3>Child's Information</h3>
         <!-- Student First and Last Name -->
-        <div class="form-group">
-          <lable for="lname">Child's Last Name</lable>
-          <input class="form-control" type="text" name="lname" id="lname" required>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="fname">Child's First Name</label>
+              <div class="input-group">
+                <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                <input type="text" class="form-control" name="fname" id="fname" required>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="form-group">
+              <lable for="lname">Child's Last Name</lable>
+              <div class="input-group">
+                <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                <input class="form-control" type="text" name="lname" id="lname" required>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div class="form-group">
-          <label for="fname">Child's First Name</label>
-          <input type="text" class="form-control" name="fname" id="fname" required>
-        </div>
-
-        <!-- Student DOB -->
-        <div class="form-group">
-          <label for='dob'>Date Of Birth</label>
-          <input class="form-control" type="text" name="DOB" id="dob" required>
+        <div class="row">
+          <!-- Student DOB -->
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for='dob'>Date Of Birth</label>
+              <div class="input-group">
+                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                <input class="form-control" type="date" name="dob" id="dob" required>
+              </div>
+            </div>
+          </div>
         </div>
 
 
 
         <h3>Details</h3>
 
+        <div class="row">
           <!--Requested start Date -->
-          <div class="form-group">
+          <div class="col-md-4">
+            <div class="form-group">
               <label for="sdate">Desired Start Date</label>
-              <input class="form-control" type="text" name="sdate" id="sdate" required>
+              <div class="input-group">
+                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                <input class="form-control" type="date" name="sdate" id="sdate" required>
+              </div>
+            </div>
           </div>
+        </div>
 
         <!-- Days -->
         <div class="form-group">
@@ -94,25 +150,30 @@
         <div class="form-group">
           <h4>Affiliation</h4>
 
-          <div class="radio-inline"><label for="member"><input class="radio" type="radio" name="type" value="MEMBER" id="member"> Child of Employee</label></div>
-          <div class="radio-inline"><label for="existing"><input class="radio" type="radio" name="type" value="EXISTING" id="existing"> Current Family</label></div>
-          <div class="radio-inline"><label for="regular"><input class="radio" type="radio" name="type" value="REGULAR" id="regular"> New Family</label></div>
+          <div class="radio-inline"><label for="member"><input class="radio" type="radio" name="type" value="member" id="member"> Child of Employee</label></div>
+          <div class="radio-inline"><label for="existing"><input class="radio" type="radio" name="type" value="existing" id="existing"> Current Family</label></div>
+          <div class="radio-inline"><label for="regular"><input class="radio" type="radio" name="type" value="regular" id="regular"> New Family</label></div>
         </div>
 
         <!-- Group -->
         <div class="form-group">
           <h4>Group</h4>
 
-          <div class="radio-inline"><label for="infant"><input class="radio" type="radio" name="group" value="INFANT" id="infant"> Infant</label></div>
-          <div class="radio-inline"><label for="toddler"><input class="radio" type="radio" name="group" value="TODDLER" id="toddler"> Toddler</label></div>
+          <div class="radio-inline"><label for="infant"><input class="radio" type="radio" name="group" value="infant" id="infant"> Infant</label></div>
+          <div class="radio-inline"><label for="toddler"><input class="radio" type="radio" name="group" value="toddler" id="toddler"> Toddler</label></div>
         </div>
 
         <!-- Details -->
-        <label for="details">Details</label>
-        <textarea class="form-control" name="details" id="details"></textarea>
+        <div class="row">
+          <div class="col-md-6">
+            <label for="details">Details</label>
+            <textarea class="form-control" name="details" id="details"></textarea>
+          </div>
+        </div>
         
         <br />
         <input class="btn btn-primary" type="submit" value="Submit Application" />
+        <br /><br />
       </form>
     </div>
   </div>

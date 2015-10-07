@@ -8,7 +8,7 @@
         <dt>Affiliation</dt><dd>{{toLower type}}</dd>
         <dt>Days Requested</dt><dd>
           <ul class="list-unstyled list-inline">
-            {{#each sortedDays daysWaitlisted}}
+            {{#each sortedDays daysRequested}}
               <li class="{{flexibleColorClass}}">{{toLower day}}</li>
             {{/each}}
           </ul>
