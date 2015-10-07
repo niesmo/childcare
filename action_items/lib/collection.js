@@ -50,31 +50,37 @@ Schemas.ActionItem = new SimpleSchema({
         label: "Type"
     },
 
-	/**
+
+    createdBy: {
+        type: SimpleSchema.RegEx.Id,
+		label: "Created By"
+    },
+	
+	createdAt: {
+		type: Date,
+		label: "Created At"
+	},
+	
+		/**
      * Boolean of whether action item is completed or not. Can take the values of:
      * 1. TRUE
      * 2. FALSE
      */
-    createdBy: {
-        type: SimpleSchema.RegEx.Id
-    },
-	
-	createdAt: {
-		type: Date
-	},
-	
 	isCompleted: {
-        type: String,
-		label: "IsCompleted"
+        type: Boolean,
+		label: "Is Completed"
     },
 
     completedBy: {
         type: SimpleSchema.RegEx.Id,
+		label: "Completed By",
         optional: true
+		
     },
-
+	
     completedAt: {
         type: Date,
+		label: "Completed At",
 		optional: true
     }
 });

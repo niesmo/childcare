@@ -18,7 +18,7 @@
 
       <!-- Task Description -->
       <div class="form-group">
-		<textarea id="title" class="form-control" placeholder="Title"></textarea> 
+		<textarea id="title" class="form-control" placeholder="Title"></textarea>
         <textarea id="description" class="form-control" placeholder="Description"></textarea>  
       </div>
 
@@ -33,8 +33,8 @@
   <tbody>
 	{{#each infantTasks}}
 		<tr>
-			<td id="{{title}}" class="action-item">{{description}}</td>
-			<td>{{createdBy}}</td>
+			<td id="ai{{_id}}" class="action-item">{{description}}</td>
+			<td>{{getCreatedByUser _id}}</td>
 			<td>{{createdAt}}</td>
 			<td><button type="button" class="action-item">Complete Action</button></td>
 		</tr>
@@ -46,8 +46,8 @@
   <tbody>
 	{{#each toddlerTasks}}
 		<tr>
-			<td id="{{title}}" class="action-item">{{description}}</td>
-			<td>{{createdBy}}</td>
+			<td id="ai{{_id}}" class="action-item">{{description}}</td>
+			<td>{{getCreatedByUser _id}}</td>
 			<td>{{createdAt}}</td>
 			<td><button type="button" class="action-item">Complete Action</button></td>
 		</tr>
@@ -59,10 +59,11 @@
   <tbody>
 	{{#each completedTasks}}
 		<tr>
-			<td id="{{title}}" class="action-item">{{description}}</td>
-			<td>{{createdBy}}</td>
+			<td id="ai{{_id}}" class="action-item">{{description}}</td>
+			<td>{{getCreatedByUser _id}}</td>
 			<td>{{createdAt}}</td>
-			<td>{{completedBy}}</td>
+			<td>{{type}}</td>
+			<td>{{getCompletedByUser _id}}</td>
 			<td>{{completedAt}}</td>
 		</tr>
 	{{/each}}

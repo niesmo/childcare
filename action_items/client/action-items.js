@@ -4,20 +4,34 @@ Template.actionItems.onCreated(function(){
 
 Template.actionItems.helpers({
   infantTasks: function () {
-    return ActionItems.find({type:"INFANT",isCompleted:"FALSE"}, {sort: {createdAt: 1}});
+    return ActionItems.find({type:"INFANT",isCompleted:false}, {sort: {createdAt: 1}});
   },
   toddlerTasks: function () {
-    return ActionItems.find({type:"TODDLER",isCompleted:"FALSE"}, {sort: {createdAt: 1}});
+    return ActionItems.find({type:"TODDLER",isCompleted:false}, {sort: {createdAt: 1}});
   },
   completedTasks: function () {
-    return ActionItems.find({isCompleted:"TRUE"}, {sort: {createdAt: -1}});
+    return ActionItems.find({isCompleted:true}, {sort: {createdAt: -1}});
   },
-  selectedActionItem: function(){
+  selectedActionItem: function (){
     var id = Session.get('selectedActionItem');
+	//remove ai from id, which is there so it doesnt start with numbers
+	id=id.substring(2);
     if(!id) return undefined;
-
-    var actionItem = ActionItems.findOne({title: id});
+    var actionItem = ActionItems.findOne({_id: id});
+	console.log(id);
     return actionItem;
+  },
+  getCreatedByUser: function(actionItemID){
+    if(!actionItemID) return undefined;
+    var actionItem = ActionItems.findOne({_id: actionItemID});
+	var createdByUser= Meteor.users.findOne(actionItem.createdBy);
+	return createdByUser.emails[0].address;
+  },
+  getCompletedByUser: function(actionItemID){
+    if(!actionItemID) return undefined;
+    var actionItem = ActionItems.findOne({_id: actionItemID});
+	var completedByUser= Meteor.users.findOne(actionItem.completedBy);
+	return completedByUser.emails[0].address;
   }
 });
 

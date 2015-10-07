@@ -6,15 +6,20 @@ Meteor.methods({
   addTask: function(task){
     // Check the different variables passed
     // Use the Check Package https://atmospherejs.com/meteor/check
+	check(task, {
+    title: String,
+    description: String,
+	type: String
+  });
 	var date=new Date();
-	date=date.toString('hh:mm MM-DD-YYYY');
     return ActionItems.insert({
       title: task.title,
       description: task.description,
       type: task.type,
-      createdBy: Meteor.user().emails[0].address,
+      createdBy: Meteor.userId(),
+	  createdByEmail: Meteor.user().emails[0].address,
       createdAt: date,
-	  isCompleted: "FALSE",
+	  isCompleted: false,
 	  //completedBy: "",
 	  //completedAt: date
     });
@@ -22,16 +27,15 @@ Meteor.methods({
   completeTask: function(taskId){
   // Check the different variables passed
     // Use the Check Package https://atmospherejs.com/meteor/check
+	check(taskId, String);
 	var compDate=new Date();
-	compDate=compDate.toString('hh:mm MM-DD-YYYY');
-	console.log(compDate);
 	//created by
     return ActionItems.update(taskId,({
-        $set: { completedBy:Meteor.user().emails[0].address}
+        $set: { completedBy:Meteor.userId()}
 		},{
 		$set: { completedAt:compDate}
 		},{
-		$set: { isCompleted:"TRUE"}
+		$set: { isCompleted:true}
 		}));
   },
 
