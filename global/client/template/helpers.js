@@ -3,7 +3,7 @@
  * @param  {String} str Any string passed
  * @return {String}     Lower case of the passed in string
  */
-Handlebars.registerHelper('toLower', function (str) {
+Template.registerHelper('toLower', function (str) {
     return str.toLowerCase();
 });
 
@@ -12,6 +12,10 @@ Handlebars.registerHelper('toLower', function (str) {
 * @param  {Integer}  index the integer passed in to the function (index of an array in this context)
 * @return {String}       Active if index is 0, "" otherwise
 */
-Handlebars.registerHelper('isActive', function(index){
+Template.registerHelper('isActive', function(index){
   return (index===0)?"active":"";
+});
+
+Template.registerHelper('formatDate', function(date, format){
+  return moment(date).format(format);
 });

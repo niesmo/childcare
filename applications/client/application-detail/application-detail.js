@@ -1,29 +1,52 @@
+// Utility functions
+function daysComparator(d1, d2){
+  var week = {
+    monday:0,
+    tuesday:1,
+    wednesday:2,
+    thursday:3,
+    friday:4,
+    saturday:5,
+    sunday:6
+  };
+
+  d1 = d1.day.toLowerCase();
+  d2 = d2.day.toLowerCase();
+
+  return week[d1] - week[d2];
+}
+
 Template.applicationDetail.onCreated(function(){
-  Meteor.subscribe("parents");
-  Meteor.subscribe("studentParents");
-  Meteor.subscribe("waitlistedStudents");
+  Meteor.subscribe("applicationStudentsFullInformation");
 });
 
 Template.applicationDetail.helpers({
   /**
-   * [Returns parent(s) with given id as their studentId]
-   * @param  {[SimpleSchema.RegEx.Id]} id [id of current student]
+   * Returns parent(s) with given id as their studentId
    * @return {[Parent]}    [ returns all parents with studentId=id]
    */
-  parent: function(id){
-    var matchedParents = [];
-    var parentCount=0;
-    var student_parents = StudentParents.find({studentId:id});
-    var parents = Parents.find();
-    parents.forEach(function(doc){
-      student_parents.forEach(function(doc2){
-        if(doc._id==doc2.parentId) {
-          matchedParents[parentCount] = doc;
-          parentCount++;
-        }
-      });
-    });
-    return matchedParents;
+  parents: function(){
+    var studentParents = StudentParents.find({studentId: this._id});
+    var parentIds = studentParents.map(function(v){return v.parentId;});
+    var parents = Parents.find({_id: {$in: parentIds}});
+    return parents;
+  },
+
+  /**
+   * This function sorts the days in the order of the week days
+   * @param  {Array} days The days that the applicants has requested
+   * @return {Array}      The sorted days in the same format
+   */
+  sortedDays: function(days){
+    return days.sort(daysComparator);
+  },
+
+  /**
+   * This function will return the appropriate class based on the flexibility of the day
+   * @return {String} The appropriate string to be set as the css class
+   */
+  flexibleColorClass: function(){
+    return this.flexible?"list-group-item-success": "list-group-item-warning";
   }
 });
 

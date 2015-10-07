@@ -19,27 +19,27 @@ Template.applicationForm.events({
 
     var phone = event.target['phone-number'].value;
     var email = event.target.email.value;
-      var days=[];
-      var i = 0;
+    var days=[];
+    var i = 0;
     if(event.target.m.checked){
-        days[i]={"day":"MONDAY"};
-        i++;
+      days[i]={"day":"MONDAY"};
+      i++;
     }
     if(event.target.t.checked){
-        days[i]={"day":"TUESDAY"};
-        i++;
+      days[i]={"day":"TUESDAY"};
+      i++;
     }
     if(event.target.w.checked){
-        days[i]={"day":"WEDNESDAY"};
-        i++;
+      days[i]={"day":"WEDNESDAY"};
+      i++;
     }
     if(event.target.th.checked){
-        days[i]={"day":"THURSDAY"};
-        i++;
+      days[i]={"day":"THURSDAY"};
+      i++;
     }
     if(event.target.f.checked){
-        days[i]={"day":"FRIDAY"};
-        i++;
+      days[i]={"day":"FRIDAY"};
+      i++;
     }
 
     var requestedStart = event.target.sdate.value;
@@ -51,27 +51,26 @@ Template.applicationForm.events({
     var detailsObj=({days:days, type:type, details:details,requestedStart:requestedStart,paid:false});
 
     //Inserts student, returns student id
-      Meteor.call('insertStudent', studentObj, detailsObj, function(error, sId){
+    Meteor.call('insertStudent', studentObj, detailsObj, function(error, sId){
       if(error){
         // TODO: Do some real error checking
         alert(error.reason);
         return;
       }
-      
-        // Insert into parent collection, returns parent id
-        Meteor.call('insertParent',parentObj,function(error, pId){
-            if(error){
-            //error checking
-                return;
-            }
-            Meteor.call('insertStudentParent', sId, pId, function(error, id){
-                if(error){
-                    //TODO: Error checking
-                    return;
-                }
-            });
 
+      // Insert into parent collection, returns parent id
+      Meteor.call('insertParent',parentObj,function(error, pId){
+        if(error){
+          //error checking
+          return;
+        }
+        Meteor.call('insertStudentParent', sId, pId, function(error, id){
+          if(error){
+            //TODO: Error checking
+            return;
+          }
         });
+      });
     });
 
     //clear all html values
@@ -86,5 +85,5 @@ Template.applicationForm.events({
     event.target.city.value = "";
     event.target.street.value="";
     event.target.state.value = "";
-  }
+	}
 });
