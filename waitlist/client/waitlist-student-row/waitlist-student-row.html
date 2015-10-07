@@ -1,0 +1,17 @@
+<template name="waitlistStudentRow">
+  <tr class="capitalize">
+    <td>{{order}}</td>
+    <td>{{firstName}} {{lastName}}</td>
+    <td>{{formatDate dateOfBirth "MMM DD, YYYY"}}</td>
+    <td>
+      <ul class="list-unstyled list-inline">
+      {{#each sortedDays daysWaitlisted}}
+        <li class="{{flexibleColorClass}}">{{toLower day}}</li>
+      {{/each}}
+      </ul>
+    </td>
+    <td>{{toLower type}}</td>
+    <td>{{details}}</td>
+    <td><button title="Remove from waitlist" class="btn btn-danger btn-circular remove"><span class="glyphicon glyphicon-trash"></span></button> <button title="Edit Item" class="btn btn-circular edit"><span class="glyphicon glyphicon-pencil"></span></button></td>
+  </tr>
+</template>

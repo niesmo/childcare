@@ -25,7 +25,13 @@ Schemas.Parent = new SimpleSchema({
 
   dateOfBirth: {
     type: Date,
-    label: "Date of Birth"
+    label: "Date of Birth",
+    optional:true
+  },
+
+  address:{
+    type: String,
+    label: "Address",
   },
 
   image:{
@@ -47,12 +53,6 @@ Schemas.Parent = new SimpleSchema({
     max:20
   },
 
-  isPrimary: {
-    type: Boolean,
-    label: "Is Primary",
-    optional: true
-  },
-
   createdAt: {
     type: Date,
     autoform:{
@@ -68,6 +68,12 @@ Schemas.StudentParent = new SimpleSchema({
   },
   studentId:{
     type: SimpleSchema.RegEx.Id
+  },
+
+  isPrimary: {
+    type: Boolean,
+    label: "Is Primary",
+    optional: true
   }
 });
 
