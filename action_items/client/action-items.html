@@ -1,10 +1,8 @@
 <template name="actionItems">
-<!--<h3> Action Items </h3>-->
-{{> actionItemDetail selectedActionItem}}
+  {{> actionItemDetail selectedActionItem}}
+  <hr />
 
-<hr />
-
-<div class="row">
+  <div class="row">
     <form class="new-task col-md-6">
       <!-- Task Type -->
       <div class="row">
@@ -16,17 +14,22 @@
         </div>
       </div>
 
+      <!-- Task Title -->
+      <div class="form-group">
+		    <textarea id="title" class="form-control" placeholder="Title"></textarea>
+        
+      </div>
+
       <!-- Task Description -->
       <div class="form-group">
-		<textarea id="title" class="form-control" placeholder="Title"></textarea>
-        <textarea id="description" class="form-control" placeholder="Description"></textarea>  
+        <textarea id="description" class="form-control" placeholder="Description"></textarea>
       </div>
 
       <input type="submit" class="btn btn-primary" value="Add Task" />
     </form>
   </div>
   
-<hr />
+  <hr />
 
   <h4>Infant</h4>
   <table class="table table-striped">
@@ -36,7 +39,7 @@
 			<td id="ai{{_id}}" class="action-item">{{description}}</td>
 			<td>{{getCreatedByUser _id}}</td>
 			<td>{{createdAt}}</td>
-			<td><button type="button" class="action-item">Complete Action</button></td>
+			<td><button type="button" class="btn btn-success btn-circular btn-sm action-item"><span class="glyphicon glyphicon-check"></span></button></td>
 		</tr>
 	{{/each}}
   </tbody></table>
@@ -49,7 +52,7 @@
 			<td id="ai{{_id}}" class="action-item">{{description}}</td>
 			<td>{{getCreatedByUser _id}}</td>
 			<td>{{createdAt}}</td>
-			<td><button type="button" class="action-item">Complete Action</button></td>
+			<td><button type="button" class="btn btn-success btn-circular btn-sm action-item"><span class="glyphicon glyphicon-check"></span></button></td>
 		</tr>
 	{{/each}}
   </tbody></table>

@@ -12,26 +12,34 @@ Template.actionItems.helpers({
   completedTasks: function () {
     return ActionItems.find({isCompleted:true}, {sort: {createdAt: -1}});
   },
+
   selectedActionItem: function (){
     var id = Session.get('selectedActionItem');
-	//remove ai from id, which is there so it doesnt start with numbers
-	id=id.substring(2);
-    if(!id) return undefined;
+    //remove ai from id, which is there so it doesnt start with numbers
+    if(!id) return ;
+    id=id.substring(2);
+
     var actionItem = ActionItems.findOne({_id: id});
-	console.log(id);
     return actionItem;
   },
+
   getCreatedByUser: function(actionItemID){
-    if(!actionItemID) return undefined;
+    if(!actionItemID) return;
+
     var actionItem = ActionItems.findOne({_id: actionItemID});
-	var createdByUser= Meteor.users.findOne(actionItem.createdBy);
-	return createdByUser.emails[0].address;
+    var createdByUser= Meteor.users.findOne(actionItem.createdBy);
+    return createdByUser.emails[0].address;
   },
+
   getCompletedByUser: function(actionItemID){
-    if(!actionItemID) return undefined;
+    if(!actionItemID) return ;
+
     var actionItem = ActionItems.findOne({_id: actionItemID});
-	var completedByUser= Meteor.users.findOne(actionItem.completedBy);
-	return completedByUser.emails[0].address;
+    var completedByUser= Meteor.users.findOne(actionItem.completedBy);
+    if(completedByUser){
+      console.log(completedByUser);
+      return completedByUser.emails[0].address;
+    }
   }
 });
 
@@ -81,6 +89,7 @@ Template.actionItems.events({
     // Clear form
     event.target.text.value = "";
   },
+  
   'click td.action-item': function (e, tpl) {
     // find the id of the selected student
     var id = e.target.id;
@@ -88,8 +97,9 @@ Template.actionItems.events({
     // set the session value to that student
     Session.set('selectedActionItem', id);
   },
+
   'click button.action-item': function (e, tpl) {
-	console.log(this._id);
+    console.log(this._id);
     Meteor.call("completeTask",this._id);
   }
 });
