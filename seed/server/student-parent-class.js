@@ -23,11 +23,19 @@ Meteor.startup(function(){
   }
 
   // add all the parents
-  // 
   var studentGroups = ['TODDLER', 'INFANT'];
   var studentStatus = ['WAITLIST', 'APPLICATION', 'ENROLLED'];
   var studentTypes = ['REGULAR', 'MEMBER', 'EXISTING'];
-  if(Parents.find().count() === 0){
+  var typeOrders = {
+    REGULAR:0,
+    MEMBER:0,
+    EXISTING:0
+  };
+
+  if(Parents.find().count() === 0 && false){
+    console.log("Started inserting parents and students");
+
+    // creating all the parents and their students
     for(var i=0;i<parentCount;i++){
       HTTP.get("https://randomuser.me/api/", {headers:{dataType: 'json'}}, function(err, data){
         var person = EJSON.parse(data.content).results[0].user;
@@ -39,7 +47,6 @@ Meteor.startup(function(){
           image: person.picture.medium,
           email: person.email,
           phoneNumber: person.phone,
-          isPrimary: true,
           createdAt: new Date()
         };
 
@@ -64,6 +71,7 @@ Meteor.startup(function(){
 
             var status = studentStatus[Math.floor(Math.random()*3)];
             var group = studentGroups[Math.floor(Math.random()*2)];
+            var type = studentTypes[Math.floor(Math.random()*3)];
             var student = {
               firstName: newStudent.name.first,
               lastName: newStudent.name.last,
@@ -71,10 +79,11 @@ Meteor.startup(function(){
               image: "http://api.adorable.io/avatars/150/" + newStudent.salt,
               group: group,
               status: status,
-              type: studentTypes[Math.floor(Math.random()*3)],
+              type: type,
               classId: (group == "INFANT")?classroomIds[0]:classroomIds[1],
               paidApplicationFee: (status == "APPLICATION")?false:true,
-              daysWaitlisted: days,
+              daysWaitlisted: (status == "WAITLIST")?days: null,
+              daysRequested: (status == "APPLICATION")?days: null,
               daysEnrolled: (status == "ENROLLED")?days: null,
               createdAt: new Date()
             };
@@ -90,6 +99,34 @@ Meteor.startup(function(){
         }
       });
     }
+
+    // assigning order to the students in the waitlist
+    // Assuming that its going to take 10 seconds to generate all the data
+    Meteor.setTimeout(function(){
+      console.log("Started setting the order");
+
+      var assignedOrder = 1; 
+
+      var students = Students.find({status: "WAITLIST", type:"MEMBER"});
+      students.forEach(function (student) {
+        Students.update({_id: student._id}, {$set: {order:assignedOrder}});
+        assignedOrder++;
+      });
+
+      students = Students.find({status: "WAITLIST", type:"EXISTING"});
+      students.forEach(function (student) {
+        Students.update({_id: student._id}, {$set: {order:assignedOrder}});
+        assignedOrder++;
+      });
+
+      students = Students.find({status: "WAITLIST", type:"REGULAR"});
+      students.forEach(function (student) {
+        Students.update({_id: student._id}, {$set: {order:assignedOrder}});
+        assignedOrder++;
+      });
+
+    }, 5000);
+    
   }
 });
 

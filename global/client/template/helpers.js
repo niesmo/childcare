@@ -3,8 +3,8 @@
  * @param  {String} str Any string passed
  * @return {String}     Lower case of the passed in string
  */
-Handlebars.registerHelper('toLower', function (str) {
-    return str.toLowerCase();
+Template.registerHelper('toLower', function (str) {
+    return (str || "").toLowerCase();
 });
 
 /**
@@ -12,6 +12,51 @@ Handlebars.registerHelper('toLower', function (str) {
 * @param  {Integer}  index the integer passed in to the function (index of an array in this context)
 * @return {String}       Active if index is 0, "" otherwise
 */
-Handlebars.registerHelper('isActive', function(index){
+Template.registerHelper('isActive', function(index){
   return (index===0)?"active":"";
+});
+
+Template.registerHelper('formatDate', function(date, format){
+  return moment(date).format(format);
+});
+
+/**
+ * This function sorts the days in the order of the week days
+ * @param  {Array} days The days that the applicants has requested
+ * @return {Array}      The sorted days in the same format
+ */
+Template.registerHelper('sortedDays', function(days){
+  if(!days) return;
+  
+  // Utility functions
+  function daysComparator(d1, d2){
+    var week = {
+      monday:0,
+      tuesday:1,
+      wednesday:2,
+      thursday:3,
+      friday:4,
+      saturday:5,
+      sunday:6
+    };
+
+    d1 = d1.day.toLowerCase();
+    d2 = d2.day.toLowerCase();
+
+    return week[d1] - week[d2];
+  }
+
+  return days.sort(daysComparator);
+});
+
+/**
+ * This function will return the appropriate class based on the flexibility of the day
+ * @return {String} The appropriate string to be set as the css class
+ */
+Template.registerHelper('flexibleColorClass', function(){
+  return this.flexible?"list-group-item-success": "list-group-item-warning";
+});
+
+Template.registerHelper('getAge', function(dob){
+  return moment().diff(dob, 'years') || "";
 });

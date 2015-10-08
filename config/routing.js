@@ -1,13 +1,13 @@
 // make sure that users are signed in for all pages
-// Router.onBeforeAction(function(pause) {
+Router.onBeforeAction(function(pause) {
 
-//   if (!Meteor.user()) {
-//     Router.go('signin');
-//   }
+  if (!Meteor.user()) {
+    Router.go('signin');
+  }
 
-//   this.next();
+  this.next();
   
-// }, {except: ['signin']});
+}, {except: ['signin']});
 
 Router.plugin('ensureSignedIn', {
     except: ['signin']
