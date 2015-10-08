@@ -8,7 +8,7 @@ Template.registerHelper('toLower', function (str) {
 });
 
 /**
-* this function will determin if for a given index the element should be active or not
+* this function will determine if for a given index the element should be active or not
 * @param  {Integer}  index the integer passed in to the function (index of an array in this context)
 * @return {String}       Active if index is 0, "" otherwise
 */
