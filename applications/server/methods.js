@@ -48,6 +48,7 @@ Meteor.methods({
 
     imageId = Random.id();
 
+    // color variable to get a unique color for the student
     var color = getRandomColor();
     while(studentColors.indexOf(color) !== -1) {
       color = getRandomColor();
@@ -233,6 +234,10 @@ Meteor.methods({
   }
 });
 
+/**
+ * Returns a random color to use for students
+ * @returns {string} a color
+ */
 function getRandomColor() {
   var letters = '0123456789ABCDEF'.split('');
   var color = '#';
@@ -242,4 +247,5 @@ function getRandomColor() {
   return color;
 }
 
+// an array to store the colors assigned to children
 var studentColors = [];
