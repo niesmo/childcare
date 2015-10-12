@@ -11,6 +11,11 @@ Template.classroomDetail.helpers({
     return ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
   },
 
+  /**
+   * Used to fill in the student table cell on the days they have class
+   * @param student
+   * @returns {Schemas.Student.color|{type, label}|color|*|string} the color given to the student
+   */
   hasClass: function(student){
     var today = this.toString().toUpperCase();
     for(var i=0;i<student.daysEnrolled.length;i++){

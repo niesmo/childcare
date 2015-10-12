@@ -49,6 +49,10 @@ Meteor.methods({
     imageId = Random.id();
 
     var color = getRandomColor();
+    while(studentColors.indexOf(color) !== -1) {
+      color = getRandomColor();
+    }
+    studentColors.push(color);
 
     // insert the student
     var studentId = Students.insert({
@@ -237,3 +241,5 @@ function getRandomColor() {
   }
   return color;
 }
+
+var studentColors = [];

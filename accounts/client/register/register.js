@@ -18,6 +18,8 @@ Template.register.events({
 
     // call the method to create the user
     Meteor.call("registerUser", email, password, accountsErrorHandler);
+    alert("User Created");
+    Router.go('home');
   }
 });
 
