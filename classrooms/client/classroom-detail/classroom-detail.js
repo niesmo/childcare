@@ -15,7 +15,7 @@ Template.classroomDetail.helpers({
     var today = this.toString().toUpperCase();
     for(var i=0;i<student.daysEnrolled.length;i++){
       if(today === student.daysEnrolled[i].day){
-        return "success";
+        return student.color;
       }
     }
   }

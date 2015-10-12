@@ -48,6 +48,8 @@ Meteor.methods({
 
     imageId = Random.id();
 
+    var color = getRandomColor();
+
     // insert the student
     var studentId = Students.insert({
       firstName: application.student.firstName,
@@ -59,7 +61,8 @@ Meteor.methods({
       paidApplicationFee: false,
       daysRequested: days,
       image: "http://api.adorable.io/avatars/100/"+ imageId +".png",
-      createdAt: new Date()
+      createdAt: new Date(),
+      color: color
     });
 
     // inserting the studentParent document
@@ -182,7 +185,8 @@ Meteor.methods({
       type: details.type,
       group: student.group,
       paidApplicationFee:details.paid,
-      createdAt: new Date() // current time
+      createdAt: new Date(), // current time
+      color: student.color
     });
 
     return id;
@@ -224,3 +228,12 @@ Meteor.methods({
     StudentParents.insert({studentId:studentId, parentId:parentId});
   }
 });
+
+function getRandomColor() {
+  var letters = '0123456789ABCDEF'.split('');
+  var color = '#';
+  for (var i = 0; i < 6; i++ ) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
