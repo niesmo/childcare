@@ -8,7 +8,7 @@ Template.classroomDetail.helpers({
   },
 
   daysOfWeek:function(){
-    return ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+    return ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
   },
 
   /**
@@ -16,11 +16,11 @@ Template.classroomDetail.helpers({
    * @param student
    * @returns {Schemas.Student.color|{type, label}|color|*|string} the color given to the student
    */
-  hasClass: function(student){
+  getColorIfhasClass: function(student){
     var today = this.toString().toUpperCase();
     for(var i=0;i<student.daysEnrolled.length;i++){
       if(today === student.daysEnrolled[i].day){
-        return student.color;
+        return student.color || '#43ac6a';
       }
     }
   }

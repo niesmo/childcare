@@ -13,7 +13,7 @@
         <tr>
           <td>{{student.firstName}}</td>
           {{#each daysOfWeek}}
-            <td style="background-color:{{hasClass student}}"></td>
+            <td style="background-color:{{getColorIfhasClass student}}"></td>
           {{/each}}
         </tr>
       {{/each}}
