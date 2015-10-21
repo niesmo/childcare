@@ -47,7 +47,7 @@
                         <ul style="list-style: none">
                             <!--Temporarily hard coded-->
                             <li style="margin-bottom: 5px">{{ userEmail }}</li>
-                            <li style="margin-bottom: 5px"><a id="newPasswordButton" href="{{ pathFor 'newpassword' }}" class="btn btn-primary">Change Password</a></li>
+                            <li style="margin-bottom: 5px"><a id="newPasswordButton" href="{{ pathFor 'newpassword' }}" class="btn btn-primary" data-dismiss="modal">Change Password</a></li>
                         </ul>
                     </div>
                 </div>
@@ -67,8 +67,8 @@
                     <h4 class="modal-title">Settings</h4>
                 </div>
                 <div class="modal-body">
-                    <a href="{{ pathFor 'register' }}" class="btn btn-primary" role="button">Add New User</a>
-                    <a href="{{ pathFor 'deleteuser' }}" class="btn btn-danger" role="button">Delete User</a>
+                    <a href="{{ pathFor 'register' }}" id="addUserButton" class="btn btn-primary" role="button" data-dismiss="modal">Add New User</a>
+                    <a href="{{ pathFor 'deleteuser' }}" id="deleteUserButton" class="btn btn-danger" role="button" data-dismiss="modal">Delete User</a>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
