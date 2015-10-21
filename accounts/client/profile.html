@@ -1,11 +1,38 @@
+<!--
 <template name="profile">
     <h2>Profile Info</h2>
     <h3>Account Details</h3>
     <div>
         <ul style="list-style: none">
-            <!--Temporarily hard coded-->
-            <li style="margin-bottom: 5px">temp@test.com</li>
+            <li style="margin-bottom: 5px">{{ userEmail }}</li>
             <li style="margin-bottom: 5px"><a href="{{ pathFor 'newpassword' }}" class="btn btn-primary">Change Password</a></li>
         </ul>
+    </div>
+</template>
+-->
+
+<template name="profile">
+    <div class="modal fade" id="profileModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Profile</h4>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <ul style="list-style: none">
+                            <!--Temporarily hard coded-->
+                            <li style="margin-bottom: 5px">{{ userEmail }}</li>
+                            <li style="margin-bottom: 5px"><a href="{{ pathFor 'newpassword' }}" class="btn btn-primary">Change Password</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
     </div>
 </template>
