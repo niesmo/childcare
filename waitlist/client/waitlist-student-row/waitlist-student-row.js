@@ -18,9 +18,8 @@ Template.waitlistStudentRow.events({
    */
   "click .edit": function(event){
       event.preventDefault();
-      alert("here");
+      
       Session.set('studentToEdit', this._id);
-      alert(Session.get('studentToEdit'));
       Modal.show('editStudentModal');
   },
 
@@ -37,10 +36,10 @@ Template.waitlistStudentRow.events({
   }
 });
 
-function enrollStudentCallback(err, res){
-  if(err){
-    console.log(err);
-    alert("Something went wrong");
-  }
-  return;
-}
+// function enrollStudentCallback(err, res){
+//   if(err){
+//     console.log(err);
+//     alert("Something went wrong");
+//   }
+//   return;
+// }

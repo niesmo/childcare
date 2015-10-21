@@ -1,45 +1,39 @@
 <template name="waitlist">
+  <div class="col-md-10">
+    <!-- The tab list on top of the page. A tab for each class -->
+    <ul class="nav nav-tabs classroom-tabs" role="tablist">
+      {{#each classrooms}}
+      <li role="presentation" class="{{isActive @index}}" classroom-id="{{_id}}"><a href="#{{toLower type}}" aria-controls="{{toLower type}}" role="tab" data-toggle="tab">{{toLower type}}</a></li>
+      {{/each}}
+    </ul>
 
-    <div class="col-md-10">
-        <!-- The tab list on top of the page. A tab for each class -->
-        <ul class="nav nav-tabs classroom-tabs" role="tablist">
-            {{#each waitlist}}
-                <li role="presentation" class="{{isActive @index}}" classroom-id="{{_id}}"><a href="#{{toLower type}}" aria-controls="{{toLower type}}" role="tab" data-toggle="tab">{{toLower type}}</a></li>
-            {{/each}}
-        </ul>
-
-        <!-- Each of the tab content -->
-        <div class="tab-content">
-            {{#each waitlist}}
-                <div role="tabpanel" class="tab-pane classroom-students-tab {{isActive @index}}" id="{{toLower type}}">
-                    <div class="row">
-
-                            <table class="table table-hover">
-                                <thead>
-                                <tr>
-                                    <th>Order</th>
-                                    <th>Name</th>
-                                    <th>Birth Date</th>
-                                    <th>Days Waitlisted</th>
-                                    <th>Desired Start Date</th>
-                                    <th>Affiliation</th>
-                                    <th>Details</th>
-                                    <th>Actions</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {{#each students}}
-                                    {{> waitlistStudentRow}}
-                                {{/each}}
-                                </tbody>
-                            </table>
-
-                    </div>
-                </div>
-            {{/each}}
+    <!-- Each of the tab content -->
+    <div class="tab-content">
+      {{#each classrooms}}
+      <div role="tabpanel" class="tab-pane classroom-students-tab {{isActive @index}}" id="{{toLower type}}">
+        <div class="row">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>Order</th>
+                <th>Name</th>
+                <th>Birth Date</th>
+                <th>Days Waitlisted</th>
+                <th>Desired Start Date</th>
+                <th>Affiliation</th>
+                <th>Details</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each students}}
+                {{> waitlistStudentRow}}
+              {{/each}}
+            </tbody>
+          </table>
         </div>
+      </div>
+      {{/each}}
     </div>
-
-
-
+  </div>
 </template>

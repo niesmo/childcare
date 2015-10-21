@@ -5,9 +5,9 @@
     <td>{{formatDate dateOfBirth "MMM DD, YYYY"}}</td>
     <td>
       <ul class="list-unstyled list-inline">
-      {{#each sortedDays daysWaitlisted}}
+        {{#each sortedDays daysWaitlisted}}
         <li class="{{flexibleColorClass}}">{{toLower day}}</li>
-      {{/each}}
+        {{/each}}
       </ul>
     </td>
     <td>{{formatDate startDate "MMM DD, YYYY"}}</td>
