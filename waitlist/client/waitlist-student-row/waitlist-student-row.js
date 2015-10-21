@@ -16,8 +16,12 @@ Template.waitlistStudentRow.events({
    *
    * @param event
    */
-  "click .glyphicon glyphicon-pencil": function(event){
+  "click .edit": function(event){
       event.preventDefault();
+      alert("here");
+      Session.set('studentToEdit', this._id);
+      alert(Session.get('studentToEdit'));
+      Modal.show('editStudentModal');
   },
 
   /**
@@ -27,8 +31,9 @@ Template.waitlistStudentRow.events({
    * @return {}     
    */
   "click button.enroll": function(e, tpl){
-    
-    Meteor.call("enrollStudent", this._id, enrollStudentCallback);
+    Session.set('studentToEnroll', this._id);
+    Modal.show('enrollStudent');
+   // Meteor.call("enrollStudent", this._id, enrollStudentCallback);
   }
 });
 

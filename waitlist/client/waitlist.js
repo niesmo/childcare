@@ -1,5 +1,6 @@
 Template.waitlist.onCreated(function(){
-    Meteor.subscribe("waitlistedStudents");
+  Meteor.subscribe("waitlistedStudents");
+  Meteor.subscribe("classrooms");
 });
 
 
@@ -9,6 +10,9 @@ Template.waitlist.helpers({
    * Ordered by oldest first
    * @returns {*}
    */
+  students: function(){
+    return Students.find({group: this.type, status:"WAITLIST"}, {sort:{order:1}});
+  },
   infants: function () {
     return Students.find({status:"WAITLIST", group:"INFANT"},{sort: {order: 1}});
   },
@@ -19,5 +23,8 @@ Template.waitlist.helpers({
    */
   toddlers: function () {
     return Students.find({status:"WAITLIST", group:"TODDLER"},{sort: {order: 1}});
+  },
+  waitlist: function(){
+    return Classrooms.find();
   }
 });

@@ -1,0 +1,40 @@
+<template name="enrollStudent">
+    <div class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h2 class="modal-title">Enroll Student</h2>
+                </div>
+
+                <div class="modal-body">
+                    <p><b>Days Requested</b></p>
+
+                    <ul class="list-unstyled list-inline">
+                        {{#each sortedDays daysWaitlisted}}
+                            <li class="{{flexibleColorClass}}">{{toLower day}}</li>
+                        {{/each}}
+                    </ul>
+                </div>
+                <form role="form">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <p><b>Days To Enroll</b></p>
+
+                            <div class="checkbox-inline"><label for="m"><input class="checkbox" type="checkbox" name="days" value="M" id="m" /> Monday</label></div>
+                            <div class="checkbox-inline"><label for="t"><input class="checkbox" type="checkbox" name="days" value="T" id="t" /> Tuesday</label></div>
+                            <div class="checkbox-inline"><label for="w"><input class="checkbox" type="checkbox" name="days" value="W" id="w" /> Wednesday</label></div>
+                            <div class="checkbox-inline"><label for="th"><input class="checkbox" type="checkbox" name="days" value="TH" id="th" /> Thursday</label></div>
+                            <div class="checkbox-inline"><label for="f"><input class="checkbox" type="checkbox" name="days" value="F" id="f" /> Friday</label></div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-success" id="enroll" data-dismiss="modal">Confirm Enroll</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</template>
