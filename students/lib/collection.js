@@ -15,7 +15,7 @@ Schemas.Day = new SimpleSchema({
         {label: "Thursday", value: "THURSDAY"},
         {label: "Friday", value: "FRIDAY"},
         {label: "Saturday", value: "SATURDAY"},
-        {label: "Sunday", value: "SUNDAY"},
+        {label: "Sunday", value: "SUNDAY"}
       ]
     }
   },
@@ -155,7 +155,7 @@ Schemas.Student = new SimpleSchema({
 
   daysRequested: {
     type: [Schemas.Day],
-    label: "Days Requested",
+    label: "Days Requested"
   },
 
   classId:{
@@ -171,6 +171,11 @@ Schemas.Student = new SimpleSchema({
     autoform:{
       omit: true
     }
+  },
+
+  color: {
+    type: String,
+    label: "Color"
   }
 });
 

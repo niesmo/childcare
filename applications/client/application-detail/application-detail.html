@@ -5,7 +5,7 @@
         <dt>Name</dt><dd>{{firstName}} {{lastName}}</dd>
         <dt>Date of Birth</dt><dd>{{formatDate dateOfBirth 'MMM DD, YYYY'}}</dd>
         <dt>Class</dt><dd>{{toLower group}}</dd>
-        <dt>Affiliation</dt><dd>{{toLower type}}</dd>
+        <dt>Affiliation</dt><dd>{{studentAffiliation type}}</dd>
         <dt>Days Requested</dt><dd>
           <ul class="list-unstyled list-inline">
             {{#each sortedDays daysRequested}}

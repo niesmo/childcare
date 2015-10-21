@@ -8,6 +8,28 @@ Template.registerHelper('toLower', function (str) {
 });
 
 /**
+ * StudentAffiliation function.
+ * @param {String} str Any string passed
+ * @return {String}   The affiliation of the student, or the empty string if no affiliation
+ */
+Template.registerHelper('studentAffiliation', function (str) {
+  var affiliation = (str || "").toLowerCase();
+  switch(affiliation) {
+    case "regular":
+          return "new family";
+          break;
+    case "member":
+          return "staff";
+          break;
+    case "existing":
+          return "current family";
+          break;
+    default:
+          return "";
+  }
+});
+
+/**
 * this function will determin if for a given index the element should be active or not
 * @param  {Integer}  index the integer passed in to the function (index of an array in this context)
 * @return {String}       Active if index is 0, "" otherwise
