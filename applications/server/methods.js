@@ -57,6 +57,7 @@ Meteor.methods({
       status: "application".toUpperCase(),
       type: application.type.toUpperCase(),
       paidApplicationFee: false,
+      startDate: application.startDate,
       daysRequested: days,
       image: "http://api.adorable.io/avatars/100/"+ imageId +".png",
       createdAt: new Date()
@@ -147,13 +148,16 @@ Meteor.methods({
   },
 
   /**
-   * [removes parent with id passed]
-   * @param  {[SimpleSchema.RegEx.Id]} id [parent id]
+   * [removes parents in object passed]
+   * @param  {[collections of parents]} parents [parents to delete]
    * @return {[type]}    [description]
    */
-  'removeParent': function (id) {
-    Parents.remove(id);
+  'removeParent': function (parent) {
+
+      Parents.remove(parent);
+
   },
+
 
   /**
    * [insert given data into student collection]
@@ -193,8 +197,9 @@ Meteor.methods({
    * @param  {[SimpleSchema.RegEx.Id]} id [id of student to be removed]
    * @return {[type]}    [description]
    */
-  'removeStudent': function (id) {
+  'removeStudent': function (id, spid) {
     Students.remove(id);
+    StudentParents.remove(spid);
   },
 
   /**

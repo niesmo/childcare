@@ -14,7 +14,11 @@ Template.waitlist.helpers({
     return Students.find({group: this.type, status:"WAITLIST"}, {sort:{order:1}});
   },
 
-  waitlist: function(){
+  /**
+   * Returns all the different classrooms
+   * @return {Meteor.cursor} Cursor to the begining of all the classes
+   */
+  classrooms: function(){
     return Classrooms.find();
   }
 });
