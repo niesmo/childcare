@@ -1,50 +1,45 @@
 <template name="waitlist">
-  <h2>Infant Waitlist</h2>
-  <div class="row">
-    <div class="col-md-10">
-      <table class="table table-hover">
-        <thead>
-          <tr>
-            <th>Order</th>
-            <th>Name</th>
-            <th>Birth Date</th>
-            <th>Days Waitlisted</th>
-            <th>Affiliation</th>
-            <th>Details</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {{#each infants}}
-            {{> waitlistStudentRow}}
-          {{/each}}
-        </tbody>
-      </table>
-    </div>
-  </div>
-  
 
-  <h2>Toddler Waitlist</h2>
-  <div class="row">
     <div class="col-md-10">
-      <table class="table table-hover">
-        <thead>
-          <tr>
-            <th>Order</th>
-            <th>Name</th>
-            <th>Birth Date</th>
-            <th>Days Waitlisted</th>
-            <th>Affiliation</th>
-            <th>Details</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {{#each toddlers}}
-            {{> waitlistStudentRow}}
-          {{/each}}
-        </tbody>
-      </table>
+        <!-- The tab list on top of the page. A tab for each class -->
+        <ul class="nav nav-tabs classroom-tabs" role="tablist">
+            {{#each waitlist}}
+                <li role="presentation" class="{{isActive @index}}" classroom-id="{{_id}}"><a href="#{{toLower type}}" aria-controls="{{toLower type}}" role="tab" data-toggle="tab">{{toLower type}}</a></li>
+            {{/each}}
+        </ul>
+
+        <!-- Each of the tab content -->
+        <div class="tab-content">
+            {{#each waitlist}}
+                <div role="tabpanel" class="tab-pane classroom-students-tab {{isActive @index}}" id="{{toLower type}}">
+                    <div class="row">
+
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>Order</th>
+                                <th>Name</th>
+                                <th>Birth Date</th>
+                                <th>Days Waitlisted</th>
+                                <th>Desired Start Date</th>
+                                <th>Affiliation</th>
+                                <th>Details</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {{#each students}}
+                                {{> waitlistStudentRow}}
+                            {{/each}}
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            {{/each}}
+        </div>
     </div>
-  </div>
+
+
+
 </template>
