@@ -10,5 +10,17 @@ Template.navbar.events({
     e.preventDefault();
     Meteor.logout();
     Router.go('signin');
+  },
+
+  'click #newPasswordButton': function(e) {
+    Router.go('newpassword')
+  },
+
+  'click #addUserButton': function(e) {
+    Router.go('register')
+  },
+
+  'click #deleteUserButton': function(e) {
+    Router.go('deleteuser')
   }
 });
