@@ -1,4 +1,4 @@
-/**
+
 Meteor.startup(function(){
   // add the classes
   var classroomIds = [];
@@ -149,4 +149,3 @@ function getRandom(arr, n) {
 
   return result;
 }
- */
