@@ -39,7 +39,22 @@ Template.actionItems.helpers({
     if(completedByUser){
       return completedByUser.emails[0].address;
     }
+  },
+  
+  getTableRowType: function(actionItemID){
+    var rowType="action-item-row";
+	
+	if(!actionItemID) return ;
+
+    var actionItem = ActionItems.findOne({_id: actionItemID});
+    var createdByUser= Meteor.users.findOne(actionItem.createdBy);
+	if(createdByUser.emails[0].address=="SYSTEM@system.com")
+	{
+		rowType="danger action-item-row";
+	}
+	return rowType;
   }
+  
 });
 
 Template.actionItems.events({
@@ -60,36 +75,25 @@ Template.actionItems.events({
     // clear the form
     tpl.reset();
   },
+  "click button.system-task": function(e, tpl){
+    e.preventDefault();
 
-  "submit .new-infantTask": function (event) {
-    // Prevent default browser form submit
-    event.preventDefault();
+    // get the task attributes
+    var task = {
+      title: "System Message",
+      description: "System Message",
+      type: tpl.$("#type").val()
+    }
 
-    // Get value from form element
-    var text = event.target.text.value;
+    Meteor.call("addSystemTask", task, function(e, r){
+      console.log(e, r);
+    });
 
-    // Insert a task into the collection
-    Meteor.call("addInfantTask",text);
-
-    // Clear form
-    event.target.text.value = "";
-  },
-
-  "submit .new-toddlerTask": function (event) {
-    // Prevent default browser form submit
-    event.preventDefault();
-
-    // Get value from form element
-    var text = event.target.text.value;
-
-    // Insert a task into the collection
-    Meteor.call("addToddlerTask",text);
-
-    // Clear form
-    event.target.text.value = "";
-  },
-  
-  'click td.action-item': function (e, tpl) {
+    // clear the form
+    tpl.reset();
+  }
+  ,
+  'click td.action-row-item': function (e,tpl) {
     // find the id of the selected student
     var id = e.target.id;
 

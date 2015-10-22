@@ -17,6 +17,13 @@
           {{/each}}
         </tr>
       {{/each}}
+	  <tr>
+		<td>Daily Ratios</td>
+		{{classType}}
+		{{#each daysOfWeek}}
+			<td>{{numOfStudentsPerDay}} / {{totalStudentsAllowed}}</td>
+		{{/each}}
+	  </tr>
     </tbody>
   </table>
 </template>

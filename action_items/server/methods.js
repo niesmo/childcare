@@ -24,6 +24,28 @@ Meteor.methods({
 	  //completedAt: date
     });
   },
+  addSystemTask: function(task){
+    // Check the different variables passed
+    // Use the Check Package https://atmospherejs.com/meteor/check
+	check(task, {
+    title: String,
+    description: String,
+	type: String
+  });
+	var date=new Date();
+	var systemUser=Meteor.users.findOne({"emails.address": "SYSTEM@system.com"});
+    return ActionItems.insert({
+      title: task.title,
+      description: task.description,
+      type: task.type,
+      createdBy: systemUser,
+	  createdByEmail: "SYSTEM@system.com",
+      createdAt: date,
+	  isCompleted: false,
+	  //completedBy: "",
+	  //completedAt: date
+    });
+  },
   completeTask: function(taskId){
   // Check the different variables passed
     // Use the Check Package https://atmospherejs.com/meteor/check

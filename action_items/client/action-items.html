@@ -28,15 +28,20 @@
       <input type="submit" class="btn btn-primary" value="Add Task" />
     </form>
   </div>
-  
   <hr />
 
   <h4>Infant</h4>
   <table class="table table-striped">
   <tbody>
-	{{#each infantTasks}}
 		<tr>
-			<td id="ai{{_id}}" class="action-item">{{description}}</td>
+			<td><strong>Description</strong></td>
+			<td><strong>Created By</strong></td>
+			<td><strong>Date Created</strong></td>
+			<td><strong>Complete Action</strong></td>
+		</tr>
+	{{#each infantTasks}}
+		<tr id="ai{{_id}}" class={{getTableRowType _id}}>
+			<td>{{description}}</td>
 			<td>{{getCreatedByUser _id}}</td>
 			<td>{{formatDate createdAt "MMM DD, YYYY"}}</td>
 			<td><button type="button" class="btn btn-success btn-circular btn-sm action-item"><span class="glyphicon glyphicon-check"></span></button></td>
@@ -47,9 +52,15 @@
   <h4>Toddler</h4>
   <table class="table table-striped">
   <tbody>
-	{{#each toddlerTasks}}
 		<tr>
-			<td id="ai{{_id}}" class="action-item">{{description}}</td>
+			<td><strong>Description</strong></td>
+			<td><strong>Created By</strong></td>
+			<td><strong>Date Created</strong></td>
+			<td><strong>Complete Action</strong></td>
+		</tr>
+	{{#each toddlerTasks}}
+		<tr class={{getTableRowType}}>
+			<td id="ai{{_id}}" class={{getTableRowType _id}}>{{description}}</td>
 			<td>{{getCreatedByUser _id}}</td>
 			<td>{{formatDate createdAt "MMM DD, YYYY"}}</td>
 			<td><button type="button" class="btn btn-success btn-circular btn-sm action-item"><span class="glyphicon glyphicon-check"></span></button></td>
@@ -60,9 +71,17 @@
   <h4>Completed</h4>
   <table class="table table-striped">
   <tbody>
-	{{#each completedTasks}}
 		<tr>
-			<td id="ai{{_id}}" class="action-item">{{description}}</td>
+			<td><strong>Description</strong></td>
+			<td><strong>Created By</strong></td>
+			<td><strong>Date Created</strong></td>
+			<td><strong>Type</strong></td>
+			<td><strong>Completed By</strong></td>
+			<td><strong>Date Completed</strong></td>
+		</tr>
+	{{#each completedTasks}}
+		<tr id={{createdBy}} class={{getTableRowType}}>
+			<td id="ai{{_id}}" class={{getTableRowType _id}}>{{description}}</td>
 			<td>{{getCreatedByUser _id}}</td>
 			<td>{{formatDate createdAt "MMM DD, YYYY"}}</td>
 			<td class="capitalize">{{toLower type}}</td>
