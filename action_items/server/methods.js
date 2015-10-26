@@ -7,17 +7,15 @@ Meteor.methods({
     // Check the different variables passed
     // Use the Check Package https://atmospherejs.com/meteor/check
 	check(task, {
-    title: String,
     description: String,
 	type: String
   });
 	var date=new Date();
     return ActionItems.insert({
-      title: task.title,
+      title: "title",
       description: task.description,
       type: task.type,
       createdBy: Meteor.userId(),
-	  createdByEmail: Meteor.user().emails[0].address,
       createdAt: date,
 	  isCompleted: false,
 	  //completedBy: "",
@@ -28,18 +26,16 @@ Meteor.methods({
     // Check the different variables passed
     // Use the Check Package https://atmospherejs.com/meteor/check
 	check(task, {
-    title: String,
     description: String,
 	type: String
   });
 	var date=new Date();
 	var systemUser=Meteor.users.findOne({"emails.address": "SYSTEM@system.com"});
     return ActionItems.insert({
-      title: task.title,
+      title: "title",
       description: task.description,
       type: task.type,
       createdBy: systemUser,
-	  createdByEmail: "SYSTEM@system.com",
       createdAt: date,
 	  isCompleted: false,
 	  //completedBy: "",

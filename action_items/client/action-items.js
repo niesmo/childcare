@@ -23,30 +23,30 @@ Template.actionItems.helpers({
     return actionItem;
   },
 
-  getCreatedByUser: function(actionItemID){
-    if(!actionItemID) return;
+  getCreatedByUser: function(){
+    if(!this._id) return;
 
-    var actionItem = ActionItems.findOne({_id: actionItemID});
+    var actionItem = ActionItems.findOne({_id: this._id});
     var createdByUser= Meteor.users.findOne(actionItem.createdBy);
     return createdByUser.emails[0].address;
   },
 
-  getCompletedByUser: function(actionItemID){
-    if(!actionItemID) return ;
+  getCompletedByUser: function(){
+    if(!this._id) return ;
 
-    var actionItem = ActionItems.findOne({_id: actionItemID});
+    var actionItem = ActionItems.findOne({_id: this._id});
     var completedByUser= Meteor.users.findOne(actionItem.completedBy);
     if(completedByUser){
       return completedByUser.emails[0].address;
     }
   },
   
-  getTableRowType: function(actionItemID){
+  getTableRowType: function(){
     var rowType="action-item-row";
 	
-	if(!actionItemID) return ;
+	if(!this._id) return ;
 
-    var actionItem = ActionItems.findOne({_id: actionItemID});
+    var actionItem = ActionItems.findOne({_id: this._id});
     var createdByUser= Meteor.users.findOne(actionItem.createdBy);
 	if(createdByUser.emails[0].address=="SYSTEM@system.com")
 	{
@@ -63,7 +63,6 @@ Template.actionItems.events({
 
     // get the task attributes
     var task = {
-      title: tpl.$("#title").val(),
       description: tpl.$("#description").val(),
       type: tpl.$("#type").val()
     }
@@ -80,7 +79,6 @@ Template.actionItems.events({
 
     // get the task attributes
     var task = {
-      title: "System Message",
       description: "System Message",
       type: tpl.$("#type").val()
     }
@@ -93,7 +91,7 @@ Template.actionItems.events({
     tpl.reset();
   }
   ,
-  'click td.action-row-item': function (e,tpl) {
+  'click tr.action-row-item': function (e,tpl) {
     // find the id of the selected student
     var id = e.target.id;
 

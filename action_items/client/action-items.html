@@ -14,12 +14,6 @@
         </div>
       </div>
 
-      <!-- Task Title -->
-      <div class="form-group">
-		    <textarea id="title" class="form-control" placeholder="Title"></textarea>
-        
-      </div>
-
       <!-- Task Description -->
       <div class="form-group">
         <textarea id="description" class="form-control" placeholder="Description"></textarea>
@@ -32,17 +26,19 @@
 
   <h4>Infant</h4>
   <table class="table table-striped">
-  <tbody>
+  <thead>
 		<tr>
-			<td><strong>Description</strong></td>
-			<td><strong>Created By</strong></td>
-			<td><strong>Date Created</strong></td>
-			<td><strong>Complete Action</strong></td>
+			<th>Description</th>
+			<th> Created By</th>
+			<th> Date Created</th>
+			<th> Complete Action</th>
 		</tr>
+	</thead>
+	<tbody>
 	{{#each infantTasks}}
-		<tr id="ai{{_id}}" class={{getTableRowType _id}}>
+		<tr id="ai{{_id}}" class={{getTableRowType}}>
 			<td>{{description}}</td>
-			<td>{{getCreatedByUser _id}}</td>
+			<td>{{getCreatedByUser}}</td>
 			<td>{{formatDate createdAt "MMM DD, YYYY"}}</td>
 			<td><button type="button" class="btn btn-success btn-circular btn-sm action-item"><span class="glyphicon glyphicon-check"></span></button></td>
 		</tr>
@@ -51,17 +47,19 @@
 
   <h4>Toddler</h4>
   <table class="table table-striped">
-  <tbody>
+  <thead>
 		<tr>
-			<td><strong>Description</strong></td>
-			<td><strong>Created By</strong></td>
-			<td><strong>Date Created</strong></td>
-			<td><strong>Complete Action</strong></td>
+			<th> Description</th>
+			<th> Created By</th>
+			<th> Date Created</th>
+			<th> Complete Action</th>
 		</tr>
+	</thead>
+	<tbody>
 	{{#each toddlerTasks}}
-		<tr class={{getTableRowType}}>
-			<td id="ai{{_id}}" class={{getTableRowType _id}}>{{description}}</td>
-			<td>{{getCreatedByUser _id}}</td>
+		<tr id="ai{{_id}}" class={{getTableRowType}}>
+			<td >{{description}}</td>
+			<td>{{getCreatedByUser}}</td>
 			<td>{{formatDate createdAt "MMM DD, YYYY"}}</td>
 			<td><button type="button" class="btn btn-success btn-circular btn-sm action-item"><span class="glyphicon glyphicon-check"></span></button></td>
 		</tr>
@@ -70,22 +68,24 @@
   
   <h4>Completed</h4>
   <table class="table table-striped">
-  <tbody>
+	<thead>
 		<tr>
-			<td><strong>Description</strong></td>
-			<td><strong>Created By</strong></td>
-			<td><strong>Date Created</strong></td>
-			<td><strong>Type</strong></td>
-			<td><strong>Completed By</strong></td>
-			<td><strong>Date Completed</strong></td>
+			<th> Description</th>
+			<th> Created By</th>
+			<th> Date Created</th>
+			<th> Type</th>
+			<th> Completed By</th>
+			<th> Date Completed</th>
 		</tr>
+	</thead>
+	<tbody>
 	{{#each completedTasks}}
-		<tr id={{createdBy}} class={{getTableRowType}}>
-			<td id="ai{{_id}}" class={{getTableRowType _id}}>{{description}}</td>
-			<td>{{getCreatedByUser _id}}</td>
+		<tr class={{getTableRowType}} id="ai{{_id}}">
+			<td >{{description}}</td>
+			<td>{{getCreatedByUser}}</td>
 			<td>{{formatDate createdAt "MMM DD, YYYY"}}</td>
 			<td class="capitalize">{{toLower type}}</td>
-			<td>{{getCompletedByUser _id}}</td>
+			<td>{{getCompletedByUser}}</td>
 			<td>{{formatDate completedAt "MMM DD, YYYY"}}</td>
 		</tr>
 	{{/each}}
