@@ -49,18 +49,13 @@ Meteor.methods({
     imageId = Random.id();
 
     // color variable to get a unique color for the student
-    var color = getRandomColor(50, 50/currentStep);
-    if (currentStep === 50) {
-      currentStep = 1;
+    var color = getRandomColor(numOfSteps, currentStep);
+    if (currentStep >= numOfSteps) {
+      currentStep -= numOfSteps;
+      curentStep += 7;
     } else {
-      currentStep++;
+      currentStep += 7;
     }
-    /*
-    while(studentColors.indexOf(color) !== -1) {
-      color = getRandomColor();
-    }
-    studentColors.push(color);
-    */
 
     // insert the student
     var studentId = Students.insert({
@@ -282,7 +277,5 @@ function getRandomColor(numOfSteps, step) {
   return (c);
 }
 
-// an array to store the colors assigned to children
-//var studentColors = [];
-
+var numOfSteps = 50;
 var currentStep = 1;
