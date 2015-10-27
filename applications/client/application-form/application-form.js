@@ -12,6 +12,21 @@ Template.applicationForm.events({
     $("input:checkbox[name=days]:checked").each(function(){
       days.push($(this).val());
     });
+    if(days.length<2){
+      Session.set('errorMessage', 'Please check at least two days');
+      Modal.show('FormErrorModal');
+      return;
+    }
+    if($(event.target).find('input:radio[name=type]:checked').val()==null){
+      Session.set('errorMessage', 'Please choose an affiliation');
+      Modal.show('FormErrorModal');
+      return;
+    }
+    if($(event.target).find('input:radio[name=group]:checked').val()==null){
+      Session.set('errorMessage', 'Please choose a student group');
+      Modal.show('FormErrorModal');
+      return;
+    }
 
     var application = {
       // Parent Information
