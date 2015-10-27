@@ -39,10 +39,14 @@ Meteor.methods({
     // constructing the days for the student document
     var days = [];
     var week = {M: "monday", T: "tuesday", W: "wednesday", TH: "thursday", F: "friday"};
+    var flexible = false;
+    if(application.flexible=="flexible"){
+      flexible=true;
+    }
     application.days.forEach(function (day) {
       days.push({
         day: week[day].toUpperCase(),
-        flexible: false
+        flexible: flexible
       });
     });
 
@@ -68,7 +72,9 @@ Meteor.methods({
       daysRequested: days,
       image: "http://api.adorable.io/avatars/100/"+ imageId +".png",
       createdAt: new Date(),
-      color: color
+      color: color,
+      details: application.details
+
     });
 
     // inserting the studentParent document
@@ -212,7 +218,7 @@ Meteor.methods({
   },
 
   /**
-   *Increments all student order greater than or equal to order passed
+   *Increments student order with given id
    * @param {{SimpleSchema.RegEx.Id}} id [id of student to increment
    */
   'incrementOrder': function (id) {

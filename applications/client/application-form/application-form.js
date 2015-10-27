@@ -38,8 +38,10 @@ Template.applicationForm.events({
       days: days,
       type: $(event.target).find('input:radio[name=type]:checked').val(),
       group: $(event.target).find('input:radio[name=group]:checked').val(),
+      flexible: $(event.target).find('input:checkbox[name=flexible]:checked').val(),
       details: event.target.details.value,
     };
+
 
 
     // console.log(application);
