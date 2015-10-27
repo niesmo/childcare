@@ -18,9 +18,9 @@ Template.waitlistStudentRow.events({
    */
   "click .edit": function(event){
       event.preventDefault();
-      
-      Session.set('studentToEdit', this._id);
-      Modal.show('editStudentModal');
+
+    Session.set('studentToEdit', this._id);
+    Modal.show('editStudentModal');
   },
 
   /**
