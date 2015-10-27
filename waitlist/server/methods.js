@@ -60,7 +60,6 @@ Meteor.methods({
       //re order when new order is lower (increment each student order that is greater than or equal to the new order and less than the old order)
       students = Students.find({$and:[{order:{$gte: newOrder}},{order:{$lte: oldOrder}}]});
       students.forEach(function(doc){
-        console.log(doc._id);
         Students.update({_id:doc.id}, {$inc: {order: 1}});
       });
     }
@@ -68,7 +67,6 @@ Meteor.methods({
       //re order when new order is greater (decrement eache student order that is greater than old order and less than new order
         students = Students.find({$and:[{order:{$lte: newOrder}},{order:{$gte: oldOrder}}]});
       students.forEach(function(doc){
-        console.log(doc._id);
         Students.update({_id:doc.id}, {$inc: {order:-1}});
       });
     }

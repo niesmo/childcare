@@ -76,7 +76,6 @@ Template.editStudentModal.helpers({
 Template.editStudentModal.events({
   "submit form":function(event){
     event.preventDefault();
-    alert('hit submit');
     //retrieve data from form
     var studentId = Session.get('studentToEdit');
     var studentParent = StudentParents.findOne({studentId: studentId});
@@ -117,10 +116,8 @@ Template.editStudentModal.events({
     }
 var parentId = parent._id;
 
-alert("about to enter");
-  Meteor.call('EditWaitlist', waitlist, studentId, parentId, EditWaitlistCallback);
 
-    alert('updated');
+  Meteor.call('EditWaitlist', waitlist, studentId, parentId, EditWaitlistCallback);
     // Clear the form
     event.target.reset();
   }
