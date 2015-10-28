@@ -1,3 +1,7 @@
 <template name="studentListItem">
-  <li class="student-list-item"><img class="img-responsive student-avatar small" src="{{image}}" /> {{firstName}} </li>
+  <li class="student-list-item">
+    <div class="student-initials" style="background-color:{{color}}"><p>{{initials}}</p></div>
+    <!-- <img class="img-responsive student-avatar small" src="{{image}}" /> -->
+    {{firstName}}
+  </li>
 </template>

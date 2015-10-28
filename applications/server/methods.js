@@ -48,6 +48,13 @@ Meteor.methods({
 
     imageId = Random.id();
 
+    // color variable to get a unique color for the student
+    var color = getRandomColor();
+    while(studentColors.indexOf(color) !== -1) {
+      color = getRandomColor();
+    }
+    studentColors.push(color);
+
     // insert the student
     var studentId = Students.insert({
       firstName: application.student.firstName,
@@ -57,9 +64,11 @@ Meteor.methods({
       status: "application".toUpperCase(),
       type: application.type.toUpperCase(),
       paidApplicationFee: false,
+      startDate: application.startDate,
       daysRequested: days,
       image: "http://api.adorable.io/avatars/100/"+ imageId +".png",
-      createdAt: new Date()
+      createdAt: new Date(),
+      color: color
     });
 
     // inserting the studentParent document
@@ -147,13 +156,16 @@ Meteor.methods({
   },
 
   /**
-   * [removes parent with id passed]
-   * @param  {[SimpleSchema.RegEx.Id]} id [parent id]
+   * [removes parents in object passed]
+   * @param  {[collections of parents]} parents [parents to delete]
    * @return {[type]}    [description]
    */
-  'removeParent': function (id) {
-    Parents.remove(id);
+  'removeParent': function (parent) {
+
+      Parents.remove(parent);
+
   },
+
 
   /**
    * [insert given data into student collection]
@@ -182,7 +194,8 @@ Meteor.methods({
       type: details.type,
       group: student.group,
       paidApplicationFee:details.paid,
-      createdAt: new Date() // current time
+      createdAt: new Date(), // current time
+      color: student.color
     });
 
     return id;
@@ -193,8 +206,9 @@ Meteor.methods({
    * @param  {[SimpleSchema.RegEx.Id]} id [id of student to be removed]
    * @return {[type]}    [description]
    */
-  'removeStudent': function (id) {
+  'removeStudent': function (id, spid) {
     Students.remove(id);
+    StudentParents.remove(spid);
   },
 
   /**
@@ -224,3 +238,19 @@ Meteor.methods({
     StudentParents.insert({studentId:studentId, parentId:parentId});
   }
 });
+
+/**
+ * Returns a random color to use for students
+ * @returns {string} a color
+ */
+function getRandomColor() {
+  var letters = '0123456789ABCDEF'.split('');
+  var color = '#';
+  for (var i = 0; i < 6; i++ ) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
+
+// an array to store the colors assigned to children
+var studentColors = [];

@@ -23,17 +23,17 @@ Template.actionItems.helpers({
     return actionItem;
   },
 
-  getTableRowType: function(){
-    var rowType="action-item-row";
-	
-	if(!this._id) return ;
+  getTableRowClass: function(){
+    var rowType="";
+
+    if(!this._id) return ;
 
     var actionItem = ActionItems.findOne({_id: this._id});
-	if(actionItem.isSystemMessage)
-	{
-		rowType="danger action-item-row";
-	}
-	return rowType;
+    if(actionItem.isSystemMessage)
+    {
+      rowType="danger";
+    }
+    return rowType;
   }
   
 });
@@ -68,13 +68,17 @@ Template.actionItems.events({
       console.log(e, r);
     });
 
-    // clear the form
-    tpl.reset();
   }
   ,
   'click tr.action-item-row': function (e,tpl) {
+<<<<<<< HEAD
+=======
+
+>>>>>>> da0f60ba047e51a4529eb5d09a013a87faf2a879
     // find the id of the selected student
-    var id = e.target.id;
+    var id = $(e.target).parent().attr('id');
+
+    console.log(id);
 
     // set the session value to that student
     Session.set('selectedActionItem', id);

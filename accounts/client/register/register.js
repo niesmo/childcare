@@ -33,6 +33,7 @@ Template.register.events({
 function accountsErrorHandler(error, result){
   if(error){
     console.log(error);
+    alert("Something went wrong when creating your user name");
   }
   else{
     Router.go('home');

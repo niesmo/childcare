@@ -36,7 +36,7 @@
 	</thead>
 	<tbody>
 	{{#each infantTasks}}
-		<tr id="ai{{_id}}" class={{getTableRowType}}>
+		<tr id="ai{{_id}}" class="action-item-row {{getTableRowClass}}">
 			<td>{{description}}</td>
 			<td>{{getCreatedByUser}}</td>
 			<td>{{formatDate createdAt "MMM DD, YYYY"}}</td>
@@ -57,7 +57,7 @@
 	</thead>
 	<tbody>
 	{{#each toddlerTasks}}
-		<tr id="ai{{_id}}" class={{getTableRowType}}>
+		<tr id="ai{{_id}}" class="action-item-row {{getTableRowClass}}">
 			<td >{{description}}</td>
 			<td>{{getCreatedByUser}}</td>
 			<td>{{formatDate createdAt "MMM DD, YYYY"}}</td>
@@ -80,7 +80,7 @@
 	</thead>
 	<tbody>
 	{{#each completedTasks}}
-		<tr class={{getTableRowType}} id="ai{{_id}}">
+		<tr id="ai{{_id}}" class="action-item-row {{getTableRowClass}}">
 			<td >{{description}}</td>
 			<td>{{getCreatedByUser}}</td>
 			<td>{{formatDate createdAt "MMM DD, YYYY"}}</td>

@@ -16,14 +16,19 @@ Template.classroomDetail.helpers({
   },
 
   daysOfWeek:function(){
-    return ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+    return ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
   },
 
-  hasClass: function(student){
+  /**
+   * Used to fill in the student table cell on the days they have class
+   * @param student
+   * @returns {Schemas.Student.color|{type, label}|color|*|string} the color given to the student
+   */
+  getColorIfhasClass: function(student){
     var today = this.toString().toUpperCase();
     for(var i=0;i<student.daysEnrolled.length;i++){
       if(today === student.daysEnrolled[i].day){
-        return "success";
+        return student.color || '#43ac6a';
       }
     }
   },
