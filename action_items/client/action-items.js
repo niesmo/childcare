@@ -32,7 +32,7 @@ Template.actionItems.helpers({
     }
     var createdByUser= Meteor.users.findOne(actionItem.createdBy);
     var name=createdByUser.profile.firstName+" "+completedByUser.profile.lastName;
-      return name;
+    return name;
   },
 
   getCompletedByUser: function(){
@@ -49,17 +49,17 @@ Template.actionItems.helpers({
     }
   },
   
-  getTableRowType: function(){
-    var rowType="action-item-row";
-	
-	if(!this._id) return ;
+  getTableRowClass: function(){
+    var rowType="";
+
+    if(!this._id) return ;
 
     var actionItem = ActionItems.findOne({_id: this._id});
-	if(actionItem.isSystemMessage)
-	{
-		rowType="danger action-item-row";
-	}
-	return rowType;
+    if(actionItem.isSystemMessage)
+    {
+      rowType="danger";
+    }
+    return rowType;
   }
   
 });

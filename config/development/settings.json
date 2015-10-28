@@ -1,9 +1,0 @@
-{
-  "public": {
-    "features:addClassroom": false
-  },
-  "kadira": { 
-    "appId": "CrLMHcew7j6xjLYYe", 
-    "appSecret": "259bbb09-f510-4f29-bb2b-931df8b3aaa8" 
-  }
-}

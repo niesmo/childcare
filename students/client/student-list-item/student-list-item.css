@@ -6,3 +6,20 @@ img.student-avatar.small{
 li.student-list-item{
   margin-bottom: 10px;
 }
+
+li.student-list-item .student-initials{
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  text-align: center;
+  display: inline-block;
+  border: #3C3C3C solid 1px;
+
+  /*Default background color*/
+  background: darkgreen;
+}
+
+li.student-list-item .student-initials > p{
+  padding-top: 7px;
+  display: inline-block;
+}

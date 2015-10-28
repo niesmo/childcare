@@ -1,3 +1,4 @@
+
 Meteor.startup(function(){
   // add the classes
   var classroomIds = [];
@@ -145,5 +146,6 @@ function getRandom(arr, n) {
     result[n] = arr[x in taken ? taken[x] : x];
     taken[x] = --len;
   }
+
   return result;
 }

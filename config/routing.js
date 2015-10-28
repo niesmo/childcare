@@ -1,4 +1,5 @@
 // make sure that users are signed in for all pages
+
 Router.onBeforeAction(function(pause) {
 
   if (!Meteor.user()) {

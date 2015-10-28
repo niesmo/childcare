@@ -38,7 +38,7 @@ Template.applicationForm.events({
       days: days,
       type: $(event.target).find('input:radio[name=type]:checked').val(),
       group: $(event.target).find('input:radio[name=group]:checked').val(),
-      details: event.target.details.value
+      details: event.target.details.value,
     };
 
 
