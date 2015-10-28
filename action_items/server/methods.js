@@ -18,6 +18,7 @@ Meteor.methods({
       createdBy: Meteor.userId(),
       createdAt: date,
 	  isCompleted: false,
+    isSystemMessage: false
 	  //completedBy: "",
 	  //completedAt: date
     });
@@ -30,14 +31,13 @@ Meteor.methods({
 	type: String
   });
 	var date=new Date();
-	var systemUser=Meteor.users.findOne({"emails.address": "SYSTEM@system.com"});
     return ActionItems.insert({
       title: "title",
       description: task.description,
-      type: task.type,
-      createdBy: systemUser,
+      type: "INFANT",
       createdAt: date,
 	  isCompleted: false,
+    isSystemMessage: true
 	  //completedBy: "",
 	  //completedAt: date
     });

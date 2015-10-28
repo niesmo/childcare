@@ -1,6 +1,10 @@
 Meteor.methods({
-  registerUser: function (email, password) {
+  registerUser: function (firstName,lastName,email, password) {
     return Accounts.createUser({
+      profile: {
+        firstName: firstName,
+        lastName: lastName
+      },
       email: email,
       password: password
     });
