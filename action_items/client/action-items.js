@@ -23,26 +23,6 @@ Template.actionItems.helpers({
     return actionItem;
   },
 
-  getCreatedByUser: function(){
-    if(!this._id) return;
-
-    var actionItem = ActionItems.findOne({_id: this._id});
-    var createdByUser= Meteor.users.findOne(actionItem.createdBy);
-    var name=createdByUser.profile.firstName+" "+completedByUser.profile.lastName;
-      return name;
-  },
-
-  getCompletedByUser: function(){
-    if(!this._id) return ;
-
-    var actionItem = ActionItems.findOne({_id: this._id});
-    var completedByUser= Meteor.users.findOne(actionItem.completedBy);
-    if(completedByUser){
-      var name=completedByUser.profile.firstName+" "+completedByUser.profile.lastName;
-      return name;
-    }
-  },
-  
   getTableRowType: function(){
     var rowType="action-item-row";
 	
@@ -92,7 +72,7 @@ Template.actionItems.events({
     tpl.reset();
   }
   ,
-  'click tr.action-row-item': function (e,tpl) {
+  'click tr.action-item-row': function (e,tpl) {
     // find the id of the selected student
     var id = e.target.id;
 

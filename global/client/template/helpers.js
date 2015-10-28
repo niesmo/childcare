@@ -60,3 +60,22 @@ Template.registerHelper('flexibleColorClass', function(){
 Template.registerHelper('getAge', function(dob){
   return moment().diff(dob, 'years') || "";
 });
+
+Template.registerHelper('getCreatedByUser', function(){
+    if(!this._id) return;
+
+    var actionItem = ActionItems.findOne({_id: this._id});
+    var createdByUser= Meteor.users.findOne(actionItem.createdBy);
+    var name=createdByUser.profile.firstName+" "+createdByUser.profile.lastName;
+      return name;
+});
+
+Template.registerHelper('getCompletedByUser', function(){
+    if(!this._id) return;
+
+    var actionItem = ActionItems.findOne({_id: this._id});
+    var completedByUser= Meteor.users.findOne(actionItem.completedBy);
+    var name=completedByUser.profile.firstName+" "+completedByUser.profile.lastName;
+      return name;
+});
+

@@ -10,17 +10,14 @@ Meteor.methods({
     description: String,
 	type: String
   });
-	var date=new Date();
     return ActionItems.insert({
       title: "title",
       description: task.description,
       type: task.type,
       createdBy: Meteor.userId(),
-      createdAt: date,
+      createdAt: new Date(),
 	  isCompleted: false,
     isSystemMessage: false
-	  //completedBy: "",
-	  //completedAt: date
     });
   },
   addSystemTask: function(task){
@@ -30,26 +27,22 @@ Meteor.methods({
     description: String,
 	type: String
   });
-	var date=new Date();
     return ActionItems.insert({
       title: "title",
       description: task.description,
       type: "INFANT",
-      createdAt: date,
+      createdAt: new Date(),
 	  isCompleted: false,
     isSystemMessage: true
-	  //completedBy: "",
-	  //completedAt: date
     });
   },
   completeTask: function(taskId){
   // Check the different variables passed
     // Use the Check Package https://atmospherejs.com/meteor/check
 	check(taskId, String);
-	var compDate=new Date();
 	//created by
     return ActionItems.update(taskId,{
-        $set: { completedBy:Meteor.userId(), completedAt:compDate, isCompleted:true}
+        $set: { completedBy:Meteor.userId(), completedAt:new Date(), isCompleted:true}
 		});
   },
 
