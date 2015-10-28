@@ -242,24 +242,13 @@ Meteor.methods({
 });
 
 /**
- * Returns a random color to use for students
- * @returns {string} a color
+ *
+ * @param numOfSteps the number of colors to choose from
+ * @param step the current counter used to choose a color along the spectrum
+ * @returns {string} the color that will be assigned to the student
  */
-/*
-function getRandomColor() {
-  var letters = '0123456789ABCDEF'.split('');
-  var color = '#';
-  for (var i = 0; i < 6; i++ ) {
-    color += letters[Math.floor(Math.random() * 16)];
-  }
-  return color;
-}
-*/
-
 function getRandomColor(numOfSteps, step) {
-  // This function generates vibrant, "evenly spaced" colours (i.e. no clustering). This is ideal for creating easily distinguishable vibrant markers in Google Maps and other apps.
-  // Adam Cole, 2011-Sept-14
-  // HSV to RBG adapted from: http://mjijackson.com/2008/02/rgb-to-hsl-and-rgb-to-hsv-color-model-conversion-algorithms-in-javascript
+  // This function generates vibrant, "evenly spaced" colors (i.e. no clustering).
   var r, g, b;
   var h = step / numOfSteps;
   var i = ~~(h * 6);
