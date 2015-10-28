@@ -97,3 +97,7 @@ Template.registerHelper('getAge', function(dob){
 Template.registerHelper('initials', function(){
   return (this.firstName[0] + "." + (this.middleName?this.middleName + ".":"") + this.lastName[0]).toUpperCase();
 });
+
+Template.registerHelper('error', function(){
+  return Session.get('errorMessage');
+});
