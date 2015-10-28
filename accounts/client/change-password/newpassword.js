@@ -24,8 +24,9 @@ Template.newpassword.events({
 
         // call the method to change the password
         Meteor.call("newPassword", currentPassword, newPassword, accountsErrorHandler);
+        alert(Meteor.user().password)
         alert("Password Changed");
-        //Router.go('profile');
+        Router.go('home');
     }
 });
 
