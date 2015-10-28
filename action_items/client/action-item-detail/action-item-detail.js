@@ -12,8 +12,14 @@ Template.actionItemDetail.helpers({
       return "SYSTEM";
     }
     var createdByUser= Meteor.users.findOne(actionItem.createdBy);
-    var name=createdByUser.profile.firstName+" "+completedByUser.profile.lastName;
-      return name;
+    var label = "";
+    try{
+      label = createdByUser.profile.firstName+" "+completedByUser.profile.lastName;
+    }
+    catch(err){
+      label = createdByUser.emails[0].address;
+    }
+    return label;
   },
 
   getCompletedByUser: function(){
@@ -25,8 +31,14 @@ Template.actionItemDetail.helpers({
     }
     var completedByUser= Meteor.users.findOne(actionItem.completedBy);
     if(completedByUser){
-      var name=completedByUser.profile.firstName+" "+completedByUser.profile.lastName;
-      return name;
+      var label = "";
+      try{
+        label = completedByUser.profile.firstName+" "+completedByUser.profile.lastName;
+      }
+      catch(err){
+        label = completedByUser.emails[0].address;
+      }
+      return label;
     }
   }
 });

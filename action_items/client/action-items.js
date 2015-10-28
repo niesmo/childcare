@@ -31,8 +31,14 @@ Template.actionItems.helpers({
       return "SYSTEM";
     }
     var createdByUser= Meteor.users.findOne(actionItem.createdBy);
-    var name=createdByUser.profile.firstName+" "+completedByUser.profile.lastName;
-    return name;
+    var label = "";
+    try{
+      label = createdByUser.profile.firstName+" "+completedByUser.profile.lastName;
+    }
+    catch(err){
+      label = createdByUser.emails[0].address;
+    }
+    return label;
   },
 
   getCompletedByUser: function(){
@@ -44,8 +50,14 @@ Template.actionItems.helpers({
     }
     var completedByUser= Meteor.users.findOne(actionItem.completedBy);
     if(completedByUser){
-      var name=completedByUser.profile.firstName+" "+completedByUser.profile.lastName;
-      return name;
+      var label = "";
+      try{
+        label = completedByUser.profile.firstName+" "+completedByUser.profile.lastName;
+      }
+      catch(err){
+        label = completedByUser.emails[0].address;
+      }
+      return label;
     }
   },
   
@@ -94,13 +106,14 @@ Template.actionItems.events({
       console.log(e, r);
     });
 
-    // clear the form
-    tpl.reset();
   }
   ,
-  'click tr.action-row-item': function (e,tpl) {
+  'click tr.action-item-row': function (e,tpl) {
+
     // find the id of the selected student
-    var id = e.target.id;
+    var id = $(e.target).parent().attr('id');
+
+    console.log(id);
 
     // set the session value to that student
     Session.set('selectedActionItem', id);
