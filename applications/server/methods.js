@@ -39,21 +39,27 @@ Meteor.methods({
     // constructing the days for the student document
     var days = [];
     var week = {M: "monday", T: "tuesday", W: "wednesday", TH: "thursday", F: "friday"};
+    var flexible = false;
+    if(application.flexible=="flexible"){
+      flexible=true;
+    }
     application.days.forEach(function (day) {
       days.push({
         day: week[day].toUpperCase(),
-        flexible: false
+        flexible: flexible
       });
     });
 
     imageId = Random.id();
 
     // color variable to get a unique color for the student
-    var color = getRandomColor();
-    while(studentColors.indexOf(color) !== -1) {
-      color = getRandomColor();
+    var color = getRandomColor(numOfSteps, currentStep);
+    if (currentStep >= numOfSteps) {
+      currentStep -= numOfSteps;
+      curentStep += 7;
+    } else {
+      currentStep += 7;
     }
-    studentColors.push(color);
 
     // insert the student
     var studentId = Students.insert({
@@ -68,7 +74,9 @@ Meteor.methods({
       daysRequested: days,
       image: "http://api.adorable.io/avatars/100/"+ imageId +".png",
       createdAt: new Date(),
-      color: color
+      color: color,
+      details: application.details
+
     });
 
     // inserting the studentParent document
@@ -212,7 +220,7 @@ Meteor.methods({
   },
 
   /**
-   *Increments all student order greater than or equal to order passed
+   *Increments student order with given id
    * @param {{SimpleSchema.RegEx.Id}} id [id of student to increment
    */
   'incrementOrder': function (id) {
@@ -240,17 +248,29 @@ Meteor.methods({
 });
 
 /**
- * Returns a random color to use for students
- * @returns {string} a color
+ *
+ * @param numOfSteps the number of colors to choose from
+ * @param step the current counter used to choose a color along the spectrum
+ * @returns {string} the color that will be assigned to the student
  */
-function getRandomColor() {
-  var letters = '0123456789ABCDEF'.split('');
-  var color = '#';
-  for (var i = 0; i < 6; i++ ) {
-    color += letters[Math.floor(Math.random() * 16)];
+function getRandomColor(numOfSteps, step) {
+  // This function generates vibrant, "evenly spaced" colors (i.e. no clustering).
+  var r, g, b;
+  var h = step / numOfSteps;
+  var i = ~~(h * 6);
+  var f = h * 6 - i;
+  var q = 1 - f;
+  switch(i % 6){
+    case 0: r = 1; g = f; b = 0; break;
+    case 1: r = q; g = 1; b = 0; break;
+    case 2: r = 0; g = 1; b = f; break;
+    case 3: r = 0; g = q; b = 1; break;
+    case 4: r = f; g = 0; b = 1; break;
+    case 5: r = 1; g = 0; b = q; break;
   }
-  return color;
+  var c = "#" + ("00" + (~ ~(r * 255)).toString(16)).slice(-2) + ("00" + (~ ~(g * 255)).toString(16)).slice(-2) + ("00" + (~ ~(b * 255)).toString(16)).slice(-2);
+  return (c);
 }
 
-// an array to store the colors assigned to children
-var studentColors = [];
+var numOfSteps = 50;
+var currentStep = 1;

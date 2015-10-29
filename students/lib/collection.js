@@ -176,6 +176,11 @@ Schemas.Student = new SimpleSchema({
   color: {
     type: String,
     label: "Color"
+  },
+  details:{
+    type: String,
+    label: "Details",
+    optional: true
   }
 });
 

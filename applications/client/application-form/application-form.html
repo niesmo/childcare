@@ -2,7 +2,7 @@
   <h2>Application Form</h2><br>
 
   <div class="row">
-    <div class="col-md-12">
+
       <form role="form">
         <h3>Parent's Information</h3>
         <!-- First name and last name -->
@@ -96,7 +96,7 @@
 
           <div class="col-md-4">
             <div class="form-group">
-              <lable for="lname">Child's Last Name</lable>
+              <label for="lname">Child's Last Name</label>
               <div class="input-group">
                 <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
                 <input class="form-control" type="text" name="lname" id="lname" required>
@@ -145,6 +145,10 @@
           <div class="checkbox-inline"><label for="th"><input class="checkbox" type="checkbox" name="days" value="TH" id="th" /> Thursday</label></div>
           <div class="checkbox-inline"><label for="f"><input class="checkbox" type="checkbox" name="days" value="F" id="f" /> Friday</label></div>
         </div>
+        <div class="form-group">
+          <div class="checkbox-inline"><label for="flexible"><input class="checkbox" type="checkbox" name="flexible" value="flexible" id="flexible"/>
+            Flexible On Days? If so explain in details section</label></div>
+        </div>
 
         <!-- Affiliation -->
         <div class="form-group">
@@ -175,6 +179,6 @@
         <input class="btn btn-primary" type="submit" value="Submit Application" />
         <br /><br />
       </form>
-    </div>
+
   </div>
 </template>

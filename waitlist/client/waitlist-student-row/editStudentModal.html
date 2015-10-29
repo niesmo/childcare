@@ -1,14 +1,78 @@
 <template name="editStudentModal">
   <div class="modal fade">
     <div class="modal-dialog">
+    <div class="modal-lg">
+
       <div class="modal-content">
 
         <div class="modal-header">
-          <h2 class="modal-title">Edit Student</h2>
+          <h2 class="modal-title">Edit Student/Parent</h2>
+        </div>
+        <form role="form">
+        <div class="row">
+
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="pfname">Parent First Name</label>
+              <div class="input-group">
+                <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                <input type="text" class="form-control" name="pfname" value="{{parent.firstName}}" required>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="plname">Parent Last Name</label>
+              <div class="input-group">
+                <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                <input type="text" class="form-control" name="plname" id="plname" value="{{parent.lastName}}" required>
+              </div>
+            </div>
+          </div>
+
         </div>
 
-        <div class="modal-body">
-          <form role="form">
+        <!-- Parent Address -->
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="address">Address</label>
+              <div class="input-group">
+                <span class="input-group-addon"><span class="glyphicon glyphicon-map-marker"></span></span>
+                <input class="form-control" type="text" name="address" id="address" value="{{parent.address}}" required>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="row">
+          <!-- Parents Email -->
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <div class="input-group">
+                <span class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></span>
+                <input class="form-control" type="email" name="email" id="email" value="{{parent.email}}" required>
+              </div>
+            </div>
+          </div>
+
+          <!-- Parents phone number -->
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="phone-number">Phone Number</label>
+              <div class="input-group">
+                <span class="input-group-addon"><span class="glyphicon glyphicon-earphone"></span></span>
+                <input class="form-control" type="text" name="phone-number" id="phone-number" value="{{parent.phoneNumber}}" required>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
             <div class="row">
               <div class="col-md-4">
                 <div class="form-group">
@@ -47,7 +111,7 @@
                   <label for='dob'>Date Of Birth</label>
                   <div class="input-group">
                     <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                    <input class="form-control" type="date" name="dob" id="dob"  value="{{student.dateOfBirth}}" required>
+                    <input class="form-control" type="date" name="dob" id="dob"  value="{{formatDate student.dateOfBirth "YYYY-MM-DD"}}" required>
                   </div>
                 </div>
               </div>
@@ -60,7 +124,7 @@
                   <label for="sdate">Desired Start Date</label>
                   <div class="input-group">
                     <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                    <input class="form-control" type="date" name="sdate" id="sdate" required>
+                    <input class="form-control" type="date" name="sdate" id="sdate" value="{{formatDate student.startDate "YYYY-MM-DD"}}" required>
                   </div>
                 </div>
               </div>
@@ -69,46 +133,92 @@
             <!-- Days -->
             <div class="form-group">
               <h4>Days</h4>
-
-              <div class="checkbox-inline"><label for="m"><input class="checkbox" type="checkbox" name="days" value="M" id="m" /> Monday</label></div>
-              <div class="checkbox-inline"><label for="t"><input class="checkbox" type="checkbox" name="days" value="T" id="t" /> Tuesday</label></div>
-              <div class="checkbox-inline"><label for="w"><input class="checkbox" type="checkbox" name="days" value="W" id="w" /> Wednesday</label></div>
-              <div class="checkbox-inline"><label for="th"><input class="checkbox" type="checkbox" name="days" value="TH" id="th" /> Thursday</label></div>
-              <div class="checkbox-inline"><label for="f"><input class="checkbox" type="checkbox" name="days" value="F" id="f" /> Friday</label></div>
+              {{#if daysChecked 'MONDAY'}}
+                <div class="checkbox-inline"><label for="m"><input class="checkbox" type="checkbox" name="days" value="M" id="m" checked/> Monday</label></div>
+              {{else}}
+                <div class="checkbox-inline"><label for="m"><input class="checkbox" type="checkbox" name="days" value="M" id="m"/> Monday</label></div>
+              {{/if}}
+              {{#if daysChecked 'TUESDAY'}}
+                <div class="checkbox-inline"><label for="t"><input class="checkbox" type="checkbox" name="days" value="T" id="t" checked/> Tuesday</label></div>
+              {{else}}
+                <div class="checkbox-inline"><label for="t"><input class="checkbox" type="checkbox" name="days" value="T" id="t"/> Tuesday</label></div>
+              {{/if}}
+              {{#if daysChecked 'WEDNESDAY'}}
+                <div class="checkbox-inline"><label for="w"><input class="checkbox" type="checkbox" name="days" value="W" id="w" checked/> Wednesday</label></div>
+              {{else}}
+                <div class="checkbox-inline"><label for="w"><input class="checkbox" type="checkbox" name="days" value="W" id="w" /> Wednesday</label></div>
+              {{/if}}
+              {{#if daysChecked 'THURSDAY'}}
+                <div class="checkbox-inline"><label for="th"><input class="checkbox" type="checkbox" name="days" value="TH" id="th" checked/> Thursday</label></div>
+              {{else}}
+                <div class="checkbox-inline"><label for="th"><input class="checkbox" type="checkbox" name="days" value="TH" id="th" /> Thursday</label></div>
+              {{/if}}
+              {{#if daysChecked 'FRIDAY'}}
+                <div class="checkbox-inline"><label for="f"><input class="checkbox" type="checkbox" name="days" value="F" id="f" checked/> Friday</label></div>
+              {{else}}
+                <div class="checkbox-inline"><label for="f"><input class="checkbox" type="checkbox" name="days" value="F" id="f" /> Friday</label></div>
+              {{/if}}
             </div>
+          <div class="form-group">
+            <div class="checkbox-inline"><label for="flexible"><input class="checkbox" type="checkbox" name="flexible" value="flexible" id="flexible"/>
+              Flexible On Days? If so explain in details section</label></div>
+          </div>
 
             <!-- Affiliation -->
             <div class="form-group">
               <h4>Affiliation</h4>
+              {{#if isMember}}
+                <div class="radio-inline"><label for="member"><input class="radio" type="radio" name="type" value="member" id="member" checked> Child of Employee</label></div>
+              {{else}}
+                <div class="radio-inline"><label for="member"><input class="radio" type="radio" name="type" value="member" id="member"> Child of Employee</label></div>
+              {{/if}}
+              {{#if isExisting}}
+                <div class="radio-inline"><label for="existing"><input class="radio" type="radio" name="type" value="existing" id="existing" checked> Current Family</label></div>
+              {{else}}
+                <div class="radio-inline"><label for="existing"><input class="radio" type="radio" name="type" value="existing" id="existing"> Current Family</label></div>
+              {{/if}}
+              {{#if isNew}}
+                <div class="radio-inline"><label for="regular"><input class="radio" type="radio" name="type" value="regular" id="regular" checked> New Family</label></div>
+              {{else}}
+                <div class="radio-inline"><label for="regular"><input class="radio" type="radio" name="type" value="regular" id="regular"> New Family</label></div>
+              {{/if}}
 
-              <div class="radio-inline"><label for="member"><input class="radio" type="radio" name="type" value="member" id="member"> Child of Employee</label></div>
-              <div class="radio-inline"><label for="existing"><input class="radio" type="radio" name="type" value="existing" id="existing"> Current Family</label></div>
-              <div class="radio-inline"><label for="regular"><input class="radio" type="radio" name="type" value="regular" id="regular"> New Family</label></div>
             </div>
 
             <!-- Group -->
             <div class="form-group">
               <h4>Group</h4>
-
-              <div class="radio-inline"><label for="infant"><input class="radio" type="radio" name="group" value="infant" id="infant"> Infant</label></div>
-              <div class="radio-inline"><label for="toddler"><input class="radio" type="radio" name="group" value="toddler" id="toddler"> Toddler</label></div>
+              {{#if isInfant}}
+              <div class="radio-inline"><label for="infant"><input class="radio" type="radio" name="group" value="infant" id="infant" checked> Infant</label></div>
+              {{else}}
+                <div class="radio-inline"><label for="infant"><input class="radio" type="radio" name="group" value="infant" id="infant"> Infant</label></div>
+              {{/if}}
+              {{#if isToddler}}
+                <div class="radio-inline"><label for="toddler"><input class="radio" type="radio" name="group" value="toddler" id="toddler" checked> Toddler</label></div>
+              {{else}}
+                <div class="radio-inline"><label for="toddler"><input class="radio" type="radio" name="group" value="toddler" id="toddler"> Toddler</label></div>
+              {{/if}}
             </div>
 
             <!-- Details -->
             <div class="row">
               <div class="col-md-6">
                 <label for="details">Details</label>
-                <textarea class="form-control" name="details" id="details"></textarea>
+                <textarea class="form-control" name="details" id="details">{{student.details}}</textarea>
               </div>
             </div>
 
             <br>
-            <input class="btn btn-primary" type="submit" value="Edit Student" />
-            <input class="btn btn-primary" type="submit" value="Cancel" />
+          <div class="modal-footer">
+            <input class="btn btn-primary" type="submit" value="Edit Student" id="submit"/>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
           </form>
-        </div>
+
+
 
       </div>
     </div>
+      </div>
   </div>
 </template>
