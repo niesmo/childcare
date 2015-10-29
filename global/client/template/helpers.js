@@ -127,8 +127,13 @@ Template.registerHelper('getCreatedByUser', function(){
     if(!this._id) return;
 
     var actionItem = ActionItems.findOne({_id: this._id});
+    if(actionItem.isSystemMessage){
+      return "System";
+    }
+
     var createdByUser= Meteor.users.findOne(actionItem.createdBy);
     var label = "";
+
     try{
       label = createdByUser.profile.firstName+" "+createdByUser.profile.lastName;
     }
@@ -147,6 +152,10 @@ Template.registerHelper('getCompletedByUser', function(){
     if(!this._id) return;
 
     var actionItem = ActionItems.findOne({_id: this._id});
+    if(actionItem.isSystemMessage){
+      return "System";
+    }
+    
     var completedByUser= Meteor.users.findOne(actionItem.completedBy);
     var label = "";
     try{
