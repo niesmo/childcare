@@ -4,7 +4,7 @@
       <tr>
         <th>Student</th>
         {{#each daysOfWeek}}
-        <th>{{this}}</th>
+          <th>{{this}}</th>
         {{/each}}
       </tr>
     </thead>
@@ -20,7 +20,7 @@
       <tr>
         <td>Daily Ratios</td>
         {{#each daysOfWeek}}
-        <td>{{numOfStudentsPerDay}} / {{totalStudentsAllowed}}</td>
+          <td>{{numOfStudentsPerDay ../_id}} / {{../capacity}}</td>
         {{/each}}
       </tr>
     </tbody>
