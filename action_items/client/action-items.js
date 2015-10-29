@@ -23,23 +23,19 @@ Template.actionItems.helpers({
     return actionItem;
   },
 
-  getCreatedByUser: function(actionItemID){
-    if(!actionItemID) return;
+  getTableRowClass: function(){
+    var rowType="";
 
-    var actionItem = ActionItems.findOne({_id: actionItemID});
-    var createdByUser= Meteor.users.findOne(actionItem.createdBy);
-    return createdByUser.emails[0].address;
-  },
+    if(!this._id) return ;
 
-  getCompletedByUser: function(actionItemID){
-    if(!actionItemID) return ;
-
-    var actionItem = ActionItems.findOne({_id: actionItemID});
-    var completedByUser= Meteor.users.findOne(actionItem.completedBy);
-    if(completedByUser){
-      return completedByUser.emails[0].address;
+    var actionItem = ActionItems.findOne({_id: this._id});
+    if(actionItem.isSystemMessage)
+    {
+      rowType="danger";
     }
+    return rowType;
   }
+  
 });
 
 Template.actionItems.events({
@@ -48,7 +44,6 @@ Template.actionItems.events({
 
     // get the task attributes
     var task = {
-      title: tpl.$("#title").val(),
       description: tpl.$("#description").val(),
       type: tpl.$("#type").val()
     }
@@ -60,38 +55,24 @@ Template.actionItems.events({
     // clear the form
     tpl.reset();
   },
+  "click button.system-task": function(e, tpl){
+    e.preventDefault();
 
-  "submit .new-infantTask": function (event) {
-    // Prevent default browser form submit
-    event.preventDefault();
+    // get the task attributes
+    var task = {
+      description: "System Message",
+      type: tpl.$("#type").val()
+    }
 
-    // Get value from form element
-    var text = event.target.text.value;
+    Meteor.call("addSystemTask", task, function(e, r){
+      console.log(e, r);
+    });
 
-    // Insert a task into the collection
-    Meteor.call("addInfantTask",text);
-
-    // Clear form
-    event.target.text.value = "";
-  },
-
-  "submit .new-toddlerTask": function (event) {
-    // Prevent default browser form submit
-    event.preventDefault();
-
-    // Get value from form element
-    var text = event.target.text.value;
-
-    // Insert a task into the collection
-    Meteor.call("addToddlerTask",text);
-
-    // Clear form
-    event.target.text.value = "";
-  },
-  
-  'click td.action-item': function (e, tpl) {
+  }
+  ,
+  'click tr.action-item-row': function (e,tpl) {
     // find the id of the selected student
-    var id = e.target.id;
+    var id = $(e.target).parent().attr('id');
 
     // set the session value to that student
     Session.set('selectedActionItem', id);

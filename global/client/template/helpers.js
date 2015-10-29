@@ -98,6 +98,46 @@ Template.registerHelper('initials', function(){
   return (this.firstName[0] + "." + (this.middleName?this.middleName + ".":"") + this.lastName[0]).toUpperCase();
 });
 
+/**
+ * This function will return the label (name or email) of the user who created the action item
+ * @param  {String}     @this {ActionItem} This in this function is referencing an action item
+ * @return {String}     The email or name of the user who created the action item
+ */
+Template.registerHelper('getCreatedByUser', function(){
+    if(!this._id) return;
+
+    var actionItem = ActionItems.findOne({_id: this._id});
+    var createdByUser= Meteor.users.findOne(actionItem.createdBy);
+    var label = "";
+    try{
+      label = createdByUser.profile.firstName+" "+createdByUser.profile.lastName;
+    }
+    catch(err){
+      label = createdByUser.emails[0].address;
+    }
+    return label;
+});
+
+/**
+ * This function will return the label (name or email) of the user who completed the action item
+ * @param  {String}     @this {ActionItem} This in this function is referencing an action item
+ * @return {String}     The email or name of the user who completed the action item
+ */
+Template.registerHelper('getCompletedByUser', function(){
+    if(!this._id) return;
+
+    var actionItem = ActionItems.findOne({_id: this._id});
+    var completedByUser= Meteor.users.findOne(actionItem.completedBy);
+    var label = "";
+    try{
+      label = completedByUser.profile.firstName+" "+completedByUser.profile.lastName;
+    }
+    catch(err){
+      label = completedByUser.emails[0].address;
+    }
+    return label;
+});
+
 Template.registerHelper('error', function(){
   return Session.get('errorMessage');
 });

@@ -1,3 +1,5 @@
+Session.setDefault("classType", "INFANT");
+
 Template.classroomDetail.helpers({
   /**
    * All the students in this class
@@ -5,6 +7,12 @@ Template.classroomDetail.helpers({
    */
   students: function(){
     return Students.find({classId: this._id});
+  },
+  
+  classType: function(){
+	var studentWithCorrectGroupId=Students.findOne({classId: this._id});
+	var currentClassType=studentWithCorrectGroupId.group;
+    Session.set("classType", currentClassType);
   },
 
   daysOfWeek:function(){
@@ -23,5 +31,38 @@ Template.classroomDetail.helpers({
         return student.color || '#43ac6a';
       }
     }
+  },
+  
+  /**
+	*Number of students enrolled in this class type in this day
+	*@return number of students enrolled in that class in that day
+	*/
+  numOfStudentsPerDay: function(){
+	var today = this.toString().toUpperCase();
+	var numEnrolled=0;
+	var currentClass=Session.get("classType");
+	var studentCursor = Students.find({group: currentClass});
+	var student;
+	studentCursor.forEach(function(student) {
+		console.log(student.daysEnrolled);
+		for(var j=0;j<student.daysEnrolled.length;j++){
+			if(today == student.daysEnrolled[i].day){
+				numEnrolled++;
+			}
+		}
+	})
+	return numEnrolled;
+  },
+  
+  /**
+	*Total number of students allowed to be enrolled in this class type in this day
+	*@return number of students enrolled in that class in that day
+	*/
+  totalStudentsAllowed: function(){
+	//for each type, we need to have a dynamic number that can be accessed
+	var currentClass=Session.get("classType");
+	console.log(currentClass);
+	var currentClass=Classrooms.findOne({type: currentClass});
+	return currentClass.capacity;
   }
 });
