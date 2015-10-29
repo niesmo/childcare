@@ -86,7 +86,27 @@ Template.registerHelper('flexibleColorClass', function(){
  */ 
 Template.registerHelper('getAge', function(dob){
   var ageInMonths = moment().diff(dob, 'months') || "";
-  return (ageInMonths === "")?"": ageInMonths + " months";
+  // if we could not parse it for some reason
+  if(ageInMonths == ""){
+    // check the baby is less than one month old
+    var ageInDays = moment().diff(dob, 'days');
+    if(ageInDays < 30){
+      return "< 1 Month";
+    }
+    return "";
+  }
+
+  // if the baby is not born yet
+  if(ageInMonths != "" && ageInMonths < 0){
+    return "Not Conceived";
+  }
+
+  // check if the baby is one month old
+  if(ageInMonths == 1){
+    return "1 Month";
+  }
+  
+  return ageInMonths + " Months";
 });
 
 /**

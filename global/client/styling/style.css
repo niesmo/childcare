@@ -16,6 +16,14 @@
   text-transform: capitalize;
 }
 
+.lowercase{
+  text-transform: lowercase;
+}
+
 button.btn-circular{
   border-radius: 50%;
+}
+
+p.large,li.large,a.large{
+  font-size: 20px;
 }
