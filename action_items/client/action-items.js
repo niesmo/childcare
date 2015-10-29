@@ -71,14 +71,8 @@ Template.actionItems.events({
   }
   ,
   'click tr.action-item-row': function (e,tpl) {
-<<<<<<< HEAD
-=======
-
->>>>>>> da0f60ba047e51a4529eb5d09a013a87faf2a879
     // find the id of the selected student
     var id = $(e.target).parent().attr('id');
-
-    console.log(id);
 
     // set the session value to that student
     Session.set('selectedActionItem', id);
