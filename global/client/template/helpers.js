@@ -91,7 +91,7 @@ Template.registerHelper('getAge', function(dob){
     // check the baby is less than one month old
     var ageInDays = moment().diff(dob, 'days');
     if(ageInDays < 30){
-      return "< 1 month";
+      return "< 1 Month";
     }
     return "";
   }
@@ -103,7 +103,7 @@ Template.registerHelper('getAge', function(dob){
 
   // check if the baby is one month old
   if(ageInMonths == 1){
-    return "1 month";
+    return "1 Month";
   }
   
   return ageInMonths + " Months";
