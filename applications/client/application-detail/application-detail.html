@@ -4,6 +4,7 @@
       <dl class="dl-horizontal capitalize">
         <dt>Name</dt><dd>{{firstName}} {{lastName}}</dd>
         <dt>Date of Birth</dt><dd>{{formatDate dateOfBirth 'MMM DD, YYYY'}}</dd>
+        <dt>Age</dt><dd>{{getAge dateOfBirth}}</dd>
         <dt>Class</dt><dd>{{toLower group}}</dd>
         <dt>Affiliation</dt><dd>{{studentAffiliation type}}</dd>
         <dt>Days Requested</dt><dd>
@@ -23,7 +24,7 @@
               <dt>Name</dt><dd>{{firstName}} {{lastName}}</dd>
               <dt>Address</dt><dd>{{address}}</dd>
               <dt>Phone Number</dt><dd>{{phoneNumber}}</dd>
-              <dt>Email</dt><dd><a href="mailto:{{email}}">{{email}}</a></dd>
+              <dt>Email</dt><dd class="lowercase"><a href="mailto:{{email}}">{{email}}</a></dd>
             </dl>
           </li>
         {{/each}}
