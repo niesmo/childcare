@@ -66,8 +66,8 @@ Template.applicationForm.events({
       Errors.insert({message:'Please enter email', seen:false,type:'validation'});
       formValidated=false;
     }
-    if(event.target.dob.value==""){
-      Errors.insert({message:'Please enter Date Of Birth', seen:false,type:'validation'});
+    if(event.target.dob.value=="" && $(event.target).find('input:checkbox[name=nconceived]:checked').val()=="NC"){
+      Errors.insert({message:'Please enter Date Of Birth or select Not Conceived', seen:false,type:'validation'});
       formValidated=false;
     }
     if(event.target.sdate.value==""){
