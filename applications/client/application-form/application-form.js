@@ -58,6 +58,10 @@ Template.applicationForm.events({
       Errors.insert({message:'Please enter state', seen:false,type:'validation'});
       formValidated=false;
     }
+    if(event.target.zip.value==""){
+      Errors.insert({message:'Please enter zip', seen:false,type:'validation'});
+      formValidated=false;
+    }
     if(event.target['phone-number'].value==""){
       Errors.insert({message:'Please enter phone number', seen:false,type:'validation'});
       formValidated=false;
@@ -86,7 +90,8 @@ if(!formValidated){
         address: {
           street: event.target.street.value,
           city: event.target.city.value,
-          state: event.target.state.value
+          state: event.target.state.value,
+          zip: event.target.zip.value
         },
         phone: event.target['phone-number'].value,
         email: event.target.email.value
