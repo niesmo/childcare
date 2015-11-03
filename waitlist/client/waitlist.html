@@ -4,7 +4,7 @@
       <!-- The tab list on top of the page. A tab for each class -->
       <ul class="nav nav-tabs classroom-tabs" role="tablist">
         {{#each classrooms}}
-        <li role="presentation" class="{{isActive @index}}" classroom-id="{{_id}}"><a href="#{{toLower type}}" aria-controls="{{toLower type}}" role="tab" data-toggle="tab">{{toLower type}}</a></li>
+        <li role="presentation" class="tab-classroom-type {{isActive @index}}" classroom-id="{{_id}}"><a href="#{{toLower type}}" aria-controls="{{toLower type}}" role="tab" data-toggle="tab">{{toLower type}}</a></li>
         {{/each}}
       </ul>
 
