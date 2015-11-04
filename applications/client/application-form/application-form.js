@@ -59,7 +59,7 @@ Template.applicationForm.events({
       formValidated=false;
     }
     if(event.target.zip.value==""){
-      Errors.insert({message:'Please enter zip', seen:false,type:'validation'});
+      Errors.insert({message:'Please enter ZIP', seen:false,type:'validation'});
       formValidated=false;
     }
     if(event.target['phone-number'].value==""){
