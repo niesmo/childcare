@@ -29,7 +29,7 @@ Meteor.methods({
     var parentId = Parents.insert({
       firstName: application.parent.firstName,
       lastName: application.parent.lastName,
-      address: application.parent.address.street + " " + application.parent.address.city + " " + application.parent.address.state,
+      address: application.parent.address.street + " " + application.parent.address.city + " " + application.parent.address.state + " " + application.parent.address.zip,
       phoneNumber: application.parent.phone,
       email: application.parent.email,
       image: "http://api.adorable.io/avatars/100/"+ imageId +".png",
