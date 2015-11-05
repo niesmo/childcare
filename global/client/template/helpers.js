@@ -170,3 +170,18 @@ Template.registerHelper('getCompletedByUser', function(){
 Template.registerHelper('error', function(){
   return Session.get('errorMessage');
 });
+
+/**
+ * This function will add a system message to the action items list
+ * @param  {String}     @task Contains a description and task type (Infant or toddler)
+ * @return {String}     The result of the addition to the action item collection
+ */
+ createSystemActionItem = function (task){
+    check(task, {
+    description: String,
+    type: String
+  });
+  return Meteor.call("addSystemTask", task, function(e, r){
+      console.log(e, r);
+    });
+}
