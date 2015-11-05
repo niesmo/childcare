@@ -6,6 +6,7 @@ Template.enrollStudent.helpers({
   daysWaitlisted:function(){
     var id = Session.get('studentToEnroll');
     var student = Students.findOne({_id:id});
+    if(!student) return;
     return student.daysWaitlisted;
   }
 
