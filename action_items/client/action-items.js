@@ -1,5 +1,8 @@
 Template.actionItems.onCreated(function(){
-  Meteor.subscribe("actionItems");
+  Meteor.subscribe("actionItems",{},dataReady);
+  function dataReady(){
+    Session.set("selectedActionItemType", "INFANT");
+  }
 });
 
 Template.actionItems.helpers({
@@ -21,6 +24,10 @@ Template.actionItems.helpers({
 
     var actionItem = ActionItems.findOne({_id: id});
     return actionItem;
+  },
+  actionItemTypes: function(){
+    var itemTypes=["INFANT","TODDLER","COMPLETED"];
+    return itemTypes;
   },
 
   getTableRowClass: function(){
@@ -53,7 +60,8 @@ Template.actionItems.events({
     });
 
     // clear the form
-    tpl.reset();
+    tpl.$("#type").val("INFANT")
+    tpl.$("#description").val("");
   },
   "click button.system-task": function(e, tpl){
     e.preventDefault();
@@ -61,15 +69,13 @@ Template.actionItems.events({
     // get the task attributes
     var task = {
       description: "System Message",
-      type: tpl.$("#type").val()
+      type: "INFANT"
     }
 
-    Meteor.call("addSystemTask", task, function(e, r){
-      console.log(e, r);
-    });
-
-  }
-  ,
+      createSystemActionItem(task);
+      console.log(task.description);
+    
+  },
   'click tr.action-item-row': function (e,tpl) {
     // find the id of the selected student
     var id = $(e.target).parent().attr('id');
@@ -78,8 +84,15 @@ Template.actionItems.events({
     Session.set('selectedActionItem', id);
   },
 
-  'click button.action-item': function (e, tpl) {
+  'click button.complete-action-item': function (e, tpl) {
     console.log(this._id);
     Meteor.call("completeTask",this._id);
+  },
+  'click button.delete-action-item': function (e, tpl) {
+    console.log(this._id);
+    Meteor.call("deleteTask",this._id);
+  },
+  'click .action-item-tabs li': function () {
+    Session.set("selectedActionItemType",  this._id);
   }
 });

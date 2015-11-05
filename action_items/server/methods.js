@@ -20,22 +20,6 @@ Meteor.methods({
     isSystemMessage: false
     });
   },
-  addSystemTask: function(task){
-    // Check the different variables passed
-    // Use the Check Package https://atmospherejs.com/meteor/check
-	check(task, {
-    description: String,
-	type: String
-  });
-    return ActionItems.insert({
-      title: "title",
-      description: task.description,
-      type: "INFANT",
-      createdAt: new Date(),
-	  isCompleted: false,
-    isSystemMessage: true
-    });
-  },
   completeTask: function(taskId){
   // Check the different variables passed
     // Use the Check Package https://atmospherejs.com/meteor/check
@@ -47,17 +31,8 @@ Meteor.methods({
   },
 
 
-  deleteToddlerTask: function (taskId) {
-    ActionItems.remove(taskId);
-  },
-  
-  /*
-  setChecked: function (taskId, setChecked) {
-    ToddlerTasks.update(taskId, { $set: { checked: setChecked} });
-  },
-  */
-
-  deleteInfantTask: function (taskId) {
-    ActionItems.remove(taskId);
+  deleteTask: function (taskId) {
+    check(taskId, String);
+    return ActionItems.remove(taskId);
   }
 });

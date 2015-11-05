@@ -22,73 +22,27 @@
       <input type="submit" class="btn btn-primary" value="Add Task" />
     </form>
   </div>
+  
   <hr />
   <button type="button" class="btn system-task">Add System Task</button>
-  <h4>Infant</h4>
-  <table class="table table-striped">
-  <thead>
-		<tr>
-			<th>Description</th>
-			<th> Created By</th>
-			<th> Date Created</th>
-			<th> Complete Action</th>
-		</tr>
-	</thead>
-	<tbody>
-	{{#each infantTasks}}
-		<tr id="ai{{_id}}" class="action-item-row {{getTableRowClass}}">
-			<td>{{description}}</td>
-			<td>{{getCreatedByUser}}</td>
-			<td>{{formatDate createdAt "MMM DD, YYYY"}}</td>
-			<td><button type="button" class="btn btn-success btn-circular btn-sm action-item"><span class="glyphicon glyphicon-check"></span></button></td>
-		</tr>
-	{{/each}}
-  </tbody></table>
-
-  <h4>Toddler</h4>
-  <table class="table table-striped">
-  <thead>
-		<tr>
-			<th> Description</th>
-			<th> Created By</th>
-			<th> Date Created</th>
-			<th> Complete Action</th>
-		</tr>
-	</thead>
-	<tbody>
-	{{#each toddlerTasks}}
-		<tr id="ai{{_id}}" class="action-item-row {{getTableRowClass}}">
-			<td >{{description}}</td>
-			<td>{{getCreatedByUser}}</td>
-			<td>{{formatDate createdAt "MMM DD, YYYY"}}</td>
-			<td><button type="button" class="btn btn-success btn-circular btn-sm action-item"><span class="glyphicon glyphicon-check"></span></button></td>
-		</tr>
-	{{/each}}
-  </tbody></table>
   
-  <h4>Completed</h4>
-  <table class="table table-striped">
-	<thead>
-		<tr>
-			<th> Description</th>
-			<th> Created By</th>
-			<th> Date Created</th>
-			<th> Type</th>
-			<th> Completed By</th>
-			<th> Date Completed</th>
-		</tr>
-	</thead>
-	<tbody>
-	{{#each completedTasks}}
-		<tr id="ai{{_id}}" class="action-item-row {{getTableRowClass}}">
-			<td >{{description}}</td>
-			<td>{{getCreatedByUser}}</td>
-			<td>{{formatDate createdAt "MMM DD, YYYY"}}</td>
-			<td class="capitalize">{{toLower type}}</td>
-			<td>{{getCompletedByUser}}</td>
-			<td>{{formatDate completedAt "MMM DD, YYYY"}}</td>
-		</tr>
-	{{/each}}
-  </tbody></table>
+  <hr />
+  <div class="col-md-10">
+      <!-- The tab list on top of the page. A tab for each class -->
+      <ul class="nav nav-tabs action-item-tabs" role="tablist">
+        {{#each actionItemTypes}}
+          <li role="presentation" class="{{isActive @index}}" classroom-id="{{_id}}"><a href="#{{toLower this}}" aria-controls="{{toLower this}}" role="tab" data-toggle="tab">{{toLower this}}</a></li>
+        {{/each}}
+      </ul>
+
+      <!-- Each of the tab content -->
+      <div class="tab-content">
+        {{#each actionItemTypes}}
+          <div role="tabpanel" class="tab-pane action-item-tab {{isActive @index}}" id="{{toLower this}}">
+            {{> actionItemTableChooser this}}
+          </div>
+        {{/each}}
+      </div>
+  </div>
 
 </template>
