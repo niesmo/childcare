@@ -13,6 +13,7 @@ Template.applicationForm.events({
     Errors.remove({type:'validation'});
     //retrieve data from form
     var formValidated=true;
+    var notConceived = $(event.target).find('input:checkbox[name=notConceived]:checked').val();
     var days=[];
     $("input:checkbox[name=days]:checked").each(function(){
       days.push($(this).val());
@@ -66,7 +67,7 @@ Template.applicationForm.events({
       Errors.insert({message:'Please enter email', seen:false,type:'validation'});
       formValidated=false;
     }
-    if(event.target.dob.value=="" && $(event.target).find('input:checkbox[name=nconceived]:checked').val()=="NC"){
+    if(event.target.dob.value=="" && notConceived!="NC"){
       Errors.insert({message:'Please enter Date Of Birth or select Not Conceived', seen:false,type:'validation'});
       formValidated=false;
     }
