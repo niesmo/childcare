@@ -51,10 +51,12 @@ Schemas.Student = new SimpleSchema({
     type: Date,
     label: "Date of Birth"
   },
+
   startDate:{
     type: Date,
     label: "Start date"
   },
+  
   moveDate:{
     type: Date,
     label: "Move date",
