@@ -28,3 +28,5 @@ check
 reywood:publish-composite
 momentjs:moment
 peppelg:bootstrap-3-modal
+
+pcel:loading

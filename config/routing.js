@@ -15,6 +15,7 @@ Router.plugin('ensureSignedIn', {
 });
 
 Router.configure({
+  loadingTemplate: 'loading',
   layoutTemplate: 'defaultLayout',
   notFoundTemplate: 'notFound'
 });

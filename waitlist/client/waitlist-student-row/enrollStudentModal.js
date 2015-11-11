@@ -24,3 +24,18 @@ Template.enrollStudent.events({
     Meteor.call('enrollStudent', id ,days);
   }
 });
+
+function enrollCallback(err, res){
+  if(err){
+    Errors.insert({type:'enroll', message:'Something went wrong', seen:false});
+    // Do some real error checking and let the use know what happned
+    console.log(err);
+    alert(err);
+  }
+
+  if(res.status === 201){
+
+    Router.go("applications");
+  }
+  return;
+}

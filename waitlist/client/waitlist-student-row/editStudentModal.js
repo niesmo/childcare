@@ -13,9 +13,9 @@ Template.editStudentModal.helpers({
   parent: function () {
     var studentId = Session.get('studentToEdit');
     var studentParent = StudentParents.findOne({studentId: studentId});
-    var parent = Parents.findOne({_id: studentParent.parentId});
-
-    return Parents.findOne({_id: studentParent.parentId});
+    var parentObj = Parents.findOne({_id: studentParent.parentId});
+    var pId = parentObj._id;
+    return parentObj;
   },
   daysChecked:function(day){
 
@@ -28,8 +28,10 @@ Template.editStudentModal.helpers({
       }
       i++;
     }
-
     return false;
+  },
+  flexable:function(){
+
   },
   isMember:function() {
     var id=Session.get('studentToEdit');

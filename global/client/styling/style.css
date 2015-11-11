@@ -27,3 +27,24 @@ button.btn-circular{
 p.large,li.large,a.large{
   font-size: 20px;
 }
+
+.loading-message {
+  color: #fff;
+  font-size: 25px;
+  font-weight: 300;
+  font-family: sans-serif;
+}
+
+.sk-spinner-rotating-plane.sk-spinner {
+  background-color: #fff;
+}
+
+.grey{
+  background-color: #FFFAF0;
+  border-radius: 10px;
+}
+
+.addParentButton {
+  height: 50% !important;
+
+}
