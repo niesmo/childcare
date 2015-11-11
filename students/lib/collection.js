@@ -49,7 +49,12 @@ Schemas.Student = new SimpleSchema({
 
   dateOfBirth: {
     type: Date,
-    label: "Date of Birth"
+    label: "Date of Birth",
+    optional: true
+  },
+  conceived: {
+    type: Boolean,
+    label: "Conceived"
   },
   startDate:{
     type: Date,

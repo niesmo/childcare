@@ -13,6 +13,7 @@ Template.applicationForm.events({
     Errors.remove({type:'validation'});
     //retrieve data from form
     var formValidated=true;
+    var notConceived = $(event.target).find('input:checkbox[name=notConceived]:checked').val();
     var days=[];
     $("input:checkbox[name=days]:checked").each(function(){
       days.push($(this).val());
@@ -70,8 +71,8 @@ Template.applicationForm.events({
       Errors.insert({message:'Please enter email', seen:false,type:'validation'});
       formValidated=false;
     }
-    if(event.target.dob.value==""){
-      Errors.insert({message:'Please enter Date Of Birth', seen:false,type:'validation'});
+    if(event.target.dob.value=="" && notConceived!="NC"){
+      Errors.insert({message:'Please enter Date Of Birth or select Not Conceived', seen:false,type:'validation'});
       formValidated=false;
     }
     if(event.target.sdate.value==""){
@@ -101,6 +102,7 @@ if(!formValidated){
         firstName: event.target.fname.value,
         lastName: event.target.lname.value,
         dob: event.target.dob.value,
+        conceived: notConceived
       },
 
       // Other details of the application
@@ -139,7 +141,7 @@ function createApplicationCallback(err, res){
     Errors.insert({type:'application', message:'Something went wrong', seen:false});
     // Do some real error checking and let the use know what happned
     console.log(err);
-    alert(err);
+   // alert(err);
   }
 
   if(res.status === 201){
