@@ -97,6 +97,7 @@ if(!formValidated){
         firstName: event.target.fname.value,
         lastName: event.target.lname.value,
         dob: event.target.dob.value,
+        conceived: notConceived
       },
 
       // Other details of the application
@@ -135,7 +136,7 @@ function createApplicationCallback(err, res){
     Errors.insert({type:'application', message:'Something went wrong', seen:false});
     // Do some real error checking and let the use know what happned
     console.log(err);
-    alert(err);
+   // alert(err);
   }
 
   if(res.status === 201){
