@@ -157,7 +157,7 @@ Template.registerHelper('getCompletedByUser', function(){
     if(!this._id) return;
 
     var actionItem = ActionItems.findOne({_id: this._id});
-    if(actionItem.isSystemMessage){
+    if(actionItem.isSystemMessage&&actionItem.isCompleted){
       return "System";
     }
     
