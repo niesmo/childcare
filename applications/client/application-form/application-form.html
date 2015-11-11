@@ -4,7 +4,7 @@
       <h2>Enrollment Application Form</h2>
       {{>errors}}
       <form role="form">
-      <h3>Parent's Information</h3>
+      <h3>Parent's Information <button type="button" class="btn btn-primary add" id="addParent">Add another Parent</button></h3>
       <!-- First name and last name -->
       <div class="row">
 
@@ -29,6 +29,29 @@
         </div>
 
       </div>
+        <div class="row"  id="endParent">
+          <!-- Parents Email -->
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <div class="input-group">
+                <span class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></span>
+                <input class="form-control" type="email" name="email" id="email">
+              </div>
+            </div>
+          </div>
+
+          <!-- Parents phone number -->
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="phone-number">Phone Number</label>
+              <div class="input-group">
+                <span class="input-group-addon"><span class="glyphicon glyphicon-earphone"></span></span>
+                <input class="form-control" type="text" name="phone-number" id="phone-number" placeholder="(xxx)xxx-xxxx">
+              </div>
+            </div>
+          </div>
+        </div>
 
       <!-- Parent Address -->
       <div class="row">
@@ -64,29 +87,7 @@
         </div>
       </div>
 
-      <div class="row">
-        <!-- Parents Email -->
-        <div class="col-md-4">
-          <div class="form-group">
-            <label for="email">Email Address</label>
-            <div class="input-group">
-              <span class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></span>
-              <input class="form-control" type="email" name="email" id="email">
-            </div>
-          </div>
-        </div>
 
-        <!-- Parents phone number -->
-        <div class="col-md-4">
-          <div class="form-group">
-            <label for="phone-number">Phone Number</label>
-            <div class="input-group">
-              <span class="input-group-addon"><span class="glyphicon glyphicon-earphone"></span></span>
-              <input class="form-control" type="text" name="phone-number" id="phone-number" placeholder="(xxx)xxx-xxxx">
-            </div>
-          </div>
-        </div>
-      </div>
 
       <h3>Child's Information</h3>
       <!-- Student First and Last Name -->

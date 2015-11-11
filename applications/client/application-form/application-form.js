@@ -2,6 +2,25 @@
 Template.applicationForm.rendered = function(){
   Errors.remove({type:'validation'});
 };
+
+//detect button click with onClick function rather than event because button was created dynamically with jquery
+$(document).on('click', '#collapse', function() {
+
+  $("#secondParentFirstAndLast").remove();
+  $("#secondParentContact").remove();
+  $("#collapse").replaceWith("<button type=\"button\" class=\"btn btn-primary add\" id=\"addParent\">Add another Parent</button>");
+  Session.set("secondParent", false);
+
+});
+
+$(document).on('click', '#addParent', function(){
+
+  $("#endParent").after(secondParent); //secondParent is global variable containing html string for second parent
+  $("#addParent").replaceWith("<button type=\"button\" class=\"btn btn-primary\" id=\"collapse\">Collapse</button>");
+  Session.set("secondParent", true);
+
+});
+
 Template.applicationForm.events({
   /**
    * Submits form and inserts student and parent information. Will appear on waitlist.
@@ -83,6 +102,9 @@ if(!formValidated){
   scroll(0,0);
   return;
 }
+    var secondParent = Session.get('secondParent'); //returns true if second parent input is activated
+    var parent2={};
+
     var application = {
       // Parent Information
       parent:{
@@ -115,6 +137,14 @@ if(!formValidated){
     };
 
 
+    if(secondParent){
+      var parent2 = {firstName: event.target.secondPfname.value,
+        lastName: event.target.secondPlname.value,
+        email: event.target.secondEmail.value,
+        phone: event.target['second-phone-number'].value,
+        address: application.parent.address,
+        active: true};
+    }
 
     // console.log(application);
 
@@ -122,7 +152,7 @@ if(!formValidated){
     // var parentObj=({plname:plname,pfname:pfname,address:address,email:email,phone:phone});
     // var detailsObj=({days:days, type:type, details:details,requestedStart:requestedStart,paid:false});
     Errors.remove({});
-    Meteor.call("createApplication", application, createApplicationCallback);
+    Meteor.call("createApplication", application, parent2, createApplicationCallback);
 
     // Clear the form
     scroll(0,0);
