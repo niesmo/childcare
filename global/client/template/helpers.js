@@ -39,6 +39,11 @@ Template.registerHelper('isActive', function(index){
 });
 
 Template.registerHelper('formatDate', function(date, format){
+  if(date==undefined)
+  {
+    //if returning undefined, this is not completed so has no date
+    return "";
+  }
   return moment(date).format(format);
 });
 
@@ -158,6 +163,10 @@ Template.registerHelper('getCompletedByUser', function(){
     
     var completedByUser= Meteor.users.findOne(actionItem.completedBy);
     var label = "";
+    if (!(actionItem.isCompleted))
+    {
+      return label;
+    }
     try{
       label = completedByUser.profile.firstName+" "+completedByUser.profile.lastName;
     }

@@ -5,8 +5,7 @@
         <th>Description</th>
         <th>Created By</th>
         <th>Date Created</th>
-        <th>Complete Action</th>
-        <th>Delete Item</th>
+        <th>Actions</th>
       </tr>
     </thead>
     <tbody>
@@ -15,8 +14,7 @@
           <td>{{description}}</td>
           <td>{{getCreatedByUser}}</td>
           <td>{{formatDate createdAt "MMM DD, YYYY"}}</td>
-          <td><button type="button" title="Complete Action Item" class="btn btn-success btn-circular btn-sm complete-action-item"><span class="glyphicon glyphicon-check"></span></button></td>
-          <td><button type="button" title="Remove Action Item" class="btn btn-danger btn-circular delete-action-item"><span class="glyphicon glyphicon-trash"></span></button></td>
+          <td><button type="button" title="Complete Action Item" class="btn btn-success btn-circular btn-sm complete-action-item"><span class="glyphicon glyphicon-check"></span></button><button type="button" title="Remove Action Item" class="btn btn-danger btn-circular btn-sm delete-action-item"><span class="glyphicon glyphicon-trash"></span></button></td>
         </tr>
       {{/each}}
     </tbody>
