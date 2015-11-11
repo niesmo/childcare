@@ -53,7 +53,17 @@ Meteor.methods({
     imageId = Random.id();
 
     // color variable to get a unique color for the student
+    var lastUsedColor = Color.findOne().color;
+    Color.remove({color: lastUsedColor});
+    console.log("Last used color: " + lastUsedColor);
+    var colorIndex = colorArray.lastIndexOf(lastUsedColor);
+    console.log("Color index: " + colorIndex);
+    var colorsToReorder = colorArray.slice(colorIndex+1);
+    colorArray.splice(0, colorIndex+1);
+    colorArray.concat(colorsToReorder);
     var color = colorArray.shift();
+    Color.insert({color: color});
+    console.log("Color to use: " + color);
     colorArray.push(color);
 
     // insert the student
@@ -137,7 +147,7 @@ Meteor.methods({
 
   /**
    * [Insert into parent collection]
-   * @param  {{parent object}} parent [object containting all required information of a parent containing variables below]
+   * @param  {{parent object}} parent [object containing all required information of a parent containing variables below]
    * @var  {[string]} lname   [Last name of parent]
    * @var  {[string]} fname   [First name of parent]
    * @var  {[string]} email   [email address]
@@ -243,3 +253,4 @@ Meteor.methods({
 });
 
 var colorArray = ["#1abc9c", "#16a085", "#f1c40f", "#f39c12", "#1abc9c", "#16a085", "#f1c40f", "#f39c12", "#2ecc71", "#27ae60", "#e67e22", "#d35400", "#2ecc71", "#27ae60"];
+Color.insert({color: "#27ae60"});
