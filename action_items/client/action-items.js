@@ -54,7 +54,7 @@ Template.actionItems.events({
       description: tpl.$("#description").val(),
       type: tpl.$("#type").val()
     }
-
+    
     Meteor.call("addTask", task, function(e, r){
       console.log(e, r);
     });

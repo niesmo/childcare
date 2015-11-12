@@ -39,6 +39,11 @@ Template.registerHelper('isActive', function(index){
 });
 
 Template.registerHelper('formatDate', function(date, format){
+  if(date==undefined)
+  {
+    //if returning undefined, this is not completed so has no date
+    return "";
+  }
   return moment(date).format(format);
 });
 
@@ -156,13 +161,15 @@ Template.registerHelper('getCreatedByUser', function(){
  */
 Template.registerHelper('getCompletedByUser', function(){
   if(!this || Object.keys(this).length === 0) return;
-  console.log(this);
 
   var actionItem = ActionItems.findOne({_id: this._id});
-  if(actionItem.isSystemMessage){
+  if(actionItem.isSystemMessage && actionItem.isCompleted){
     return "System";
   }
-  
+
+  // if the action is not completed return empty string
+  if (!actionItem.isCompleted) return ""
+
   var completedByUser= Meteor.users.findOne(actionItem.completedBy);
   var label = "";
   try{
