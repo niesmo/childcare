@@ -49,7 +49,12 @@ Schemas.Student = new SimpleSchema({
 
   dateOfBirth: {
     type: Date,
-    label: "Date of Birth"
+    label: "Date of Birth",
+    optional: true
+  },
+  conceived: {
+    type: Boolean,
+    label: "Conceived"
   },
 
   startDate:{
@@ -179,6 +184,7 @@ Schemas.Student = new SimpleSchema({
     type: String,
     label: "Color"
   },
+
   details:{
     type: String,
     label: "Details",
@@ -186,4 +192,14 @@ Schemas.Student = new SimpleSchema({
   }
 });
 
+Schemas.Color = new SimpleSchema({
+  color: {
+    type: String,
+    label: "Color"
+  }
+});
+
 Students.attachSchema(Schemas.Student);
+
+Color = new Mongo.Collection("color");
+Color.attachSchema(Schemas.Color);

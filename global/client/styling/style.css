@@ -31,3 +31,8 @@ p.large,li.large,a.large{
 .no-outline{
   outline: none !important;
 }
+
+.secondParentBackground{
+  background-color: #FFFAF0;
+  border-radius: 10px;
+}

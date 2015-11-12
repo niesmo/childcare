@@ -2,6 +2,25 @@
 Template.applicationForm.rendered = function(){
   Errors.remove({type:'validation'});
 };
+
+//detect button click with onClick function rather than event because button was created dynamically with jquery
+$(document).on('click', '#collapse', function() {
+
+  $("#secondParentFirstAndLast").remove();
+  $("#secondParentContact").remove();
+  $("#collapse").replaceWith("<button type=\"button\" class=\"btn btn-primary add\" id=\"addParent\">Add another Parent</button>");
+  Session.set("secondParent", false);
+
+});
+
+$(document).on('click', '#addParent', function(){
+
+  $("#endParent").after(secondParent); //secondParent is global variable containing html string for second parent
+  $("#addParent").replaceWith("<button type=\"button\" class=\"btn btn-primary\" id=\"collapse\">Collapse</button>");
+  Session.set("secondParent", true);
+
+});
+
 Template.applicationForm.events({
   /**
    * Submits form and inserts student and parent information. Will appear on waitlist.
@@ -13,6 +32,7 @@ Template.applicationForm.events({
     Errors.remove({type:'validation'});
     //retrieve data from form
     var formValidated=true;
+    var notConceived = $(event.target).find('input:checkbox[name=notConceived]:checked').val();
     var days=[];
     $("input:checkbox[name=days]:checked").each(function(){
       days.push($(this).val());
@@ -70,8 +90,8 @@ Template.applicationForm.events({
       Errors.insert({message:'Please enter email', seen:false,type:'validation'});
       formValidated=false;
     }
-    if(event.target.dob.value==""){
-      Errors.insert({message:'Please enter Date Of Birth', seen:false,type:'validation'});
+    if(event.target.dob.value=="" && notConceived!="NC"){
+      Errors.insert({message:'Please enter Date Of Birth or select Not Conceived', seen:false,type:'validation'});
       formValidated=false;
     }
     if(event.target.sdate.value==""){
@@ -82,6 +102,9 @@ if(!formValidated){
   scroll(0,0);
   return;
 }
+    var secondParent = Session.get('secondParent'); //returns true if second parent input is activated
+    var parent2={};
+
     var application = {
       // Parent Information
       parent:{
@@ -101,6 +124,7 @@ if(!formValidated){
         firstName: event.target.fname.value,
         lastName: event.target.lname.value,
         dob: event.target.dob.value,
+        conceived: notConceived
       },
 
       // Other details of the application
@@ -113,6 +137,14 @@ if(!formValidated){
     };
 
 
+    if(secondParent){
+      var parent2 = {firstName: event.target.secondPfname.value,
+        lastName: event.target.secondPlname.value,
+        email: event.target.secondEmail.value,
+        phone: event.target['second-phone-number'].value,
+        address: application.parent.address,
+        active: true};
+    }
 
     // console.log(application);
 
@@ -120,7 +152,7 @@ if(!formValidated){
     // var parentObj=({plname:plname,pfname:pfname,address:address,email:email,phone:phone});
     // var detailsObj=({days:days, type:type, details:details,requestedStart:requestedStart,paid:false});
     Errors.remove({});
-    Meteor.call("createApplication", application, createApplicationCallback);
+    Meteor.call("createApplication", application, parent2, createApplicationCallback);
 
     // Clear the form
     scroll(0,0);
@@ -139,7 +171,7 @@ function createApplicationCallback(err, res){
     Errors.insert({type:'application', message:'Something went wrong', seen:false});
     // Do some real error checking and let the use know what happned
     console.log(err);
-    alert(err);
+   // alert(err);
   }
 
   if(res.status === 201){
