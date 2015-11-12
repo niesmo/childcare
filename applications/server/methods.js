@@ -9,7 +9,7 @@ Meteor.methods({
    * @param  {Object} application All the information submitted from the client
    * @return {}             Result of the operations
    */
-  'createApplication': function(application){
+  'createApplication': function(application, parent2){
     // check to see if they have selected at least one day
     if(application.days.length === 0){
       throw new Meteor.error("No day select",
@@ -20,6 +20,17 @@ Meteor.methods({
     if(new Date(application.startDate) < new Date()){
       throw new Meteor.error("Start date in the past",
         "You must select a start date in the future");
+    }
+    //checking if not conceived was checked on application
+    var conceived;
+    if(application.student.conceived=="NC"){
+      conceived = true;
+    }
+    else{
+      conceived=false;
+    }
+    if(!conceived && application.student.dob==null){
+      throw new Meteor.error("must either have dob selected or not conceived selected");
     }
 
 
@@ -66,23 +77,45 @@ Meteor.methods({
     console.log("Color to use: " + color);
     colorArray.push(color);
 
-    // insert the student
-    var studentId = Students.insert({
-      firstName: application.student.firstName,
-      lastName: application.student.lastName,
-      dateOfBirth: new Date(application.student.dob),
-      group: application.group.toUpperCase(),
-      status: "application".toUpperCase(),
-      type: application.type.toUpperCase(),
-      paidApplicationFee: false,
-      startDate: application.startDate,
-      daysRequested: days,
-      image: "http://api.adorable.io/avatars/100/"+ imageId +".png",
-      createdAt: new Date(),
-      color: color,
-      details: application.details
+    // insert the student, check if conceived to determine if dob should be inserted
+    if(!conceived) {
+      var studentId = Students.insert({
+        firstName: application.student.firstName,
+        lastName: application.student.lastName,
+        dateOfBirth: new Date(application.student.dob),
+        group: application.group.toUpperCase(),
+        status: "application".toUpperCase(),
+        type: application.type.toUpperCase(),
+        paidApplicationFee: false,
+        startDate: application.startDate,
+        daysRequested: days,
+        image: "http://api.adorable.io/avatars/100/" + imageId + ".png",
+        createdAt: new Date(),
+        color: color,
+        details: application.details,
+        conceived: conceived
 
-    });
+      });
+    }
+    else{
+      var studentId = Students.insert({
+        firstName: application.student.firstName,
+        lastName: application.student.lastName,
+  //      dateOfBirth: new Date(application.student.dob),
+        group: application.group.toUpperCase(),
+        status: "application".toUpperCase(),
+        type: application.type.toUpperCase(),
+        paidApplicationFee: false,
+        startDate: application.startDate,
+        daysRequested: days,
+        image: "http://api.adorable.io/avatars/100/" + imageId + ".png",
+        createdAt: new Date(),
+        color: color,
+        details: application.details,
+        conceived: conceived
+      });
+
+    }
 
     // inserting the studentParent document
     var studentParentId = StudentParents.insert({
@@ -91,6 +124,25 @@ Meteor.methods({
       isPrimary: true,
       createdAt: new Date()
     });
+
+    //check if there is second parent and then add parent
+    if(parent2.active){
+      var secondParentId = Parents.insert({
+        firstName: parent2.firstName,
+        lastName: parent2.lastName,
+        address: parent2.address.street + " " + application.parent.address.city + " " + application.parent.address.state + " " + application.parent.address.zip,
+        phoneNumber: parent2.phone,
+        email: parent2.email,
+        image: "http://api.adorable.io/avatars/100/"+ imageId +".png",
+        createdAt: new Date()
+      });
+      var studentParentId = StudentParents.insert({
+        studentId: studentId,
+        parentId: secondParentId,
+        isPrimary: true,
+        createdAt: new Date()
+      });
+    }
 
     return {
       status: "201",
@@ -208,7 +260,8 @@ Meteor.methods({
       group: student.group,
       paidApplicationFee:details.paid,
       createdAt: new Date(), // current time
-      color: student.color
+      color: student.color,
+
     });
 
     return id;
