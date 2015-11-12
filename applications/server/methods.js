@@ -17,19 +17,20 @@ Meteor.methods({
     }
 
     // check if the start date is not before today
-    if(new Date(application.startDate) < new Date()){
+    /*if(new Date(application.startDate) < new Date()){
       throw new Meteor.error("Start date in the past",
         "You must select a start date in the future");
     }
+    */
     //checking if not conceived was checked on application
-    var conceived;
+    var notConceived;
     if(application.student.conceived=="NC"){
-      conceived = true;
+      notConceived = true;
     }
     else{
-      conceived=false;
+      notConceived=false;
     }
-    if(!conceived && application.student.dob==null){
+    if(!notConceived && application.student.dob==null){
       throw new Meteor.error("must either have dob selected or not conceived selected");
     }
 
@@ -89,7 +90,7 @@ Meteor.methods({
     console.log("Move date: " + moveDate);
 
     // insert the student, check if conceived to determine if dob should be inserted
-    if(!conceived) {
+    if(!notConceived) {
       var studentId = Students.insert({
         firstName: application.student.firstName,
         lastName: application.student.lastName,
@@ -105,7 +106,7 @@ Meteor.methods({
         createdAt: new Date(),
         color: color,
         details: application.details,
-        conceived: conceived
+        conceived: notConceived
 
       });
     }
@@ -124,7 +125,7 @@ Meteor.methods({
         createdAt: new Date(),
         color: color,
         details: application.details,
-        conceived: conceived
+        conceived: notConceived
       });
 
     }
