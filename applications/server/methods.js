@@ -65,16 +65,13 @@ Meteor.methods({
 
     // color variable to get a unique color for the student
     var lastUsedColor = Color.findOne().color;
-    console.log("Last used color: " + lastUsedColor);
     var colorIndex = colorArray.lastIndexOf(lastUsedColor);
-    console.log("Color index: " + colorIndex);
     for (i=0;i<=colorIndex;i++) {
       colorArray.push(colorArray.shift());
     }
     var color = colorArray.shift();
     Color.remove({color: lastUsedColor});
     Color.insert({color: color});
-    console.log("Color to use: " + color);
     colorArray.push(color);
 
     // insert the student, check if conceived to determine if dob should be inserted
