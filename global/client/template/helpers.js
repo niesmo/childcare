@@ -124,23 +124,29 @@ Template.registerHelper('initials', function(){
  * @return {String}     The email or name of the user who created the action item
  */
 Template.registerHelper('getCreatedByUser', function(){
-    if(!this._id) return;
+  // console.log("THIS: ", this);
+  if(!this || Object.keys(this).length === 0) return;
+  console.log(this);
 
-    var actionItem = ActionItems.findOne({_id: this._id});
-    if(actionItem.isSystemMessage){
-      return "System";
-    }
 
-    var createdByUser= Meteor.users.findOne(actionItem.createdBy);
-    var label = "";
+  var actionItem = ActionItems.findOne({_id: this._id});
+  if(actionItem.isSystemMessage){
+    return "System";
+  }
 
-    try{
-      label = createdByUser.profile.firstName+" "+createdByUser.profile.lastName;
-    }
-    catch(err){
-      label = createdByUser.emails[0].address;
-    }
-    return label;
+  var createdByUser= Meteor.users.findOne(actionItem.createdBy);
+  var label = "";
+
+  console.log("Action item.CreatedBy", actionItem.createdBy);
+  console.log("User: ", createdByUser);
+
+  try{
+    label = createdByUser.profile.firstName+" "+createdByUser.profile.lastName;
+  }
+  catch(err){
+    label = createdByUser.emails[0].address;
+  }
+  return label;
 });
 
 /**
@@ -149,22 +155,23 @@ Template.registerHelper('getCreatedByUser', function(){
  * @return {String}     The email or name of the user who completed the action item
  */
 Template.registerHelper('getCompletedByUser', function(){
-    if(!this._id) return;
+  if(!this || Object.keys(this).length === 0) return;
+  console.log(this);
 
-    var actionItem = ActionItems.findOne({_id: this._id});
-    if(actionItem.isSystemMessage){
-      return "System";
-    }
-    
-    var completedByUser= Meteor.users.findOne(actionItem.completedBy);
-    var label = "";
-    try{
-      label = completedByUser.profile.firstName+" "+completedByUser.profile.lastName;
-    }
-    catch(err){
-      label = completedByUser.emails[0].address;
-    }
-    return label;
+  var actionItem = ActionItems.findOne({_id: this._id});
+  if(actionItem.isSystemMessage){
+    return "System";
+  }
+  
+  var completedByUser= Meteor.users.findOne(actionItem.completedBy);
+  var label = "";
+  try{
+    label = completedByUser.profile.firstName+" "+completedByUser.profile.lastName;
+  }
+  catch(err){
+    label = completedByUser.emails[0].address;
+  }
+  return label;
 });
 
 Template.registerHelper('error', function(){
