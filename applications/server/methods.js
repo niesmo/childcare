@@ -64,13 +64,15 @@ Meteor.methods({
     imageId = Random.id();
 
     // color variable to get a unique color for the student
-    var color = getRandomColor(numOfSteps, currentStep);
-    if (currentStep >= numOfSteps) {
-      currentStep -= numOfSteps;
-      curentStep += 7;
-    } else {
-      currentStep += 7;
+    var lastUsedColor = Color.findOne().color;
+    var colorIndex = colorArray.lastIndexOf(lastUsedColor);
+    for (i=0;i<=colorIndex;i++) {
+      colorArray.push(colorArray.shift());
     }
+    var color = colorArray.shift();
+    Color.remove({color: lastUsedColor});
+    Color.insert({color: color});
+    colorArray.push(color);
 
     // insert the student, check if conceived to determine if dob should be inserted
     if(!conceived) {
@@ -194,7 +196,7 @@ Meteor.methods({
 
   /**
    * [Insert into parent collection]
-   * @param  {{parent object}} parent [object containting all required information of a parent containing variables below]
+   * @param  {{parent object}} parent [object containing all required information of a parent containing variables below]
    * @var  {[string]} lname   [Last name of parent]
    * @var  {[string]} fname   [First name of parent]
    * @var  {[string]} email   [email address]
@@ -300,30 +302,7 @@ Meteor.methods({
   }
 });
 
-/**
- *
- * @param numOfSteps the number of colors to choose from
- * @param step the current counter used to choose a color along the spectrum
- * @returns {string} the color that will be assigned to the student
- */
-function getRandomColor(numOfSteps, step) {
-  // This function generates vibrant, "evenly spaced" colors (i.e. no clustering).
-  var r, g, b;
-  var h = step / numOfSteps;
-  var i = ~~(h * 6);
-  var f = h * 6 - i;
-  var q = 1 - f;
-  switch(i % 6){
-    case 0: r = 1; g = f; b = 0; break;
-    case 1: r = q; g = 1; b = 0; break;
-    case 2: r = 0; g = 1; b = f; break;
-    case 3: r = 0; g = q; b = 1; break;
-    case 4: r = f; g = 0; b = 1; break;
-    case 5: r = 1; g = 0; b = q; break;
-  }
-  var c = "#" + ("00" + (~ ~(r * 255)).toString(16)).slice(-2) + ("00" + (~ ~(g * 255)).toString(16)).slice(-2) + ("00" + (~ ~(b * 255)).toString(16)).slice(-2);
-  return (c);
+var colorArray = ["#1abc9c", "#16a085", "#f1c40f", "#f39c12", "#1abc9c", "#16a085", "#f1c40f", "#f39c12", "#2ecc71", "#27ae60", "#e67e22", "#d35400", "#2ecc71", "#27ae60"];
+if (Color.findOne() == null) {
+  Color.insert({color: "#27ae60"});
 }
-
-var numOfSteps = 50;
-var currentStep = 1;
