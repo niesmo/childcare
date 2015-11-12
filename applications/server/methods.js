@@ -54,14 +54,14 @@ Meteor.methods({
 
     // color variable to get a unique color for the student
     var lastUsedColor = Color.findOne().color;
-    Color.remove({color: lastUsedColor});
     console.log("Last used color: " + lastUsedColor);
     var colorIndex = colorArray.lastIndexOf(lastUsedColor);
     console.log("Color index: " + colorIndex);
-    var colorsToReorder = colorArray.slice(colorIndex+1);
-    colorArray.splice(0, colorIndex+1);
-    colorArray.concat(colorsToReorder);
+    for (i=0;i<=colorIndex;i++) {
+      colorArray.push(colorArray.shift());
+    }
     var color = colorArray.shift();
+    Color.remove({color: lastUsedColor});
     Color.insert({color: color});
     console.log("Color to use: " + color);
     colorArray.push(color);
@@ -253,4 +253,6 @@ Meteor.methods({
 });
 
 var colorArray = ["#1abc9c", "#16a085", "#f1c40f", "#f39c12", "#1abc9c", "#16a085", "#f1c40f", "#f39c12", "#2ecc71", "#27ae60", "#e67e22", "#d35400", "#2ecc71", "#27ae60"];
-Color.insert({color: "#27ae60"});
+if (Color.findOne() == null) {
+  Color.insert({color: "#27ae60"});
+}
