@@ -84,6 +84,7 @@ Meteor.methods({
       monthsToMoveDate = 36 - ageInMonths;
       moveDate = new Date(new Date(dob).setMonth(dob.getMonth()+monthsToMoveDate));
     }
+    console.log("Move date: " + moveDate);
 
     // insert the student, check if conceived to determine if dob should be inserted
     if(!conceived) {
