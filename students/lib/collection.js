@@ -190,14 +190,4 @@ Schemas.Student = new SimpleSchema({
   }
 });
 
-Schemas.Color = new SimpleSchema({
-  color: {
-    type: String,
-    label: "Color"
-  }
-});
-
 Students.attachSchema(Schemas.Student);
-
-Color = new Mongo.Collection("color");
-Color.attachSchema(Schemas.Color);
