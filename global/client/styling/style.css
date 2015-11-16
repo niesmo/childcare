@@ -27,6 +27,11 @@ button.btn-circular{
 p.large,li.large,a.large{
   font-size: 20px;
 }
+
+.no-outline{
+  outline: none !important;
+}
+
 .secondParentBackground{
   background-color: #FFFAF0;
   border-radius: 10px;

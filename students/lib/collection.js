@@ -56,10 +56,12 @@ Schemas.Student = new SimpleSchema({
     type: Boolean,
     label: "Conceived"
   },
+
   startDate:{
     type: Date,
     label: "Start date"
   },
+  
   moveDate:{
     type: Date,
     label: "Move date",
