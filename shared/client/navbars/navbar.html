@@ -21,7 +21,7 @@
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{userEmail}} <span class="caret"></span></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{userName}} <span class="caret"></span></a>
             <ul class="dropdown-menu">
                 <li><a href="#profileModal" data-toggle="modal">Profile</a></li>
                 <li><a href="#settingsModal" data-toggle="modal">Settings</a></li>
@@ -45,8 +45,7 @@
                 <div class="modal-body">
                     <div>
                         <ul style="list-style: none">
-                            <!--Temporarily hard coded-->
-                            <li style="margin-bottom: 5px">{{ userEmail }}</li>
+                            <li style="margin-bottom: 5px">{{ userName }}</li>
                             <li style="margin-bottom: 5px"><a id="newPasswordButton" href="{{ pathFor 'newpassword' }}" class="btn btn-primary" data-dismiss="modal">Change Password</a></li>
                         </ul>
                     </div>

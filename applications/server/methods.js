@@ -75,19 +75,20 @@ Meteor.methods({
     Color.insert({color: color});
     colorArray.push(color);
 
-    var moveDate;
-    var monthsToMoveDate;
-    var dob = new Date(application.student.dob);
-    var ageInMonths = moment().diff(dob, 'months') || "";
-    if (ageInMonths < 16) {
-      monthsToMoveDate = 16;
-      moveDate = new Date(new Date(dob).setMonth(dob.getMonth()+monthsToMoveDate));
+    if (!notConceived) {
+      var moveDate;
+      var monthsToMoveDate;
+      var dob = new Date(application.student.dob);
+      var ageInMonths = moment().diff(dob, 'months') || "";
+      if (ageInMonths < 16) {
+        monthsToMoveDate = 16;
+        moveDate = new Date(new Date(dob).setMonth(dob.getMonth()+monthsToMoveDate));
+      }
+      else {
+        monthsToMoveDate = 36;
+        moveDate = new Date(new Date(dob).setMonth(dob.getMonth()+monthsToMoveDate));
+      }
     }
-    else {
-      monthsToMoveDate = 36;
-      moveDate = new Date(new Date(dob).setMonth(dob.getMonth()+monthsToMoveDate));
-    }
-    console.log("Move date: " + moveDate);
 
     // insert the student, check if conceived to determine if dob should be inserted
     if(!notConceived) {
