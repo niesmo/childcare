@@ -98,10 +98,12 @@ Template.applicationForm.events({
       Errors.insert({message:'Please enter Start Date', seen:false,type:'validation'});
       formValidated=false;
     }
-if(!formValidated){
-  scroll(0,0);
-  return;
-}
+
+    if(!formValidated){
+      scroll(0,0);
+      return;
+    }
+    
     var secondParent = Session.get('secondParent'); //returns true if second parent input is activated
     var parent2={};
 

@@ -22,6 +22,7 @@ Meteor.methods({
         "You must select a start date in the future");
     }
     */
+   
     //checking if not conceived was checked on application
     var notConceived;
     if(application.student.conceived=="NC"){
@@ -114,7 +115,7 @@ Meteor.methods({
       var studentId = Students.insert({
         firstName: application.student.firstName,
         lastName: application.student.lastName,
-  //      dateOfBirth: new Date(application.student.dob),
+        // dateOfBirth: new Date(application.student.dob),
         group: application.group.toUpperCase(),
         status: "application".toUpperCase(),
         type: application.type.toUpperCase(),
@@ -315,6 +316,70 @@ Meteor.methods({
     */
   'insertStudentParent': function(studentId, parentId){
     StudentParents.insert({studentId:studentId, parentId:parentId});
+  },
+
+  
+  /**
+   * This function will send out the application to the email specified in the applicationInfo
+   * @param  {Object} applicationInfo This object contains the email and the type of the application
+   * @return {[type]}                 Status of the operation
+   */
+  'createNewApplication': function(applicationInfo){
+    // check if the user is logged in
+    if(!Meteor.userId()){
+      throw new Meteor.error("User Not Authorized", "User is not logged in. Access Denied!!");
+    }
+
+    // validate format
+    if(!SimpleSchema.RegEx.Email.test(applicationInfo.email)){
+      throw new Meteor.error("Wrong Email format", "Email does not have the correct format");
+    }
+
+
+    // valid application type
+    if(['regular', 'member', 'existing'].indexOf(applicationInfo.applicationType.toLowerCase()) === -1){
+      throw new Meteor.error("Wrong Application Type", "Application type can only be one of 'Current ', 'Member', or 'existing'");
+    }
+
+    // Creating the expiration date
+    var expirationDate = new Date();
+    expirationDate.setDate(expirationDate.getDate() + 2);
+    expirationDate.setHours(0);
+    expirationDate.setMinutes(0);
+    expirationDate.setSeconds(1);
+
+
+    // throws an exception when needed
+    Applications.insert({
+      effectiveDate: new Date(),
+      expirationDate: expirationDate,
+      sentAt: new Date(),
+      sentBy: Meteor.userId(),
+      sentTo: applicationInfo.email,
+      type: applicationInfo.applicationType.toUpperCase()
+    });
+
+    // send an email to the parent
+    
+    // Let other method calls from the same client start running,
+    // without waiting for the email sending to complete.
+    this.unblock();
+
+    Email.send({
+      to: applicationInfo.email,
+      from: "olb-application@olb.com",
+      subject: "Childcare Application",
+      text: "Here is the application that you need to fill out and submit.\n Follow the link below to access your application.\n The application will expire in 2 days"
+    });
+
+
+    // PrettyEmail.send('Basic', {
+    //   from: "olb-application@olb.com",
+    //   to: applicationInfo.email,
+    //   subject: "Childcare Application",
+    //   heading: "Childcare Application",
+    //   message: "Here is the application that you need to fill out and submit.\n Follow the link below to access your application.\n The application will expire in 2 days"
+    // });
   }
 });
 

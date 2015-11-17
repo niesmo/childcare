@@ -23,6 +23,11 @@ Schemas.Application = new SimpleSchema({
     label: "Sent By"
   },
 
+  sentTo: {
+    type: SimpleSchema.RegEx.Email,
+    label: "Email"
+  },
+
   /**
    * type will only get the values of
    * 1. REGULAR   ->  First time students
