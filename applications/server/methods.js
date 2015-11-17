@@ -356,6 +356,7 @@ Meteor.methods({
       sentAt: new Date(),
       sentBy: Meteor.userId(),
       sentTo: applicationInfo.email,
+      token: Random.id(),
       type: applicationInfo.applicationType.toUpperCase()
     });
 

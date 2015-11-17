@@ -28,6 +28,16 @@ Schemas.Application = new SimpleSchema({
     label: "Email"
   },
 
+  token: {
+    type: SimpleSchema.RegEx.Id,
+  },
+
+  submittedAt:{
+    type: Date,
+    label: "Submitted At",
+    optional: true
+  },
+
   /**
    * type will only get the values of
    * 1. REGULAR   ->  First time students
