@@ -42,3 +42,6 @@ p.large,li.large,a.large{
 .show{
   display: initial;
 }
+.partiallyEnrolled{
+  background-color: #E0FFFF;
+}
