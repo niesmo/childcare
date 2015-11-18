@@ -1,6 +1,17 @@
 <template name="applications">
-  <h1>Applications</h1>
-    <br>
+  <!-- Part for sending applications to parents -->
+  <div class="row">
+    <div class="col-xs-8"><h1>Applications</h1></div>
+    <div class="col-xs-4 text-right">
+      <button id="send-application" class="btn btn-lg btn-success btn-circular no-outline">
+        <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
+      </button>
+    </div>
+  </div>
+
+  <br>
+
+  <!-- Displaying current Applications -->
   <div class="row">
     <div class="col-md-12">
       {{#each applicants}}

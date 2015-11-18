@@ -1,3 +1,3 @@
-.actionItemColumns{
-  vertical-align: middle;
+.action-item-row td{
+  vertical-align: middle !important;
 }
