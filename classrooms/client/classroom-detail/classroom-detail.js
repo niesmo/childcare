@@ -72,7 +72,7 @@ Template.classroomDetail.helpers({
       return Students.find({status: "WAITLIST", group: "INFANT"});
     }
     else if (currentClassroom.type == "TODDLER") {
-      return Students.find({$or: [{$and: [{type: "INFANT"}, {moveDate: {$lte: moveDateRange}}]}, {$and: [{status: "WAITLIST"}, {group: "TODDLER"}]}]});
+      return Students.find({$or: [{$and: [{group: "INFANT"}, {moveDate: {$lte: moveDateRange}}]}, {$and: [{status: "WAITLIST"}, {group: "TODDLER"}]}]});
     }
     //return Students.find({status: "WAITLIST", group: "INFANT"});
   },
