@@ -61,5 +61,33 @@ Template.classroomDetail.helpers({
     var currentClass=Session.get("classType");
     var currentClass=Classrooms.findOne({type: currentClass});
     return currentClass.capacity;
+  },
+
+  studentsTransitioning: function(){
+    var moveDateRange = new Date();
+    moveDateRange.setMonth(moveDateRange.getMonth()+2);
+    //return Students.find({status: "WAITLIST", group: "INFANT"});
+    var currentClassroom = Classrooms.findOne(this._id);
+    if (currentClassroom.type == "INFANT") {
+      return Students.find({status: "WAITLIST", group: "INFANT"});
+    }
+    else if (currentClassroom.type == "TODDLER") {
+      return Students.find({$or: [{$and: [{type: "INFANT"}, {moveDate: {$lte: moveDateRange}}]}, {$and: [{status: "WAITLIST"}, {group: "TODDLER"}]}]});
+    }
+    //return Students.find({status: "WAITLIST", group: "INFANT"});
+  },
+
+  /**
+   * Used to fill in the student table cell on the days they have requested class
+   * @param student
+   * @returns {Schemas.Student.color|{type, label}|color|*|string} the color given to the student
+   */
+  getColorIfRequestsClass: function(student){
+    var today = this.toString().toUpperCase();
+    for(var i=0;i<student.daysRequested.length;i++){
+      if(today === student.daysRequested[i].day){
+        return student.color || '#43ac6a';
+      }
+    }
   }
 });

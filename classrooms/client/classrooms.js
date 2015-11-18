@@ -25,13 +25,15 @@ Template.classrooms.helpers({
   },
 
   /**
-   * This funciton will return all the students in the class of the selected tab
+   * This function will return all the students in the class of the selected tab
    * @return {Meteor.cursor} cursor to the DB
    */
   studentsInThisClass: function(){
     var id = Session.get("selectedClassroomId");    
     return Students.find({classId: id, status:"ENROLLED"});
-  }
+  },
+
+
 });
 
 Template.classrooms.events({

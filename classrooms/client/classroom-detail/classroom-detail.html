@@ -25,4 +25,25 @@
       </tr>
     </tbody>
   </table>
+
+  <table class="table table-bordered">
+    <thead>
+    <tr>
+      <th>Student</th>
+      {{#each daysOfWeek}}
+        <th>{{this}}</th>
+      {{/each}}
+    </tr>
+    </thead>
+    <tbody>
+    {{#each student in studentsTransitioning}}
+      <tr>
+        <td>{{student.firstName}} {{student.lastName}}</td>
+        {{#each daysOfWeek}}
+          <td style="background-color:{{getColorIfRequestsClass student}}"></td>
+        {{/each}}
+      </tr>
+    {{/each}}
+    </tbody>
+  </table>
 </template>
