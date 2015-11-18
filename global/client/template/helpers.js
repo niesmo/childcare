@@ -155,16 +155,16 @@ Template.registerHelper('getCreatedByUser', function(){
  */
 Template.registerHelper('getCompletedByUser', function(){
     if(!this._id) return;
-
     var actionItem = ActionItems.findOne({_id: this._id});
-    if(actionItem.isSystemMessage&&actionItem.isCompleted){
-      return "System";
-    }
     
+    if(!actionItem.completedBy){
+      return "";
+    }
+
     var completedByUser= Meteor.users.findOne(actionItem.completedBy);
     var label = "";
-    if (!(actionItem.isCompleted))
-    {
+
+    if (!actionItem.isCompleted){
       return label;
     }
     try{
