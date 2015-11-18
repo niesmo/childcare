@@ -2,9 +2,11 @@ Meteor.methods({
   /**
    * This function will simply enroll 
    * @param  {String} studentId The id of the student that is about to be enrolled
+   * @param  {object} totalDays object containing the days to enroll and the days to waitlist
+   * @param  {String} enrollType 'enroll' if taking off waitlist and 'partial_enroll' if staying on waitlist
    * @return {}
    */
-  "enrollStudent": function(studentId, days){
+  "enrollStudent": function(studentId, totalDays, enrollType){
     // get the student with such id
     var student = Students.findOne({_id: studentId});
 
@@ -28,20 +30,26 @@ Meteor.methods({
 
     var daysEnr = [];
     var week = {M: "monday", T: "tuesday", W: "wednesday", TH: "thursday", F: "friday"};
-    days.forEach(function (day) {
+    totalDays.daysChecked.forEach(function (day) {
       daysEnr.push({
         day: week[day].toUpperCase(),
         flexible: false
       });
     });
-    // enroll the student
-    Students.update({_id: studentId}, {$set: {status: "ENROLLED", classId: classroom._id, daysEnrolled: daysEnr}});
 
-    // fix the order of the waitlist
-    var toBeUpdated = Students.find({status:"WAITLIST", group:student.group, order: {$gt: student.order}});
-    toBeUpdated.forEach(function (student) {
-      Students.update({_id: student._id}, {$inc: {order: -1}});
-    });
+    if(enrollType='enroll') {
+      // enroll the student
+      Students.update({_id: studentId}, {$set: {status: "ENROLLED", classId: classroom._id, daysEnrolled: daysEnr}});
+
+      // fix the order of the waitlist
+      var toBeUpdated = Students.find({status: "WAITLIST", group: student.group, order: {$gt: student.order}});
+      toBeUpdated.forEach(function (student) {
+        Students.update({_id: student._id}, {$inc: {order: -1}});
+      });
+    }
+    if(enrollType='partial_enroll'){
+      Students.update({_id: studentId}, {$set: {status: "PARTIALLY_ENROLLED", classId: classroom._id, daysEnrolled: daysEnr, daysWaitlisted: totalDays.daysNotChecked}});
+    }
   },
   /**
    *
@@ -123,5 +131,42 @@ Meteor.methods({
     var updatedObj = {parentId:parentId, studentId:studentId};
     return updatedObj;
   },
+  'compareDays': function(studentId, days){
+    var student = Students.findOne({_id:studentId});
+    var daysEnr = [];
+
+    var week = {M: "monday", T: "tuesday", W: "wednesday", TH: "thursday", F: "friday"};
+    days.forEach(function (day) {
+      daysEnr.push({
+        day: week[day].toUpperCase(),
+        flexible: false
+      });
+    });
+    //compare days waitlisted to days selected to enroll
+    //if there are any days waitlisted that are not selected partially enroll
+    var daysNotSelected = [];
+    var daysWaiting = student.daysWaitlisted;
+    var count = 0;
+    var checkDay = false;
+    while(count < daysWaiting.length){
+      var waitlistCount = 0;
+      while(waitlistCount < daysEnr.length){
+        if(daysWaiting[count].day == daysEnr[waitlistCount].day){
+          checkDay=true;
+          break;
+        }
+        waitlistCount++;
+      }
+      if(!checkDay){
+        daysNotSelected.push({
+          day: daysWaiting[count].day,
+          flexible: daysWaiting[count].flexible
+        })
+      }
+      checkDay=false;
+      count++;
+    }
+    return daysNotSelected;
+  }
 
 });

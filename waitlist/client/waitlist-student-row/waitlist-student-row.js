@@ -21,6 +21,7 @@ Template.waitlistStudentRow.events({
 
     Session.set('studentToEdit', this._id);
     Modal.show('editStudentModal');
+
   },
 
   /**
@@ -32,7 +33,8 @@ Template.waitlistStudentRow.events({
   "click button.enroll": function(e, tpl){
     Session.set('studentToEnroll', this._id);
     Modal.show('enrollStudent');
-   // Meteor.call("enrollStudent", this._id, enrollStudentCallback);
+
+    // Meteor.call("enrollStudent", this._id, enrollStudentCallback);
   }
 });
 

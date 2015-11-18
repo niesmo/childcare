@@ -1,5 +1,5 @@
 Meteor.publish('waitlistedStudents', function(){
-  return Students.find({status: 'WAITLIST'});
+  return Students.find({$or: [{status:"WAITLIST"}, {status:"PARTIALLY_ENROLLED"}]});
 });
 
 Meteor.publishComposite('waitlistedStudentsFullInformation', {
