@@ -11,6 +11,20 @@ Template.enrollStudent.helpers({
   },
   days:function(){
     return Session.get('daysNotSelected');
+  },
+  dayChecked:function(day){
+
+    var id=Session.get('studentToEnroll');
+    var student = Students.findOne({_id:id});
+    var i = 0;
+    while(i<student.daysWaitlisted.length) {
+      if(day==student.daysWaitlisted[i].day){
+        return true;
+      }
+      i++;
+    }
+
+    return false;
   }
 
 });

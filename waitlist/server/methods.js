@@ -37,7 +37,12 @@ Meteor.methods({
       });
     });
 
-    if(enrollType='enroll') {
+    //if student is already partially enrolled, then concat the new days enrolled with days student is already enrolled
+    if(student.status=="PARTIALLY_ENROLLED"){
+      daysEnr = daysEnr.concat(student.daysEnrolled);
+    }
+    if(enrollType=='enroll') {
+
       // enroll the student
       Students.update({_id: studentId}, {$set: {status: "ENROLLED", classId: classroom._id, daysEnrolled: daysEnr}});
 
@@ -47,7 +52,8 @@ Meteor.methods({
         Students.update({_id: student._id}, {$inc: {order: -1}});
       });
     }
-    if(enrollType='partial_enroll'){
+    //if status id partial_enroll, change status to partially_enrolled, change daysWaitlisted to unchecked days and don't reorder waitlist
+    else if(enrollType=='partial_enroll'){
       Students.update({_id: studentId}, {$set: {status: "PARTIALLY_ENROLLED", classId: classroom._id, daysEnrolled: daysEnr, daysWaitlisted: totalDays.daysNotChecked}});
     }
   },
