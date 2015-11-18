@@ -137,6 +137,12 @@ Meteor.methods({
     var updatedObj = {parentId:parentId, studentId:studentId};
     return updatedObj;
   },
+  /**
+   *
+   * @param studentId id of student to check
+   * @param days array of days that the student is waitlisted for but were not selected for enrollment.
+   * @returns {Array}
+   */
   'compareDays': function(studentId, days){
     var student = Students.findOne({_id:studentId});
     var daysEnr = [];
