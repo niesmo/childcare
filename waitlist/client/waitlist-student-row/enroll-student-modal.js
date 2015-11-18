@@ -76,7 +76,7 @@ Template.enrollStudent.events({
   },
   "click #no":function(event){
     event.preventDefault();
-    
+
     var id = Session.get('studentToEnroll');
     var daysSelected = Session.get('daysSelected');
     var totalDays = {
