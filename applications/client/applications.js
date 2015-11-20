@@ -29,11 +29,22 @@ Template.applications.events({
   }
 });
 
-function applicationSentCompleted(err, result){
+function applicationSentCompleted(err, applicationToken){
   if(err){
+    // TODO: do actual error handling
+    alert("Error, something went wrong");
     console.log(err);
     return;
   }
 
-  alert("Success");
+  // show the link that they can access the link in the UI
+  $("#application-link").text("The application can be accessed here.");
+  var applicationLink = $("<a />")
+    .attr("href", "http://localhost:3000/new-application/" + applicationToken)
+    .text("link");
+
+  $("#application-link").append(applicationLink);
+  $("#application-link").removeClass("hidden");
+
+  console.log(applicationToken);
 }

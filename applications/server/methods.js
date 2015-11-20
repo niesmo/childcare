@@ -186,15 +186,23 @@ Meteor.methods({
     if(lastInGroup){
       order = lastInGroup.order + 1;
     }
-    else{
-      var where = {status: "WAITLIST", group: student.group};
-      if(student.type === "EXISTING"){
-        where['type'] = "MEMBER";
+    else {
+      // if the student is a Staff and there is no one in the staff sub-section
+      if(student.type === "MEMBER"){
+        order = 1;
       }
 
-      var lastOtherGroup = Students.findOne(where, {sort: {order:-1}});
-      if(lastOtherGroup){
-        order = lastOtherGroup.order + 1;
+      // if the student is not staff
+      else{
+        var where = {status: "WAITLIST", group: student.group};
+        if(student.type === "EXISTING"){
+          where['type'] = "MEMBER";
+        }
+
+        var lastOtherGroup = Students.findOne(where, {sort: {order:-1}});
+        if(lastOtherGroup){
+          order = lastOtherGroup.order + 1;
+        }
       }
     }
 
@@ -349,6 +357,10 @@ Meteor.methods({
     expirationDate.setSeconds(1);
 
 
+    // generate the token for the session
+    var token = Random.id();
+
+
     // throws an exception when needed
     Applications.insert({
       effectiveDate: new Date(),
@@ -356,7 +368,7 @@ Meteor.methods({
       sentAt: new Date(),
       sentBy: Meteor.userId(),
       sentTo: applicationInfo.email,
-      token: Random.id(),
+      token: token,
       type: applicationInfo.applicationType.toUpperCase()
     });
 
@@ -364,14 +376,16 @@ Meteor.methods({
     
     // Let other method calls from the same client start running,
     // without waiting for the email sending to complete.
-    this.unblock();
+    // this.unblock();
 
-    Email.send({
-      to: applicationInfo.email,
-      from: "olb-application@olb.com",
-      subject: "Childcare Application",
-      text: "Here is the application that you need to fill out and submit.\n Follow the link below to access your application.\n The application will expire in 2 days"
-    });
+    // Email.send({
+    //   to: applicationInfo.email,
+    //   from: "olb-application@olb.com",
+    //   subject: "Childcare Application",
+    //   text: "Here is the application that you need to fill out and submit.\n Follow the link below to access your application.\n The application will expire in 2 days"
+    // });
+
+    return token;
 
 
     // PrettyEmail.send('Basic', {
