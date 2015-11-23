@@ -9,7 +9,7 @@ Meteor.methods({
    * @param  {Object} application All the information submitted from the client
    * @return {}             Result of the operations
    */
-  'createApplication': function(application, parent2){
+  'createApplication': function(application){
     // check to see if they have selected at least one day
     if(application.days.length === 0){
       throw new Meteor.error("No day select",
@@ -140,13 +140,13 @@ Meteor.methods({
     });
 
     //check if there is second parent and then add parent
-    if(parent2.active){
+    if(application.secondParent.active){
       var secondParentId = Parents.insert({
-        firstName: parent2.firstName,
-        lastName: parent2.lastName,
-        address: parent2.address.street + " " + application.parent.address.city + " " + application.parent.address.state + " " + application.parent.address.zip,
-        phoneNumber: parent2.phone,
-        email: parent2.email,
+        firstName: application.secondParent.firstName,
+        lastName: application.secondParent.lastName,
+        address: application.secondParent.address.street + " " + application.secondParent.address.city + " " + application.secondParent.address.state + " " + application.secondParent.address.zip,
+        phoneNumber: application.secondParent.phone,
+        email: application.secondParent.email,
         image: "http://api.adorable.io/avatars/100/"+ imageId +".png",
         createdAt: new Date()
       });
