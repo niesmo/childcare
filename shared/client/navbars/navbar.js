@@ -2,6 +2,11 @@ Template.navbar.helpers({
   userEmail: function () {
     if(Meteor.user())
       return Meteor.user().emails[0].address;      
+  },
+
+  userName: function() {
+    if(Meteor.user())
+      return Meteor.user().profile.firstName + " " + Meteor.user().profile.lastName;
   }
 });
 

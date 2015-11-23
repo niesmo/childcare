@@ -85,8 +85,8 @@ Template.registerHelper('flexibleColorClass', function(){
 });
 
 /**
- * This function will retun the age of the student in number of months
- * @param  {Date}          the date of birh in the date format
+ * This function will return the age of the student in number of months
+ * @param  {Date}          the date of birth in the date format
  * @return {String}        The age in number of months
  */ 
 Template.registerHelper('getAge', function(dob){
