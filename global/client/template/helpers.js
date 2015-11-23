@@ -180,6 +180,16 @@ Template.registerHelper('error', function(){
   return Session.get('errorMessage');
 });
 
+Template.registerHelper('partiallyEnrolledClass', function(){
+  if(this.status=="PARTIALLY_ENROLLED"){
+    return 'partiallyEnrolled';
+  }
+  else{
+    return '';
+  }
+
+});
+
 /**
  * This function will add a system message to the action items list
  * @param  {String}     @task Contains a description and task type (Infant or toddler)
