@@ -25,7 +25,7 @@ Meteor.methods({
     // check if this person is requesting any days to be enrolled or not
     if(student.daysWaitlisted.length === 0){
       throw new Meteor.error("No days waitlisted",
-        "This student is not waitlisted for any days, so it cannot be enrolled in any class");
+        "This student is not waitlisted for any days, so they cannot be enrolled in any class");
     }
 
     var daysEnr = [];

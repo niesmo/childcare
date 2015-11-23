@@ -319,7 +319,7 @@ Meteor.methods({
   }
 });
 
-var colorArray = ["#1abc9c", "#16a085", "#f1c40f", "#f39c12", "#1abc9c", "#16a085", "#f1c40f", "#f39c12", "#2ecc71", "#27ae60", "#e67e22", "#d35400", "#2ecc71", "#27ae60"];
+var colorArray = ["#1abc9c", "#2ecc71", "#3498db", "#9b59b6", "#16a085", "#27ae60", "#2980b9", "#8e44ad", "#f1c40f", "#e67e22", "#e74c3c", "#f39c12", "#d35400", "#c0392b"];
 if (Color.findOne() == null) {
   Color.insert({color: "#27ae60"});
 }
