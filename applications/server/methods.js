@@ -182,12 +182,12 @@ Meteor.methods({
     
     // find out what the order for this student should be
     var order = 1;
-    var lastInGroup = Students.findOne({status: "WAITLIST", group: student.group, type: student.type}, {sort: {order:-1}});
+    var lastInGroup = Students.findOne({$or: [{status: "WAITLIST"},{status:"PARTIALLY_ENROLLED"}], group: student.group, type: student.type}, {sort: {order:-1}});
     if(lastInGroup){
       order = lastInGroup.order + 1;
     }
     else{
-      var where = {status: "WAITLIST", group: student.group};
+      var where = {$or: [{status: "WAITLIST"},{status:"PARTIALLY_ENROLLED"}], group: student.group};
       if(student.type === "EXISTING"){
         where['type'] = "MEMBER";
       }
@@ -199,7 +199,7 @@ Meteor.methods({
     }
 
     // TODO: Change this to a better efficient way
-    var toBeIncremented = Students.find({status:"WAITLIST", group: student.group, order: {$gte: order}});
+    var toBeIncremented = Students.find({$or: [{status: "WAITLIST"},{status:"PARTIALLY_ENROLLED"}], group: student.group, order: {$gte: order}});
     toBeIncremented.forEach(function (student) {
       Students.update({_id: student._id}, {$inc: {order: 1}});
     });
