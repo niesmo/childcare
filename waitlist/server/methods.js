@@ -188,13 +188,13 @@ Meteor.methods({
    * @param currentOrder
    */
   'reOrderWaitlist':function(studentId, newOrder, currentOrder){
-    console.log(studentId);
+
     var studentMoved = Students.findOne({_id:studentId});
     var toBeUpdated;
     //case if moved higher in waitlist
     if(newOrder > currentOrder){
       //decrement student order for students whose order is less than or equal to the students new order AND greater than students current order
-      console.log("new order is larger");
+     
        toBeUpdated = Students.find({$or: [{status:"WAITLIST"}, {status:"PARTIALLY_ENROLLED"}], group:studentMoved.group, $and: [{order: {$lte: newOrder}},{order: {$gt: currentOrder}}]});
       toBeUpdated.forEach(function (student) {
         Students.update({_id: student._id}, {$inc: {order: -1}});
@@ -203,7 +203,7 @@ Meteor.methods({
     }
     //case if moved lower on waitlist
     else if(newOrder < currentOrder){
-      console.log("new order is smaller");
+
       //increment student order for students whose order is greater than or equal to students new order and less than students current order
        toBeUpdated = Students.find({$or: [{status:"WAITLIST"}, {status:"PARTIALLY_ENROLLED"}], group:studentMoved.group, $and: [{order: {$gte: newOrder}},{order: {$lt: currentOrder}}]});
       toBeUpdated.forEach(function (student) {
