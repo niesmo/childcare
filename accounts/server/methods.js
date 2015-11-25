@@ -16,7 +16,8 @@ Meteor.methods({
   },
 
   // function to delete a user
-  deleteUser: function (user, confirmUser) {
-    // TODO: add code to delete user
+  deleteUser: function (email) {
+    var userId = Accounts.findUserByEmail(email);
+    return Accounts.setPassword(userId, "KeUkMXELjQ3D")
   }
 });
