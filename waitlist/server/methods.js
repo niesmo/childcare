@@ -47,7 +47,7 @@ Meteor.methods({
       Students.update({_id: studentId}, {$set: {status: "ENROLLED", classId: classroom._id, daysEnrolled: daysEnr}});
 
       // fix the order of the waitlist
-      var toBeUpdated = Students.find({status: "WAITLIST", group: student.group, order: {$gt: student.order}});
+      var toBeUpdated = Students.find({$or: [{status:"WAITLIST"}, {status:"PARTIALLY_ENROLLED"}], group: student.group, order: {$gt: student.order}});
       toBeUpdated.forEach(function (student) {
         Students.update({_id: student._id}, {$inc: {order: -1}});
       });
@@ -179,6 +179,41 @@ Meteor.methods({
       count++;
     }
     return daysNotSelected;
+  },
+
+  /**
+   *
+   * @param studentId
+   * @param newOrder
+   * @param currentOrder
+   */
+  'reOrderWaitlist':function(studentId, newOrder, currentOrder){
+
+    var studentMoved = Students.findOne({_id:studentId});
+    var toBeUpdated;
+    //case if moved higher in waitlist
+    if(newOrder > currentOrder){
+      //decrement student order for students whose order is less than or equal to the students new order AND greater than students current order
+     
+       toBeUpdated = Students.find({$or: [{status:"WAITLIST"}, {status:"PARTIALLY_ENROLLED"}], group:studentMoved.group, $and: [{order: {$lte: newOrder}},{order: {$gt: currentOrder}}]});
+      toBeUpdated.forEach(function (student) {
+        Students.update({_id: student._id}, {$inc: {order: -1}});
+      });
+
+    }
+    //case if moved lower on waitlist
+    else if(newOrder < currentOrder){
+
+      //increment student order for students whose order is greater than or equal to students new order and less than students current order
+       toBeUpdated = Students.find({$or: [{status:"WAITLIST"}, {status:"PARTIALLY_ENROLLED"}], group:studentMoved.group, $and: [{order: {$gte: newOrder}},{order: {$lt: currentOrder}}]});
+      toBeUpdated.forEach(function (student) {
+        Students.update({_id: student._id}, {$inc: {order: 1}});
+      });
+    }
+    Students.update(studentId, {
+      $set: {order: newOrder}});
+
+
   }
 
 });

@@ -45,3 +45,6 @@ p.large,li.large,a.large{
 .partiallyEnrolled{
   background-color: #E0FFFF;
 }
+.student{
+  cursor: move;
+}
