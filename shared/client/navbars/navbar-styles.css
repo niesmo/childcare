@@ -1,3 +1,11 @@
 .white-text{
   color:white;
 }
+
+.navbar-brand > img {
+      max-height: 175%;
+      height: 175%;
+      margin-top: -7px;
+      -o-object-fit: contain;
+      object-fit: contain;
+    }
