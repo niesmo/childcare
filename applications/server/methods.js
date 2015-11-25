@@ -32,7 +32,7 @@ Meteor.methods({
       notConceived=false;
     }
     if(!notConceived && application.student.dob==null){
-      throw new Meteor.error("must either have dob selected or not conceived selected");
+      throw new Meteor.error("Must either have date of birth picked or not conceived selected");
     }
 
 
@@ -88,48 +88,38 @@ Meteor.methods({
       monthsToMoveDate = 36;
       moveDate = new Date(new Date(dob).setMonth(dob.getMonth()+monthsToMoveDate));
     }
-    console.log("Move date: " + moveDate);
 
     // insert the student, check if conceived to determine if dob should be inserted
-    if(!notConceived) {
-      var studentId = Students.insert({
-        firstName: application.student.firstName,
-        lastName: application.student.lastName,
-        dateOfBirth: new Date(application.student.dob),
-        group: application.group.toUpperCase(),
-        status: "application".toUpperCase(),
-        type: application.type.toUpperCase(),
-        paidApplicationFee: false,
-        startDate: application.startDate,
-        moveDate: moveDate,
-        daysRequested: days,
-        image: "http://api.adorable.io/avatars/100/" + imageId + ".png",
-        createdAt: new Date(),
-        color: color,
-        details: application.details,
-        conceived: notConceived
+    var studentToBeInserted = {
+      firstName: application.student.firstName,
+      lastName: application.student.lastName,
+      group: application.group.toUpperCase(),
+      status: "application".toUpperCase(),
+      paidApplicationFee: false,
+      startDate: application.startDate,
+      moveDate: moveDate,
+      daysRequested: days,
+      image: "http://api.adorable.io/avatars/100/" + imageId + ".png",
+      createdAt: new Date(),
+      color: color,
+      details: application.details,
+      conceived: notConceived
+    };
 
-      });
+    if(!notConceived) {
+      studentToBeInserted.dateOfBirth = new Date(application.student.dob);
+    }
+
+    // if the parents filled this out, set the type from the database
+    if(application.sessionToken.toLowerCase() !== 'admin'){
+      studentToBeInserted.type = Applications.findOne({token: application.sessionToke}).type;
     }
     else{
-      var studentId = Students.insert({
-        firstName: application.student.firstName,
-        lastName: application.student.lastName,
-        // dateOfBirth: new Date(application.student.dob),
-        group: application.group.toUpperCase(),
-        status: "application".toUpperCase(),
-        type: application.type.toUpperCase(),
-        paidApplicationFee: false,
-        startDate: application.startDate,
-        daysRequested: days,
-        image: "http://api.adorable.io/avatars/100/" + imageId + ".png",
-        createdAt: new Date(),
-        color: color,
-        details: application.details,
-        conceived: notConceived
-      });
-
+      studentToBeInserted.type = application.type.toUpperCase();
     }
+    
+    var studentId = Students.insert(studentToBeInserted);
+    
 
     // inserting the studentParent document
     var studentParentId = StudentParents.insert({
@@ -156,6 +146,11 @@ Meteor.methods({
         isPrimary: true,
         createdAt: new Date()
       });
+    }
+
+    // set the application session to complete
+    if(application.sessionToken.toLowerCase() !== 'admin'){
+      Applications.update({token: application.sessionToken}, {submittedAt: new Date()});
     }
 
     return {

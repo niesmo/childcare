@@ -48,6 +48,10 @@ Router.route('/new-application/:token',{
         if( expDate < new Date()){
           this.render("applicationExpired");    
         }
+
+        if(application.submittedAt){
+          this.render("applicationSubmitted");
+        }
       }
     }
   },

@@ -29,6 +29,10 @@ Template.applicationForm.events({
    */
   "submit form": function(event){
     event.preventDefault();
+
+    // getting the token from the URL 
+    sessionToken = Router.current().params.token;
+
     Errors.remove({type:'validation'});
     //retrieve data from form
     var formValidated=true;
@@ -41,7 +45,7 @@ Template.applicationForm.events({
       Errors.insert({message:'Please check at least two days', seen:false, type:'validation'});
       formValidated=false;
     }
-    if($(event.target).find('input:radio[name=type]:checked').val()==null){
+    if($(event.target).find('input:radio[name=type]:checked').val()==null && $("input:radio[name=type]").length){
       Errors.insert({message:'Please select affiliation', seen:false,type:'validation'});
       formValidated=false;
 
@@ -136,23 +140,21 @@ Template.applicationForm.events({
       group: $(event.target).find('input:radio[name=group]:checked').val(),
       flexible: $(event.target).find('input:checkbox[name=flexible]:checked').val(),
       details: event.target.details.value,
+      sessionToken: sessionToken
     };
 
 
     if(secondParent){
-      var parent2 = {firstName: event.target.secondPfname.value,
+      var parent2 = {
+        firstName: event.target.secondPfname.value,
         lastName: event.target.secondPlname.value,
         email: event.target.secondEmail.value,
         phone: event.target['second-phone-number'].value,
         address: application.parent.address,
-        active: true};
+        active: true
+      };
     }
-
-    // console.log(application);
-
-    // var studentObj = ({lname:lname,fname:fname,DOB:DOB,group:group, status:"APPLICATION"});
-    // var parentObj=({plname:plname,pfname:pfname,address:address,email:email,phone:phone});
-    // var detailsObj=({days:days, type:type, details:details,requestedStart:requestedStart,paid:false});
+    
     Errors.remove({});
     Meteor.call("createApplication", application, parent2, createApplicationCallback);
 
