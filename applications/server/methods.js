@@ -114,7 +114,7 @@ Meteor.methods({
 
     // if the parents filled this out, set the type from the database
     if(application.sessionToken.toLowerCase() !== 'admin'){
-      studentToBeInserted.type = Applications.findOne({token: application.sessionToke}).type;
+      studentToBeInserted.type = Applications.findOne({token: application.sessionToken}).type;
     }
     else{
       studentToBeInserted.type = application.type.toUpperCase();
@@ -152,7 +152,7 @@ Meteor.methods({
 
     // set the application session to complete
     if(application.sessionToken.toLowerCase() !== 'admin'){
-      Applications.update({token: application.sessionToken}, {submittedAt: new Date()});
+      Applications.update({token: application.sessionToken}, {$set: {submittedAt: new Date()}});
     }
 
     return {
