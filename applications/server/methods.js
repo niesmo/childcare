@@ -9,7 +9,7 @@ Meteor.methods({
    * @param  {Object} application All the information submitted from the client
    * @return {}             Result of the operations
    */
-  'createApplication': function(application, parent2){
+  'createApplication': function(application){
     // check to see if they have selected at least one day
     if(application.days.length === 0){
       throw new Meteor.error("No day select",
@@ -76,17 +76,19 @@ Meteor.methods({
     Color.insert({color: color});
     colorArray.push(color);
 
-    var moveDate;
-    var monthsToMoveDate;
-    var dob = new Date(application.student.dob);
-    var ageInMonths = moment().diff(dob, 'months') || "";
-    if (ageInMonths < 16) {
-      monthsToMoveDate = 16;
-      moveDate = new Date(new Date(dob).setMonth(dob.getMonth()+monthsToMoveDate));
-    }
-    else {
-      monthsToMoveDate = 36;
-      moveDate = new Date(new Date(dob).setMonth(dob.getMonth()+monthsToMoveDate));
+    if (!notConceived) {
+      var moveDate;
+      var monthsToMoveDate;
+      var dob = new Date(application.student.dob);
+      var ageInMonths = moment().diff(dob, 'months') || "";
+      if (ageInMonths < 16) {
+        monthsToMoveDate = 16;
+        moveDate = new Date(new Date(dob).setMonth(dob.getMonth()+monthsToMoveDate));
+      }
+      else {
+        monthsToMoveDate = 36;
+        moveDate = new Date(new Date(dob).setMonth(dob.getMonth()+monthsToMoveDate));
+      }
     }
 
     // insert the student, check if conceived to determine if dob should be inserted
@@ -130,13 +132,13 @@ Meteor.methods({
     });
 
     //check if there is second parent and then add parent
-    if(parent2.active){
+    if(application.secondParent.active){
       var secondParentId = Parents.insert({
-        firstName: parent2.firstName,
-        lastName: parent2.lastName,
-        address: parent2.address.street + " " + application.parent.address.city + " " + application.parent.address.state + " " + application.parent.address.zip,
-        phoneNumber: parent2.phone,
-        email: parent2.email,
+        firstName: application.secondParent.firstName,
+        lastName: application.secondParent.lastName,
+        address: application.secondParent.address.street + " " + application.secondParent.address.city + " " + application.secondParent.address.state + " " + application.secondParent.address.zip,
+        phoneNumber: application.secondParent.phone,
+        email: application.secondParent.email,
         image: "http://api.adorable.io/avatars/100/"+ imageId +".png",
         createdAt: new Date()
       });
@@ -177,7 +179,7 @@ Meteor.methods({
     
     // find out what the order for this student should be
     var order = 1;
-    var lastInGroup = Students.findOne({status: "WAITLIST", group: student.group, type: student.type}, {sort: {order:-1}});
+    var lastInGroup = Students.findOne({$or: [{status: "WAITLIST"},{status:"PARTIALLY_ENROLLED"}], group: student.group, type: student.type}, {sort: {order:-1}});
     if(lastInGroup){
       order = lastInGroup.order + 1;
     }
@@ -186,10 +188,9 @@ Meteor.methods({
       if(student.type === "MEMBER"){
         order = 1;
       }
-
       // if the student is not staff
       else{
-        var where = {status: "WAITLIST", group: student.group};
+        var where = {$or: [{status: "WAITLIST"},{status:"PARTIALLY_ENROLLED"}], group: student.group};
         if(student.type === "EXISTING"){
           where['type'] = "MEMBER";
         }
@@ -202,7 +203,7 @@ Meteor.methods({
     }
 
     // TODO: Change this to a better efficient way
-    var toBeIncremented = Students.find({status:"WAITLIST", group: student.group, order: {$gte: order}});
+    var toBeIncremented = Students.find({$or: [{status: "WAITLIST"},{status:"PARTIALLY_ENROLLED"}], group: student.group, order: {$gte: order}});
     toBeIncremented.forEach(function (student) {
       Students.update({_id: student._id}, {$inc: {order: 1}});
     });
@@ -393,7 +394,7 @@ Meteor.methods({
   }
 });
 
-var colorArray = ["#1abc9c", "#16a085", "#f1c40f", "#f39c12", "#1abc9c", "#16a085", "#f1c40f", "#f39c12", "#2ecc71", "#27ae60", "#e67e22", "#d35400", "#2ecc71", "#27ae60"];
+var colorArray = ["#1abc9c", "#2ecc71", "#3498db", "#9b59b6", "#16a085", "#27ae60", "#2980b9", "#8e44ad", "#f1c40f", "#e67e22", "#e74c3c", "#f39c12", "#d35400", "#c0392b"];
 if (Color.findOne() == null) {
   Color.insert({color: "#27ae60"});
 }

@@ -7,7 +7,7 @@
           <h2 class="modal-title">Enroll Student</h2>
         </div>
 
-        <div class="modal-body">
+        <div class="modal-body toHide">
           <p><b>Days Requested</b></p>
 
           <ul class="list-unstyled list-inline">
@@ -17,21 +17,59 @@
           </ul>
         </div>
         <form role="form">
-          <div class="modal-body">
+          <div class="modal-body toHide">
             <div class="form-group">
-              <p><b>Days To Enroll</b></p>
-
-              <div class="checkbox-inline"><label for="m"><input class="checkbox" type="checkbox" name="days" value="M" id="m" /> Monday</label></div>
-              <div class="checkbox-inline"><label for="t"><input class="checkbox" type="checkbox" name="days" value="T" id="t" /> Tuesday</label></div>
-              <div class="checkbox-inline"><label for="w"><input class="checkbox" type="checkbox" name="days" value="W" id="w" /> Wednesday</label></div>
-              <div class="checkbox-inline"><label for="th"><input class="checkbox" type="checkbox" name="days" value="TH" id="th" /> Thursday</label></div>
-              <div class="checkbox-inline"><label for="f"><input class="checkbox" type="checkbox" name="days" value="F" id="f" /> Friday</label></div>
+              <h4>Days</h4>
+              {{#if dayChecked 'MONDAY'}}
+                <div class="checkbox-inline"><label for="m"><input class="checkbox" type="checkbox" name="days" value="M" id="m" checked/> Monday</label></div>
+              {{else}}
+                <div class="checkbox-inline"><label for="m"><input class="checkbox" type="checkbox" name="days" value="M" id="m"/> Monday</label></div>
+              {{/if}}
+              {{#if dayChecked 'TUESDAY'}}
+                <div class="checkbox-inline"><label for="t"><input class="checkbox" type="checkbox" name="days" value="T" id="t" checked/> Tuesday</label></div>
+              {{else}}
+                <div class="checkbox-inline"><label for="t"><input class="checkbox" type="checkbox" name="days" value="T" id="t"/> Tuesday</label></div>
+              {{/if}}
+              {{#if dayChecked 'WEDNESDAY'}}
+                <div class="checkbox-inline"><label for="w"><input class="checkbox" type="checkbox" name="days" value="W" id="w" checked/> Wednesday</label></div>
+              {{else}}
+                <div class="checkbox-inline"><label for="w"><input class="checkbox" type="checkbox" name="days" value="W" id="w" /> Wednesday</label></div>
+              {{/if}}
+              {{#if dayChecked 'THURSDAY'}}
+                <div class="checkbox-inline"><label for="th"><input class="checkbox" type="checkbox" name="days" value="TH" id="th" checked/> Thursday</label></div>
+              {{else}}
+                <div class="checkbox-inline"><label for="th"><input class="checkbox" type="checkbox" name="days" value="TH" id="th" /> Thursday</label></div>
+              {{/if}}
+              {{#if dayChecked 'FRIDAY'}}
+                <div class="checkbox-inline"><label for="f"><input class="checkbox" type="checkbox" name="days" value="F" id="f" checked/> Friday</label></div>
+              {{else}}
+                <div class="checkbox-inline"><label for="f"><input class="checkbox" type="checkbox" name="days" value="F" id="f" /> Friday</label></div>
+              {{/if}}
             </div>
           </div>
 
+          <div class="modal-body">
+            <span class="hidden">
+              The below days are waitlisted but not selected. Would you like to keep student on waitlist for these days?
+              <ul class="list-unstled list-inline">
+                {{#each sortedDays days}}
+                  <li class="list-group-item-warning">{{toLower day}}</li>
+                {{/each}}
+              </ul>
+
+            </span>
+          </div>
+
+          <div class="modal-footer toHide">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-success" id="enroll">Confirm Enroll</button>
+          </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-success" id="enroll" data-dismiss="modal">Confirm Enroll</button>
+            <span class="hidden">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+              <button type="button" class="btn btn-warning" id="no" data-dismiss="modal">No</button>
+              <button type="button" class="btn btn-success" id="yes" data-dismiss="modal">Yes</button>
+            </span>
           </div>
         </form>
       </div>
