@@ -1,7 +1,15 @@
 <template name="applicationForm">
   <div class="row">
     <div class="col-md-12">
-      <h2>Enrollment Application Form</h2>
+      <h2>Wait List Application Form</h2>
+      <p class="center">We are happy you are considering Our Lady Of Bethlehem for your infant or toddler's early care and education!<br>
+        <i>Our Infant Classroom admits students age 6 weeks through 16-18 months.<br>
+          Out Toddler Classroom admits students aged 16-18 months thrugh 30-36 weeks.</i>
+      </p>
+      <p><span style="text-decoration: underline">By completing this agreement, you agree to pay $50 (half of our $100 registration fee) to be placed on the waitlist for
+      our Infant Classroom or Toddler Classroom.</span> Although the $50 is non-refundable, should we offer and should you accept a spot on our
+        roster, the $50 will apply to the $100 refistration fee.</p>
+
       {{>errors}}
       <form role="form">
       <h3>Parent's Information <button type="button" class="btn btn-primary add" id="addParent">Add another Parent</button></h3>
@@ -55,7 +63,7 @@
 
       <!-- Parent Address -->
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-4">
           <div class="form-group">
             <label for="address">Street Address</label>
             <div class="input-group">
@@ -140,7 +148,7 @@
 
         <!-- Parent Address -->
         <div class="row">
-          <div class="col-md-6">
+          <div class="col-md-4">
             <div class="form-group">
               <label for="second-address">Street Address</label>
               <div class="input-group">
@@ -210,7 +218,14 @@
           </div>
           <div class="form-group">
             <div class="checkbox-inline">
-              <label for="notConceived"><input class="checkbox" type="checkbox" name="notConceived" value="NC" id="nc" /> Not Conceived</label>
+              <label for="notConceived"><input class="checkbox" type="checkbox" name="notConceived" value="NC" id="nc" /> Not Yet Conceived</label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for='dueDate'>If not yet conceived, expected due date?</label>
+            <div class="input-group">
+              <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+              <input class="form-control" type="date" name="dueDate" id="dueDate">
             </div>
           </div>
         </div>
@@ -235,7 +250,7 @@
 
       <!-- Days -->
       <div class="form-group">
-        <h4>Days</h4>
+        <h4>Days (Please select at least 2)</h4>
 
         <div class="checkbox-inline"><label for="m"><input class="checkbox" type="checkbox" name="days" value="M" id="m" /> Monday</label></div>
         <div class="checkbox-inline"><label for="t"><input class="checkbox" type="checkbox" name="days" value="T" id="t" /> Tuesday</label></div>
@@ -274,7 +289,10 @@
             <textarea class="form-control" name="details" id="details"></textarea>
           </div>
         </div>
-        
+        <p>Please be sure to include your check or money order (made out to "OLB"), in the
+          amount of %50, with this agreement. If you wish to pay with cash or a debit/credit card, please
+          contact our Office Manager, Lorri Ebling, at 614.459.8252 or <span style="text-decoration: underline">
+            lebling@cdeducation.org</span></p>
         <br />
         <input class="btn btn-primary" type="submit" value="Submit Application" />
         <br /><br />
