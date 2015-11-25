@@ -9,7 +9,7 @@ Meteor.methods({
    * @param  {Object} application All the information submitted from the client
    * @return {}             Result of the operations
    */
-  'createApplication': function(application){
+  'createApplication': function(application, parent2){
     // check to see if they have selected at least one day
     if(application.days.length === 0){
       throw new Meteor.error("No day select",
@@ -17,9 +17,21 @@ Meteor.methods({
     }
 
     // check if the start date is not before today
-    if(new Date(application.startDate) < new Date()){
+    /*if(new Date(application.startDate) < new Date()){
       throw new Meteor.error("Start date in the past",
         "You must select a start date in the future");
+    }
+    */
+    //checking if not conceived was checked on application
+    var notConceived;
+    if(application.student.conceived=="NC"){
+      notConceived = true;
+    }
+    else{
+      notConceived=false;
+    }
+    if(!notConceived && application.student.dob==null){
+      throw new Meteor.error("must either have dob selected or not conceived selected");
     }
 
 
@@ -29,7 +41,7 @@ Meteor.methods({
     var parentId = Parents.insert({
       firstName: application.parent.firstName,
       lastName: application.parent.lastName,
-      address: application.parent.address.street + " " + application.parent.address.city + " " + application.parent.address.state,
+      address: application.parent.address.street + " " + application.parent.address.city + " " + application.parent.address.state + " " + application.parent.address.zip,
       phoneNumber: application.parent.phone,
       email: application.parent.email,
       image: "http://api.adorable.io/avatars/100/"+ imageId +".png",
@@ -39,37 +51,84 @@ Meteor.methods({
     // constructing the days for the student document
     var days = [];
     var week = {M: "monday", T: "tuesday", W: "wednesday", TH: "thursday", F: "friday"};
+    var flexible = false;
+    if(application.flexible=="flexible"){
+      flexible=true;
+    }
     application.days.forEach(function (day) {
       days.push({
         day: week[day].toUpperCase(),
-        flexible: false
+        flexible: flexible
       });
     });
 
     imageId = Random.id();
 
     // color variable to get a unique color for the student
-    var color = getRandomColor();
-    while(studentColors.indexOf(color) !== -1) {
-      color = getRandomColor();
+    var lastUsedColor = Color.findOne().color;
+    var colorIndex = colorArray.lastIndexOf(lastUsedColor);
+    for (i=0;i<=colorIndex;i++) {
+      colorArray.push(colorArray.shift());
     }
-    studentColors.push(color);
+    var color = colorArray.shift();
+    Color.remove({color: lastUsedColor});
+    Color.insert({color: color});
+    colorArray.push(color);
 
-    // insert the student
-    var studentId = Students.insert({
-      firstName: application.student.firstName,
-      lastName: application.student.lastName,
-      dateOfBirth: new Date(application.student.dob),
-      group: application.group.toUpperCase(),
-      status: "application".toUpperCase(),
-      type: application.type.toUpperCase(),
-      paidApplicationFee: false,
-      startDate: application.startDate,
-      daysRequested: days,
-      image: "http://api.adorable.io/avatars/100/"+ imageId +".png",
-      createdAt: new Date(),
-      color: color
-    });
+    var moveDate;
+    var monthsToMoveDate;
+    var dob = new Date(application.student.dob);
+    var ageInMonths = moment().diff(dob, 'months') || "";
+    if (ageInMonths < 16) {
+      monthsToMoveDate = 16;
+      moveDate = new Date(new Date(dob).setMonth(dob.getMonth()+monthsToMoveDate));
+    }
+    else {
+      monthsToMoveDate = 36;
+      moveDate = new Date(new Date(dob).setMonth(dob.getMonth()+monthsToMoveDate));
+    }
+    console.log("Move date: " + moveDate);
+
+    // insert the student, check if conceived to determine if dob should be inserted
+    if(!notConceived) {
+      var studentId = Students.insert({
+        firstName: application.student.firstName,
+        lastName: application.student.lastName,
+        dateOfBirth: new Date(application.student.dob),
+        group: application.group.toUpperCase(),
+        status: "application".toUpperCase(),
+        type: application.type.toUpperCase(),
+        paidApplicationFee: false,
+        startDate: application.startDate,
+        moveDate: moveDate,
+        daysRequested: days,
+        image: "http://api.adorable.io/avatars/100/" + imageId + ".png",
+        createdAt: new Date(),
+        color: color,
+        details: application.details,
+        conceived: notConceived
+
+      });
+    }
+    else{
+      var studentId = Students.insert({
+        firstName: application.student.firstName,
+        lastName: application.student.lastName,
+  //      dateOfBirth: new Date(application.student.dob),
+        group: application.group.toUpperCase(),
+        status: "application".toUpperCase(),
+        type: application.type.toUpperCase(),
+        paidApplicationFee: false,
+        startDate: application.startDate,
+        daysRequested: days,
+        image: "http://api.adorable.io/avatars/100/" + imageId + ".png",
+        createdAt: new Date(),
+        color: color,
+        details: application.details,
+        conceived: notConceived
+      });
+
+    }
 
     // inserting the studentParent document
     var studentParentId = StudentParents.insert({
@@ -78,6 +137,25 @@ Meteor.methods({
       isPrimary: true,
       createdAt: new Date()
     });
+
+    //check if there is second parent and then add parent
+    if(parent2.active){
+      var secondParentId = Parents.insert({
+        firstName: parent2.firstName,
+        lastName: parent2.lastName,
+        address: parent2.address.street + " " + application.parent.address.city + " " + application.parent.address.state + " " + application.parent.address.zip,
+        phoneNumber: parent2.phone,
+        email: parent2.email,
+        image: "http://api.adorable.io/avatars/100/"+ imageId +".png",
+        createdAt: new Date()
+      });
+      var studentParentId = StudentParents.insert({
+        studentId: studentId,
+        parentId: secondParentId,
+        isPrimary: true,
+        createdAt: new Date()
+      });
+    }
 
     return {
       status: "201",
@@ -134,7 +212,7 @@ Meteor.methods({
 
   /**
    * [Insert into parent collection]
-   * @param  {{parent object}} parent [object containting all required information of a parent containing variables below]
+   * @param  {{parent object}} parent [object containing all required information of a parent containing variables below]
    * @var  {[string]} lname   [Last name of parent]
    * @var  {[string]} fname   [First name of parent]
    * @var  {[string]} email   [email address]
@@ -195,7 +273,8 @@ Meteor.methods({
       group: student.group,
       paidApplicationFee:details.paid,
       createdAt: new Date(), // current time
-      color: student.color
+      color: student.color,
+
     });
 
     return id;
@@ -212,7 +291,7 @@ Meteor.methods({
   },
 
   /**
-   *Increments all student order greater than or equal to order passed
+   *Increments student order with given id
    * @param {{SimpleSchema.RegEx.Id}} id [id of student to increment
    */
   'incrementOrder': function (id) {
@@ -239,18 +318,7 @@ Meteor.methods({
   }
 });
 
-/**
- * Returns a random color to use for students
- * @returns {string} a color
- */
-function getRandomColor() {
-  var letters = '0123456789ABCDEF'.split('');
-  var color = '#';
-  for (var i = 0; i < 6; i++ ) {
-    color += letters[Math.floor(Math.random() * 16)];
-  }
-  return color;
+var colorArray = ["#1abc9c", "#16a085", "#f1c40f", "#f39c12", "#1abc9c", "#16a085", "#f1c40f", "#f39c12", "#2ecc71", "#27ae60", "#e67e22", "#d35400", "#2ecc71", "#27ae60"];
+if (Color.findOne() == null) {
+  Color.insert({color: "#27ae60"});
 }
-
-// an array to store the colors assigned to children
-var studentColors = [];

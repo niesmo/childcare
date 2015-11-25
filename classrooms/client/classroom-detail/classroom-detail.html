@@ -11,12 +11,18 @@
     <tbody>
       {{#each student in students}}
         <tr>
-          <td>{{student.firstName}}</td>
+          <td>{{student.firstName}} {{student.lastName}}</td>
           {{#each daysOfWeek}}
             <td style="background-color:{{getColorIfhasClass student}}"></td>
           {{/each}}
         </tr>
       {{/each}}
+      <tr>
+        <td>Daily Ratios</td>
+        {{#each daysOfWeek}}
+          <td>{{numOfStudentsPerDay ../_id}} / {{../capacity}}</td>
+        {{/each}}
+      </tr>
     </tbody>
   </table>
 </template>

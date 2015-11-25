@@ -4,6 +4,7 @@
 
   <div class="row">
     <form class="new-task col-md-6">
+      <h3>Create Action Items</h3>
       <!-- Task Type -->
       <div class="row">
         <div class="form-group col-md-6">
@@ -12,12 +13,6 @@
             <option value="TODDLER">Toddler</option>
           </select>
         </div>
-      </div>
-
-      <!-- Task Title -->
-      <div class="form-group">
-		    <textarea id="title" class="form-control" placeholder="Title"></textarea>
-        
       </div>
 
       <!-- Task Description -->
@@ -29,47 +24,27 @@
     </form>
   </div>
   
-  <hr />
-
-  <h4>Infant</h4>
-  <table class="table table-striped">
-  <tbody>
-	{{#each infantTasks}}
-		<tr>
-			<td id="ai{{_id}}" class="action-item">{{description}}</td>
-			<td>{{getCreatedByUser _id}}</td>
-			<td>{{formatDate createdAt "MMM DD, YYYY"}}</td>
-			<td><button type="button" class="btn btn-success btn-circular btn-sm action-item"><span class="glyphicon glyphicon-check"></span></button></td>
-		</tr>
-	{{/each}}
-  </tbody></table>
-
-  <h4>Toddler</h4>
-  <table class="table table-striped">
-  <tbody>
-	{{#each toddlerTasks}}
-		<tr>
-			<td id="ai{{_id}}" class="action-item">{{description}}</td>
-			<td>{{getCreatedByUser _id}}</td>
-			<td>{{formatDate createdAt "MMM DD, YYYY"}}</td>
-			<td><button type="button" class="btn btn-success btn-circular btn-sm action-item"><span class="glyphicon glyphicon-check"></span></button></td>
-		</tr>
-	{{/each}}
-  </tbody></table>
+  <br />
+  <button type="button" class="btn system-task">Add System Task</button>
   
-  <h4>Completed</h4>
-  <table class="table table-striped">
-  <tbody>
-	{{#each completedTasks}}
-		<tr>
-			<td id="ai{{_id}}" class="action-item">{{description}}</td>
-			<td>{{getCreatedByUser _id}}</td>
-			<td>{{formatDate createdAt "MMM DD, YYYY"}}</td>
-			<td class="capitalize">{{toLower type}}</td>
-			<td>{{getCompletedByUser _id}}</td>
-			<td>{{formatDate completedAt "MMM DD, YYYY"}}</td>
-		</tr>
-	{{/each}}
-  </tbody></table>
+  <div class="row">
+    <div class="col-md-12">
+      <h3>List of Action Items</h3>
+      <!-- The tab list on top of the page. A tab for each class -->
+      <ul class="nav nav-tabs action-item-tabs" role="tablist">
+        {{#each actionItemTypes}}
+          <li role="presentation" class="{{isActive @index}}" classroom-id="{{_id}}"><a href="#{{toLower this}}" aria-controls="{{toLower this}}" role="tab" data-toggle="tab">{{toLower this}}</a></li>
+        {{/each}}
+      </ul>
 
+      <!-- Each of the tab content -->
+      <div class="tab-content">
+        {{#each actionItemTypes}}
+          <div role="tabpanel" class="tab-pane action-item-tab {{isActive @index}}" id="{{toLower this}}">
+            {{> actionItemTableChooser this}}
+          </div>
+        {{/each}}
+      </div>
+    </div>
+  </div>
 </template>

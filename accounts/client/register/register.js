@@ -4,6 +4,8 @@ Template.register.events({
     e.preventDefault();
 
     // getting the user's input
+    var firstName = tpl.$('#firstName').val();
+    var lastName = tpl.$('#lastName').val();
     var email = tpl.$('#email').val();
     var password = tpl.$('#password').val();
     var passwordConfirm = tpl.$('#password-confirm').val();
@@ -17,9 +19,7 @@ Template.register.events({
     }
 
     // call the method to create the user
-    Meteor.call("registerUser", email, password, accountsErrorHandler);
-    alert("User Created");
-    Router.go('home');
+    Meteor.call("registerUser", firstName, lastName , email, password, accountsErrorHandler);
   }
 });
 
@@ -33,6 +33,7 @@ Template.register.events({
 function accountsErrorHandler(error, result){
   if(error){
     console.log(error);
+    alert("Something went wrong when creating your user name");
   }
   else{
     Router.go('home');

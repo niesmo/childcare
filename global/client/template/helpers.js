@@ -39,6 +39,11 @@ Template.registerHelper('isActive', function(index){
 });
 
 Template.registerHelper('formatDate', function(date, format){
+  if(date==undefined)
+  {
+    //if returning undefined, this is not completed so has no date
+    return "";
+  }
   return moment(date).format(format);
 });
 
@@ -86,7 +91,27 @@ Template.registerHelper('flexibleColorClass', function(){
  */ 
 Template.registerHelper('getAge', function(dob){
   var ageInMonths = moment().diff(dob, 'months') || "";
-  return (ageInMonths === "")?"": ageInMonths + " months";
+  // if we could not parse it for some reason
+  if(ageInMonths == ""){
+    // check the baby is less than one month old
+    var ageInDays = moment().diff(dob, 'days');
+    if(ageInDays < 30){
+      return "< 1 Month";
+    }
+    return "";
+  }
+
+  // if the baby is not born yet
+  if(ageInMonths != "" && ageInMonths < 0){
+    return "Not Conceived";
+  }
+
+  // check if the baby is one month old
+  if(ageInMonths == 1){
+    return "1 Month";
+  }
+  
+  return ageInMonths + " Months";
 });
 
 /**
@@ -97,3 +122,75 @@ Template.registerHelper('getAge', function(dob){
 Template.registerHelper('initials', function(){
   return (this.firstName[0] + "." + (this.middleName?this.middleName + ".":"") + this.lastName[0]).toUpperCase();
 });
+
+/**
+ * This function will return the label (name or email) of the user who created the action item
+ * @param  {String}     @this {ActionItem} This in this function is referencing an action item
+ * @return {String}     The email or name of the user who created the action item
+ */
+Template.registerHelper('getCreatedByUser', function(){
+    if(!this._id) return;
+
+    var actionItem = ActionItems.findOne({_id: this._id});
+    if(actionItem.isSystemMessage){
+      return "System";
+    }
+
+    var createdByUser= Meteor.users.findOne(actionItem.createdBy);
+    var label = "";
+
+    try{
+      label = createdByUser.profile.firstName+" "+createdByUser.profile.lastName;
+    }
+    catch(err){
+      label = createdByUser.emails[0].address;
+    }
+    return label;
+});
+
+/**
+ * This function will return the label (name or email) of the user who completed the action item
+ * @param  {String}     @this {ActionItem} This in this function is referencing an action item
+ * @return {String}     The email or name of the user who completed the action item
+ */
+Template.registerHelper('getCompletedByUser', function(){
+    if(!this._id) return;
+    var actionItem = ActionItems.findOne({_id: this._id});
+    
+    if(!actionItem.completedBy){
+      return "";
+    }
+
+    var completedByUser= Meteor.users.findOne(actionItem.completedBy);
+    var label = "";
+
+    if (!actionItem.isCompleted){
+      return label;
+    }
+    try{
+      label = completedByUser.profile.firstName+" "+completedByUser.profile.lastName;
+    }
+    catch(err){
+      label = completedByUser.emails[0].address;
+    }
+    return label;
+});
+
+Template.registerHelper('error', function(){
+  return Session.get('errorMessage');
+});
+
+/**
+ * This function will add a system message to the action items list
+ * @param  {String}     @task Contains a description and task type (Infant or toddler)
+ * @return {String}     The result of the addition to the action item collection
+ */
+ createSystemActionItem = function (task){
+    check(task, {
+    description: String,
+    type: String
+  });
+  return Meteor.call("addSystemTask", task, function(e, r){
+      console.log(e, r);
+    });
+}

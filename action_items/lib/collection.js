@@ -53,7 +53,8 @@ Schemas.ActionItem = new SimpleSchema({
 
     createdBy: {
         type: SimpleSchema.RegEx.Id,
-		label: "Created By"
+		label: "Created By",
+        optional: true
     },
 	
 	createdAt: {
@@ -82,6 +83,10 @@ Schemas.ActionItem = new SimpleSchema({
         type: Date,
 		label: "Completed At",
 		optional: true
+    },
+    isSystemMessage: {
+        type: Boolean,
+        label: "Is System Message"
     }
 });
 

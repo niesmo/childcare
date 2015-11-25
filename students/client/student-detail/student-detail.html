@@ -1,15 +1,26 @@
 <template name="studentDetail">
   <h3>Student Detail</h3>
-  <dl class="dl-horizontal">
-    <dt>Name</dt><dd class="student-name">{{firstName}} {{lastName}}</dd>
-    <dt>Age</dt><dd>{{getAge dateOfBirth}}</dd>
-    <dt class="parent-row">Parents</dt>
-    <dd>
-      <ul class="list-inline">
+  <div class="row">
+    <div class="col-md-6">
+      <dl class="dl-horizontal">
+        <dt>Child Name</dt><dd class="student-name">{{firstName}} {{lastName}}</dd>
+        <dt>Age</dt><dd>{{getAge dateOfBirth}}</dd>
+        <dt>Transition Date</dt><dd>{{formatDate moveDate "MMM DD, YYYY"}}</dd>
+      </dl>
+    </div>
+    <div class="col-md-6">
+      <ul class="list-unstyled">
         {{#each parents}}
-          <li><img class="parent-avatar-thumbnail" src="{{image}}" alt="parent" /></li>
+          <li>
+            <dl class="dl-horizontal capitalize">
+                <dt>Parent Name</dt><dd>{{firstName}} {{lastName}}</dd>
+                <dt>Address</dt><dd>{{address}}</dd>
+                <dt>Phone Number</dt><dd>{{phoneNumber}}</dd>
+                <dt>Email</dt><dd class="lowercase"><a href="mailto:{{email}}">{{email}}</a></dd>
+            </dl>
+          </li>
         {{/each}}
       </ul>
-    </dd>
-  </dl>
+    </div>
+  </div>
 </template>

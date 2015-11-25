@@ -7,46 +7,32 @@ Meteor.methods({
     // Check the different variables passed
     // Use the Check Package https://atmospherejs.com/meteor/check
 	check(task, {
-    title: String,
     description: String,
 	type: String
   });
-	var date=new Date();
     return ActionItems.insert({
-      title: task.title,
+      title: "title",
       description: task.description,
       type: task.type,
       createdBy: Meteor.userId(),
-	  createdByEmail: Meteor.user().emails[0].address,
-      createdAt: date,
+      createdAt: new Date(),
 	  isCompleted: false,
-	  //completedBy: "",
-	  //completedAt: date
+    isSystemMessage: false
     });
   },
   completeTask: function(taskId){
   // Check the different variables passed
     // Use the Check Package https://atmospherejs.com/meteor/check
 	check(taskId, String);
-	var compDate=new Date();
 	//created by
     return ActionItems.update(taskId,{
-        $set: { completedBy:Meteor.userId(), completedAt:compDate, isCompleted:true}
+        $set: { completedBy:Meteor.userId(), completedAt:new Date(), isCompleted:true}
 		});
   },
 
 
-  deleteToddlerTask: function (taskId) {
-    ActionItems.remove(taskId);
-  },
-  
-  /*
-  setChecked: function (taskId, setChecked) {
-    ToddlerTasks.update(taskId, { $set: { checked: setChecked} });
-  },
-  */
-
-  deleteInfantTask: function (taskId) {
-    ActionItems.remove(taskId);
+  deleteTask: function (taskId) {
+    check(taskId, String);
+    return ActionItems.remove(taskId);
   }
 });
