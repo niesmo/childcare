@@ -1,6 +1,6 @@
 
 //global variable for the html added for the second parent using jquery in the application form
-secondParent = '<div class=\" container secondParentBackground\"><div class=\"row\" id=\"secondParentFirstAndLast\">'+
+/*secondParent = '<div class=\" container secondParentBackground\"><div class=\"row\" id=\"secondParentFirstAndLast\">'+
                   '<div class=\"col-md-4\">'+
                     '<div class=\"form-group\">'+
                       '<label for=\"secondPfname\">First Name</label>'+
@@ -40,3 +40,5 @@ secondParent = '<div class=\" container secondParentBackground\"><div class=\"ro
                   '</div>'+
                 '</div>'+
               '</div></div>';
+
+    */

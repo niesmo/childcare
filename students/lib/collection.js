@@ -100,12 +100,13 @@ Schemas.Student = new SimpleSchema({
   status:{
     type: String,
     label: "Status",
-    allowedValues: ['WAITLIST', 'APPLICATION', 'ENROLLED'],
+    allowedValues: ['WAITLIST', 'APPLICATION', 'ENROLLED', 'PARTIALLY_ENROLLED'],
     autoform:{
       options:[
         {label: "Waitlist", value: "WAITLIST"},
         {label: "Application", value: "APPLICATION"},
-        {label: "Enrolled", value: "ENROLLED"}
+        {label: "Enrolled", value: "ENROLLED"},
+        {label: "Partially Enrolled", value:"PARTIALLY_ENROLLED"}
       ],
       omit: true
     }

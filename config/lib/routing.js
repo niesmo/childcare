@@ -2,16 +2,16 @@
 
 Router.onBeforeAction(function(pause) {
 
+  this.next();
   if (!Meteor.user()) {
-    Router.go('signin');
+    this.render('signin');
   }
 
-  this.next();
   
-}, {except: ['signin']});
+}, {except: ['signin', 'applicationForm']});
 
 Router.plugin('ensureSignedIn', {
-    except: ['signin']
+    except: ['signin', 'applicationForm']
 });
 
 Router.configure({
