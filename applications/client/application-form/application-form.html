@@ -249,13 +249,15 @@
         </div>
 
         <!-- Affiliation -->
-        <div class="form-group">
-          <h4>Affiliation</h4>
+        {{#if showTypeOption}}
+          <div class="form-group">
+            <h4>Affiliation</h4>
 
-          <div class="radio-inline"><label for="member"><input class="radio" type="radio" name="type" value="member" id="member"> Child of Employee</label></div>
-          <div class="radio-inline"><label for="existing"><input class="radio" type="radio" name="type" value="existing" id="existing"> Current Family</label></div>
-          <div class="radio-inline"><label for="regular"><input class="radio" type="radio" name="type" value="regular" id="regular"> New Family</label></div>
-        </div>
+            <div class="radio-inline"><label for="member"><input class="radio" type="radio" name="type" value="member" id="member"> Child of Employee</label></div>
+            <div class="radio-inline"><label for="existing"><input class="radio" type="radio" name="type" value="existing" id="existing"> Current Family</label></div>
+            <div class="radio-inline"><label for="regular"><input class="radio" type="radio" name="type" value="regular" id="regular"> New Family</label></div>
+          </div>
+        {{/if}}
 
         <!-- Group -->
         <div class="form-group">

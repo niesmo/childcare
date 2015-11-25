@@ -22,6 +22,7 @@ Meteor.methods({
         "You must select a start date in the future");
     }
     */
+   
     //checking if not conceived was checked on application
     var notConceived;
     if(application.student.conceived=="NC"){
@@ -30,13 +31,13 @@ Meteor.methods({
     else{
       notConceived=false;
     }
-    if(!notConceived && application.student.dob==null){
-      throw new Meteor.error("must either have dob selected or not conceived selected");
+    if(!notConceived && application.student.dob == null){
+      throw new Meteor.error("Must either have date of birth picked or not conceived selected");
     }
 
 
     var imageId = Random.id();
-    // TODO: Blocks the Thread
+    // NOTE: Blocks the Thread
     // insert the parent
     var parentId = Parents.insert({
       firstName: application.parent.firstName,
@@ -91,45 +92,36 @@ Meteor.methods({
     }
 
     // insert the student, check if conceived to determine if dob should be inserted
-    if(!notConceived) {
-      var studentId = Students.insert({
-        firstName: application.student.firstName,
-        lastName: application.student.lastName,
-        dateOfBirth: new Date(application.student.dob),
-        group: application.group.toUpperCase(),
-        status: "application".toUpperCase(),
-        type: application.type.toUpperCase(),
-        paidApplicationFee: false,
-        startDate: application.startDate,
-        moveDate: moveDate,
-        daysRequested: days,
-        image: "http://api.adorable.io/avatars/100/" + imageId + ".png",
-        createdAt: new Date(),
-        color: color,
-        details: application.details,
-        conceived: notConceived
+    var studentToBeInserted = {
+      firstName: application.student.firstName,
+      lastName: application.student.lastName,
+      group: application.group.toUpperCase(),
+      status: "application".toUpperCase(),
+      paidApplicationFee: false,
+      startDate: application.startDate,
+      moveDate: moveDate,
+      daysRequested: days,
+      image: "http://api.adorable.io/avatars/100/" + imageId + ".png",
+      createdAt: new Date(),
+      color: color,
+      details: application.details,
+      conceived: notConceived
+    };
 
-      });
+    if(!notConceived) {
+      studentToBeInserted.dateOfBirth = new Date(application.student.dob);
+    }
+
+    // if the parents filled this out, set the type from the database
+    if(application.sessionToken.toLowerCase() !== 'admin'){
+      studentToBeInserted.type = Applications.findOne({token: application.sessionToken}).type;
     }
     else{
-      var studentId = Students.insert({
-        firstName: application.student.firstName,
-        lastName: application.student.lastName,
-  //      dateOfBirth: new Date(application.student.dob),
-        group: application.group.toUpperCase(),
-        status: "application".toUpperCase(),
-        type: application.type.toUpperCase(),
-        paidApplicationFee: false,
-        startDate: application.startDate,
-        daysRequested: days,
-        image: "http://api.adorable.io/avatars/100/" + imageId + ".png",
-        createdAt: new Date(),
-        color: color,
-        details: application.details,
-        conceived: notConceived
-      });
-
+      studentToBeInserted.type = application.type.toUpperCase();
     }
+    
+    var studentId = Students.insert(studentToBeInserted);
+    
 
     // inserting the studentParent document
     var studentParentId = StudentParents.insert({
@@ -156,6 +148,11 @@ Meteor.methods({
         isPrimary: true,
         createdAt: new Date()
       });
+    }
+
+    // set the application session to complete
+    if(application.sessionToken.toLowerCase() !== 'admin'){
+      Applications.update({token: application.sessionToken}, {$set: {submittedAt: new Date()}});
     }
 
     return {
@@ -186,15 +183,22 @@ Meteor.methods({
     if(lastInGroup){
       order = lastInGroup.order + 1;
     }
-    else{
-      var where = {$or: [{status: "WAITLIST"},{status:"PARTIALLY_ENROLLED"}], group: student.group};
-      if(student.type === "EXISTING"){
-        where['type'] = "MEMBER";
+    else {
+      // if the student is a Staff and there is no one in the staff sub-section
+      if(student.type === "MEMBER"){
+        order = 1;
       }
+      // if the student is not staff
+      else{
+        var where = {$or: [{status: "WAITLIST"},{status:"PARTIALLY_ENROLLED"}], group: student.group};
+        if(student.type === "EXISTING"){
+          where['type'] = "MEMBER";
+        }
 
-      var lastOtherGroup = Students.findOne(where, {sort: {order:-1}});
-      if(lastOtherGroup){
-        order = lastOtherGroup.order + 1;
+        var lastOtherGroup = Students.findOne(where, {sort: {order:-1}});
+        if(lastOtherGroup){
+          order = lastOtherGroup.order + 1;
+        }
       }
     }
 
@@ -316,6 +320,77 @@ Meteor.methods({
     */
   'insertStudentParent': function(studentId, parentId){
     StudentParents.insert({studentId:studentId, parentId:parentId});
+  },
+
+  
+  /**
+   * This function will send out the application to the email specified in the applicationInfo
+   * @param  {Object} applicationInfo This object contains the email and the type of the application
+   * @return {[type]}                 Status of the operation
+   */
+  'createNewApplication': function(applicationInfo){
+    // check if the user is logged in
+    if(!Meteor.userId()){
+      throw new Meteor.error("User Not Authorized", "User is not logged in. Access Denied!!");
+    }
+
+    // validate format
+    if(!SimpleSchema.RegEx.Email.test(applicationInfo.email)){
+      throw new Meteor.error("Wrong Email format", "Email does not have the correct format");
+    }
+
+
+    // valid application type
+    if(['regular', 'member', 'existing'].indexOf(applicationInfo.applicationType.toLowerCase()) === -1){
+      throw new Meteor.error("Wrong Application Type", "Application type can only be one of 'Current ', 'Member', or 'existing'");
+    }
+
+    // Creating the expiration date
+    var expirationDate = new Date();
+    expirationDate.setDate(expirationDate.getDate() + 2);
+    expirationDate.setHours(0);
+    expirationDate.setMinutes(0);
+    expirationDate.setSeconds(1);
+
+
+    // generate the token for the session
+    var token = Random.id();
+
+
+    // throws an exception when needed
+    Applications.insert({
+      effectiveDate: new Date(),
+      expirationDate: expirationDate,
+      sentAt: new Date(),
+      sentBy: Meteor.userId(),
+      sentTo: applicationInfo.email,
+      token: token,
+      type: applicationInfo.applicationType.toUpperCase()
+    });
+
+    // send an email to the parent
+    
+    // Let other method calls from the same client start running,
+    // without waiting for the email sending to complete.
+    // this.unblock();
+
+    // Email.send({
+    //   to: applicationInfo.email,
+    //   from: "olb-application@olb.com",
+    //   subject: "Childcare Application",
+    //   text: "Here is the application that you need to fill out and submit.\n Follow the link below to access your application.\n The application will expire in 2 days"
+    // });
+
+    return token;
+
+
+    // PrettyEmail.send('Basic', {
+    //   from: "olb-application@olb.com",
+    //   to: applicationInfo.email,
+    //   subject: "Childcare Application",
+    //   heading: "Childcare Application",
+    //   message: "Here is the application that you need to fill out and submit.\n Follow the link below to access your application.\n The application will expire in 2 days"
+    // });
   }
 });
 

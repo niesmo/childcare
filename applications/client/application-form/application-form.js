@@ -13,6 +13,10 @@ Template.applicationForm.events({
    */
   "submit form": function(event){
     event.preventDefault();
+
+    // getting the token from the URL 
+    sessionToken = Router.current().params.token;
+
     Errors.remove({type:'validation'});
     //retrieve data from form
     var formValidated=true;
@@ -25,7 +29,7 @@ Template.applicationForm.events({
       Errors.insert({message:'Please check at least two days', seen:false, type:'validation'});
       formValidated=false;
     }
-    if($(event.target).find('input:radio[name=type]:checked').val()==null){
+    if($(event.target).find('input:radio[name=type]:checked').val()==null && $("input:radio[name=type]").length){
       Errors.insert({message:'Please select affiliation', seen:false,type:'validation'});
       formValidated=false;
 
@@ -82,9 +86,11 @@ Template.applicationForm.events({
       Errors.insert({message:'Please enter Start Date', seen:false,type:'validation'});
       formValidated=false;
     }
+
     var secondParentObj = {
       active: false
     };
+    
     if(Session.get("secondParent")){
        secondParentObj = {
         lastName:event.target['second-plname'].value,
@@ -103,10 +109,10 @@ Template.applicationForm.events({
         formValidated=false;
       }
     }
-if(!formValidated){
-  scroll(0,0);
-  return;
-}
+    if(!formValidated){
+      scroll(0,0);
+      return;
+    }
 
 
     var application = {
@@ -140,15 +146,10 @@ if(!formValidated){
       group: $(event.target).find('input:radio[name=group]:checked').val(),
       flexible: $(event.target).find('input:checkbox[name=flexible]:checked').val(),
       details: event.target.details.value,
+      sessionToken: sessionToken
     };
 
 
-
-    // console.log(application);
-
-    // var studentObj = ({lname:lname,fname:fname,DOB:DOB,group:group, status:"APPLICATION"});
-    // var parentObj=({plname:plname,pfname:pfname,address:address,email:email,phone:phone});
-    // var detailsObj=({days:days, type:type, details:details,requestedStart:requestedStart,paid:false});
     Errors.remove({});
     Meteor.call("createApplication", application, createApplicationCallback);
 
@@ -156,12 +157,24 @@ if(!formValidated){
     scroll(0,0);
     event.target.reset();
 	},
+
+  /**
+   * [description]
+   * @param  {[type]} event [description]
+   * @return {[type]}       [description]
+   */
   "click #addParent":function(event){
     event.preventDefault();
     $(".hidden").removeClass('hidden');
     $("#addParent").replaceWith("<button type=\"button\" class=\"btn btn-primary\" id=\"collapse\">Collapse</button>");
     Session.set("secondParent", true);
   },
+
+  /**
+   * [description]
+   * @param  {[type]} event [description]
+   * @return {[type]}       [description]
+   */
   "click #collapse":function(event){
     event.preventDefault();
     $("#collapse").replaceWith("<button type=\"button\" class=\"btn btn-primary add\" id=\"addParent\">Add another Parent</button>");
@@ -191,6 +204,11 @@ function createApplicationCallback(err, res){
   return;
 }
 
+/**
+ * [secondParentValidate description]
+ * @param  {[type]} secondParentObj [description]
+ * @return {[type]}                 [description]
+ */
 function secondParentValidate(secondParentObj){
   var valid=true;
   if(secondParentObj.firstName==""){
