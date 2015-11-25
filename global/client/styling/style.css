@@ -48,3 +48,7 @@ p.large,li.large,a.large{
 .student{
   cursor: move;
 }
+.center{
+  text-align: center;
+
+}
