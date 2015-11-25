@@ -31,13 +31,13 @@ Meteor.methods({
     else{
       notConceived=false;
     }
-    if(!notConceived && application.student.dob==null){
+    if(!notConceived && application.student.dob == null){
       throw new Meteor.error("Must either have date of birth picked or not conceived selected");
     }
 
 
     var imageId = Random.id();
-    // TODO: Blocks the Thread
+    // NOTE: Blocks the Thread
     // insert the parent
     var parentId = Parents.insert({
       firstName: application.parent.firstName,
