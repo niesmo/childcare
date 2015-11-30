@@ -64,7 +64,7 @@ Meteor.methods({
    * @param studentId
    * @returns {{status: string, studentId: *, parentId: *, studentParentId: *}}
    */
-  'EditWaitlist': function(waitlist, sId){
+  'EditWaitlist': function(waitlist, sId, editMode){
 
     if(waitlist.days.length === 0){
       throw new Meteor.error("No day select",
@@ -78,7 +78,7 @@ Meteor.methods({
     }
 
 */
-
+    var status = Students.findOne({_id:sId}).status;
     var parentId = Parents.update(waitlist.parent.id,{$set: {
       firstName: waitlist.parent.firstName,
       lastName: waitlist.parent.lastName,
@@ -111,20 +111,38 @@ Meteor.methods({
     });
 
     // insert the student
-    var studentId = Students.update(sId,{$set: {
-      firstName: waitlist.student.firstName,
-      lastName: waitlist.student.lastName,
-      dateOfBirth: new Date(waitlist.student.dob),
-      group: waitlist.group.toUpperCase(),
-      status: "waitlist".toUpperCase(),
-      type: waitlist.type.toUpperCase(),
-      startDate: waitlist.startDate,
-      order: waitlist.order,
-      details: waitlist.details,
-      daysWaitlisted: days
+    //if edit from waitlist, change days waitlisted
+    if(editMode=='waitlsit') {
+      var studentId = Students.update(sId, {
+        $set: {
+          firstName: waitlist.student.firstName,
+          lastName: waitlist.student.lastName,
+          dateOfBirth: new Date(waitlist.student.dob),
+          group: waitlist.group.toUpperCase(),
+          status: status,
+          type: waitlist.type.toUpperCase(),
+          startDate: waitlist.startDate,
+          order: waitlist.order,
+          details: waitlist.details,
+          daysWaitlisted: days
+        }
+      });
+    }else if(editMode=='enrolled'){
+      var studentId = Students.update(sId, {
+        $set: {
+          firstName: waitlist.student.firstName,
+          lastName: waitlist.student.lastName,
+          dateOfBirth: new Date(waitlist.student.dob),
+          group: waitlist.group.toUpperCase(),
+          status: status,
+          type: waitlist.type.toUpperCase(),
+          startDate: waitlist.startDate,
+          order: waitlist.order,
+          details: waitlist.details,
+          daysEnrolled: days
+        }
+      });
     }
-
-    });
     var updatedObj = {parentId:parentId, studentId:studentId};
     return updatedObj;
   },

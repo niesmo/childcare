@@ -6,3 +6,22 @@ Template.studentDetail.helpers({
     return parents;
   }
 });
+
+Template.studentDetail.events({
+  "click .remove": function(event){
+    event.preventDefault();
+    Meteor.call('removeStudent', this._id);
+  },
+  /**
+   *
+   * @param event
+   */
+  "click .edit": function(event){
+    event.preventDefault();
+    Session.set('studentToEdit', Session.get('selectedStudentId'));
+    //sets editMode to waitlist to differentiate between waitlist and enrolled student edit
+    Session.set('editMode', 'enrolled');
+    Modal.show('editStudentModal');
+
+  }
+});

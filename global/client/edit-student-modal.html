@@ -186,9 +186,25 @@
                       <input class="form-control" type="date" name="dob" id="dob"  value="{{formatDate student.dateOfBirth "YYYY-MM-DD"}}">
                     </div>
                   </div>
+                <!-- only if being edited from waitlist -->
+                  {{#if fromWaitlist}}
+                  <div class="form-group">
+                    <div class="checkbox-inline">
+                      <label for="nc"><input class="checkbox" type="checkbox" name="notConceived" value="NC" id="nc" /> Not Yet Conceived</label>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for='dueDate'>If not yet conceived, expected due date?</label>
+                    <div class="input-group">
+                      <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                      <input class="form-control" type="date" name="dueDate" id="dueDate">
+                    </div>
+                  </div>
+                  {{/if}}
                 </div>
               </div>
 
+              {{#if fromWaitlist}}
               <div class="row">
                 <!--Requested start Date -->
                 <div class="col-md-4">
@@ -201,6 +217,7 @@
                   </div>
                 </div>
               </div>
+              {{/if}}
 
               <!-- Days -->
               <div class="form-group">
@@ -301,7 +318,6 @@
     </div>
   </div>
   <script>
-
     $('#sel1').change(function(){
       if($( "#parent1" ).hasClass( "hidden" )){
           Session.set('parentToEdit', 'parent1');
@@ -314,6 +330,17 @@
         $( "#parent1").addClass('hidden');
       }
     });
-
   </script>
+  {{#if fromWaitlist}}
+  <script>
+    $("#dueDate").prop('disabled', true);
+    var checked = false;
+    $( "#nc" ).change(function() {
+      $("#dueDate").prop('disabled', checked);
+      $("#dob").prop('disabled', !checked);
+      checked = !checked;
+
+    });
+  </script>
+  {{/if}}
 </template>

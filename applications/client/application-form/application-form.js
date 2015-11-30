@@ -25,67 +25,7 @@ Template.applicationForm.events({
     $("input:checkbox[name=days]:checked").each(function(){
       days.push($(this).val());
     });
-    if(days.length<2){
-      Errors.insert({message:'Please check at least two days', seen:false, type:'validation'});
-      formValidated=false;
-    }
-    if($(event.target).find('input:radio[name=type]:checked').val()==null && $("input:radio[name=type]").length){
-      Errors.insert({message:'Please select affiliation', seen:false,type:'validation'});
-      formValidated=false;
 
-    }
-    if($(event.target).find('input:radio[name=group]:checked').val()==null){
-      Errors.insert({message:'Please select group', seen:false,type:'validation'});
-      formValidated=false;
-    }
-    if(event.target.pfname.value==""){
-      Errors.insert({message:'Please enter Parent First Name', seen:false,type:'validation'});
-      formValidated=false;
-    }
-    if(event.target.plname.value==""){
-      Errors.insert({message:'Please select Parent Last Name', seen:false,type:'validation'});
-      formValidated=false;
-    }
-    if(event.target.fname.value==""){
-      Errors.insert({message:'Please enter student first name', seen:false,type:'validation'});
-      formValidated=false;
-    }
-    if(event.target.lname.value==""){
-      Errors.insert({message:'Please enter student last name', seen:false,type:'validation'});
-      formValidated=false;
-    }
-    if(event.target.street.value==""){
-      Errors.insert({message:'Please enter street', seen:false,type:'validation'});
-      formValidated=false;
-    }
-    if(event.target.city.value==""){
-      Errors.insert({message:'Please enter city', seen:false,type:'validation'});
-      formValidated=false;
-    }
-    if(event.target.state.value==""){
-      Errors.insert({message:'Please enter state', seen:false,type:'validation'});
-      formValidated=false;
-    }
-    if(event.target.zip.value==""){
-      Errors.insert({message:'Please enter ZIP', seen:false,type:'validation'});
-      formValidated=false;
-    }
-    if(event.target['phone-number'].value==""){
-      Errors.insert({message:'Please enter phone number', seen:false,type:'validation'});
-      formValidated=false;
-    }
-    if(event.target.email.value==""){
-      Errors.insert({message:'Please enter email', seen:false,type:'validation'});
-      formValidated=false;
-    }
-    if(event.target.dob.value=="" && notConceived!="NC"){
-      Errors.insert({message:'Please enter Date Of Birth or select Not Conceived', seen:false,type:'validation'});
-      formValidated=false;
-    }
-    if(event.target.sdate.value==""){
-      Errors.insert({message:'Please enter Start Date', seen:false,type:'validation'});
-      formValidated=false;
-    }
 
     var secondParentObj = {
       active: false
@@ -105,14 +45,8 @@ Template.applicationForm.events({
         phone:event.target['second-phone-number'].value,
         active: true
       };
-      if(!secondParentValidate(secondParentObj)){
-        formValidated=false;
-      }
     }
-    if(!formValidated){
-      scroll(0,0);
-      return;
-    }
+
 
 
     var application = {
@@ -148,8 +82,13 @@ Template.applicationForm.events({
       details: event.target.details.value,
       sessionToken: sessionToken
     };
-
-
+    if(!applicationValidate(application)){
+      formValidated = false;
+    }
+    if(!formValidated){
+      scroll(0,0);
+      return;
+    }
     Errors.remove({});
     Meteor.call("createApplication", application, createApplicationCallback);
 
