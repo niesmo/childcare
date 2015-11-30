@@ -64,26 +64,8 @@ Meteor.methods({
    * @param studentId
    * @returns {{status: string, studentId: *, parentId: *, studentParentId: *}}
    */
-  'EditWaitlist': function(waitlist, sId, pId){
-    // check to see if they have selected at least one day
-    var student = Students.findOne({_id:sId});
-    var oldOrder=student.order;
-    var newOrder = waitlist.order;
-    var students;
-    if(newOrder < oldOrder){
-      //re order when new order is lower (increment each student order that is greater than or equal to the new order and less than the old order)
-      students = Students.find({$and:[{order:{$gte: newOrder}},{order:{$lte: oldOrder}}]});
-      students.forEach(function(doc){
-        Students.update({_id:doc.id}, {$inc: {order: 1}});
-      });
-    }
-    else if(newOrder > oldOrder){
-      //re order when new order is greater (decrement eache student order that is greater than old order and less than new order
-        students = Students.find({$and:[{order:{$lte: newOrder}},{order:{$gte: oldOrder}}]});
-      students.forEach(function(doc){
-        Students.update({_id:doc.id}, {$inc: {order:-1}});
-      });
-    }
+  'EditWaitlist': function(waitlist, sId){
+
     if(waitlist.days.length === 0){
       throw new Meteor.error("No day select",
           "You must select at least one day of the week.");
@@ -97,13 +79,22 @@ Meteor.methods({
 
 */
 
-    var parentId = Parents.update(pId,{$set: {
+    var parentId = Parents.update(waitlist.parent.id,{$set: {
       firstName: waitlist.parent.firstName,
       lastName: waitlist.parent.lastName,
       address: waitlist.parent.address,
       phoneNumber: waitlist.parent.phone,
       email: waitlist.parent.email
     }});
+    if(waitlist.secondParent.active){
+      var secondParentId = Parents.update(waitlist.secondParent.id,{$set: {
+        firstName: waitlist.secondParent.firstName,
+        lastName: waitlist.secondParent.lastName,
+        address: waitlist.secondParent.address,
+        phoneNumber: waitlist.secondParent.phone,
+        email: waitlist.secondParent.email
+      }});
+    }
 
     // constructing the days for the student document
     var days = [];

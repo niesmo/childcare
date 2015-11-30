@@ -10,25 +10,39 @@
           </div>
 
           <div class="modal-body">
+            {{>errors}}
             <form role="form">
-              {{#with parent}}
               <div class="row">
                 <div class="col-md-4">
                   <div class="form-group">
-                    <label for="pfname">Parent First Name</label>
-                    <div class="input-group">
-                      <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
-                      <input type="text" class="form-control" name="pfname" value="{{firstName}}" required>
-                    </div>
+                    <label for="sel1">Parent to edit:</label>
+                    <select class="form-control" id="sel1">
+                      {{#each parents}}
+                          <option>{{firstName}}</option>
+                      {{/each}}
+                    </select>
                   </div>
                 </div>
+              </div>
+              {{#with parent1}}
+              <div id="parent1">
+                <div class="row">
+                 <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="pfname">Parent First Name</label>
+                      <div class="input-group">
+                      <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                        <input type="text" class="form-control" name="pfname" value="{{firstName}}" >
+                      </div>
+                    </div>
+                  </div>
 
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="plname">Parent Last Name</label>
                     <div class="input-group">
                       <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
-                      <input type="text" class="form-control" name="plname" id="plname" value="{{lastName}}" required>
+                      <input type="text" class="form-control" name="plname" id="plname" value="{{lastName}}">
                     </div>
                   </div>
                 </div>
@@ -41,7 +55,7 @@
                     <label for="address">Address</label>
                     <div class="input-group">
                       <span class="input-group-addon"><span class="glyphicon glyphicon-map-marker"></span></span>
-                      <input class="form-control" type="text" name="address" id="address" value="{{address}}" required>
+                      <input class="form-control" type="text" name="address" id="address" value="{{address}}">
                     </div>
                   </div>
                 </div>
@@ -55,7 +69,7 @@
                     <label for="email">Email Address</label>
                     <div class="input-group">
                       <span class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></span>
-                      <input class="form-control" type="email" name="email" id="email" value="{{email}}" required>
+                      <input class="form-control" type="email" name="email" id="email" value="{{email}}">
                     </div>
                   </div>
                 </div>
@@ -66,14 +80,78 @@
                     <label for="phone-number">Phone Number</label>
                     <div class="input-group">
                       <span class="input-group-addon"><span class="glyphicon glyphicon-earphone"></span></span>
-                      <input class="form-control" type="text" name="phone-number" id="phone-number" value="{{phoneNumber}}" required>
+                      <input class="form-control" type="text" name="phone-number" id="phone-number" value="{{phoneNumber}}">
                     </div>
                   </div>
                 </div>
               </div>
+              </div>
               {{/with}}
 
 
+              {{#with parent2}}
+                <div class="hidden" id="parent2">
+                 <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="second-pfname">Parent First Name</label>
+                      <div class="input-group">
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                        <input type="text" class="form-control" name="second-pfname" value="{{firstName}}">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="second-plname">Parent Last Name</label>
+                      <div class="input-group">
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                        <input type="text" class="form-control" name="second-plname" id="second-plname" value="{{lastName}}">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Parent Address -->
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="second-address">Address</label>
+                      <div class="input-group">
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-map-marker"></span></span>
+                        <input class="form-control" type="text" name="second-address" id="second-address" value="{{address}}">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="row">
+                  <!-- Parents Email -->
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="second-email">Email Address</label>
+                      <div class="input-group">
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></span>
+                        <input class="form-control" type="email" name="second-email" id="second-email" value="{{email}}">
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Parents phone number -->
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="second-phone-number">Phone Number</label>
+                      <div class="input-group">
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-earphone"></span></span>
+                        <input class="form-control" type="text" name="second-phone-number" id="second-phone-number" value="{{phoneNumber}}">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                </div>
+              {{/with}}
 
               <div class="row">
                 <div class="col-md-4">
@@ -81,7 +159,7 @@
                     <label for="fname">Child's First Name</label>
                     <div class="input-group">
                       <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
-                      <input type="text" class="form-control" name="fname" id="fname"  value="{{student.firstName}}" required>
+                      <input type="text" class="form-control" name="fname" id="fname"  value="{{student.firstName}}">
                     </div>
                   </div>
                 </div>
@@ -91,7 +169,7 @@
                     <label for="lname">Child's Last Name</label>
                     <div class="input-group">
                       <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
-                      <input class="form-control" type="text" name="lname" id="lname"  value="{{student.lastName}}" required>
+                      <input class="form-control" type="text" name="lname" id="lname"  value="{{student.lastName}}">
                     </div>
                   </div>
                 </div>
@@ -105,7 +183,7 @@
                     <label for='dob'>Date Of Birth</label>
                     <div class="input-group">
                       <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                      <input class="form-control" type="date" name="dob" id="dob"  value="{{formatDate student.dateOfBirth "YYYY-MM-DD"}}" required>
+                      <input class="form-control" type="date" name="dob" id="dob"  value="{{formatDate student.dateOfBirth "YYYY-MM-DD"}}">
                     </div>
                   </div>
                 </div>
@@ -118,7 +196,7 @@
                     <label for="sdate">Desired Start Date</label>
                     <div class="input-group">
                       <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                      <input class="form-control" type="date" name="sdate" id="sdate" value="{{formatDate student.startDate "YYYY-MM-DD"}}" required>
+                      <input class="form-control" type="date" name="sdate" id="sdate" value="{{formatDate student.startDate "YYYY-MM-DD"}}">
                     </div>
                   </div>
                 </div>
@@ -155,9 +233,15 @@
               </div>
 
               <div class="form-group">
+                {{#if isFlexible}}
+                  <div class="checkbox-inline"><label for="flexible"><input class="checkbox" type="checkbox" name="flexible" value="flexible" id="flexible" checked/>
+                    Flexible On Days? If so explain in details section</label>
+                  </div>
+                    {{else}}
                 <div class="checkbox-inline"><label for="flexible"><input class="checkbox" type="checkbox" name="flexible" value="flexible" id="flexible"/>
                   Flexible On Days? If so explain in details section</label>
                 </div>
+                {{/if}}
               </div>
 
               <!-- Affiliation -->
@@ -204,15 +288,32 @@
               </div>
 
               <br>
+              <div class="modal-footer">
+                <input class="btn btn-primary" type="submit" value="Edit Student" id="submit"/>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
             </form>
           </div>
 
-          <div class="modal-footer">
-            <input class="btn btn-primary" type="submit" value="Edit Student" id="submit"/>
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          </div>
+
         </div>
       </div>
     </div>
   </div>
+  <script>
+
+    $('#sel1').change(function(){
+      if($( "#parent1" ).hasClass( "hidden" )){
+          Session.set('parentToEdit', 'parent1');
+        $( "#parent1").removeClass('hidden');
+        $( "#parent2").addClass('hidden');
+      }
+      else{
+        Session.set('parentToEdit', 'parent2');
+        $( "#parent2").removeClass('hidden');
+        $( "#parent1").addClass('hidden');
+      }
+    });
+
+  </script>
 </template>
