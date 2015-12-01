@@ -1,5 +1,5 @@
   Meteor.methods({
-    'reset' : function() {
+    'actionItemReset' : function() {
       ActionItems.remove({});
     }
   });
