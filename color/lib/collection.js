@@ -1,4 +1,4 @@
-Color = new Mongo.Collection("color");
+Color = new Mongo.Collection("colors");
 
 var Schemas = {};
 
