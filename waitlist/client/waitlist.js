@@ -11,7 +11,7 @@ Template.waitlist.helpers({
    * @returns {*}
    */
   students: function(){
-    return Students.find({group: this.type, status:"WAITLIST"}, {sort:{order:1}});
+    return Students.find({group: this.type, $or: [{status:"WAITLIST"}, {status:"PARTIALLY_ENROLLED"}]}, {sort:{order:1}});
   },
 
   /**

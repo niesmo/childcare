@@ -25,4 +25,29 @@
       </tr>
     </tbody>
   </table>
+
+  <h4>Students Transitioning</h4>
+  <table class="table table-bordered">
+    <thead>
+    <tr>
+      <th>Student</th>
+      <th>Estimated Transition Date</th>
+      {{#each daysOfWeek}}
+        <th>{{this}}</th>
+      {{/each}}
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#each student in studentsTransitioning}}
+      <tr class="info" style="background-color:#7f8c8d">
+        <td>{{student.firstName}} {{student.lastName}}</td>
+        <td>{{formatDate student.moveDate "MMM DD, YYYY"}}</td>
+        {{#each daysOfWeek}}
+          <td style="background-color:{{getColorIfRequestsClass student}}"></td>
+        {{/each}}
+      </tr>
+    {{/each}}
+    </tbody>
+  </table>
 </template>

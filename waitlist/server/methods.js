@@ -2,9 +2,11 @@ Meteor.methods({
   /**
    * This function will simply enroll 
    * @param  {String} studentId The id of the student that is about to be enrolled
+   * @param  {object} totalDays object containing the days to enroll and the days to waitlist
+   * @param  {String} enrollType 'enroll' if taking off waitlist and 'partial_enroll' if staying on waitlist
    * @return {}
    */
-  "enrollStudent": function(studentId, days){
+  "enrollStudent": function(studentId, totalDays, enrollType){
     // get the student with such id
     var student = Students.findOne({_id: studentId});
 
@@ -23,25 +25,37 @@ Meteor.methods({
     // check if this person is requesting any days to be enrolled or not
     if(student.daysWaitlisted.length === 0){
       throw new Meteor.error("No days waitlisted",
-        "This student is not waitlisted for any days, so it cannot be enrolled in any class");
+        "This student is not waitlisted for any days, so they cannot be enrolled in any class");
     }
 
     var daysEnr = [];
     var week = {M: "monday", T: "tuesday", W: "wednesday", TH: "thursday", F: "friday"};
-    days.forEach(function (day) {
+    totalDays.daysChecked.forEach(function (day) {
       daysEnr.push({
         day: week[day].toUpperCase(),
         flexible: false
       });
     });
-    // enroll the student
-    Students.update({_id: studentId}, {$set: {status: "ENROLLED", classId: classroom._id, daysEnrolled: daysEnr}});
 
-    // fix the order of the waitlist
-    var toBeUpdated = Students.find({status:"WAITLIST", group:student.group, order: {$gt: student.order}});
-    toBeUpdated.forEach(function (student) {
-      Students.update({_id: student._id}, {$inc: {order: -1}});
-    });
+    //if student is already partially enrolled, then concat the new days enrolled with days student is already enrolled
+    if(student.status=="PARTIALLY_ENROLLED"){
+      daysEnr = daysEnr.concat(student.daysEnrolled);
+    }
+    if(enrollType=='enroll') {
+
+      // enroll the student
+      Students.update({_id: studentId}, {$set: {status: "ENROLLED", classId: classroom._id, daysEnrolled: daysEnr}});
+
+      // fix the order of the waitlist
+      var toBeUpdated = Students.find({$or: [{status:"WAITLIST"}, {status:"PARTIALLY_ENROLLED"}], group: student.group, order: {$gt: student.order}});
+      toBeUpdated.forEach(function (student) {
+        Students.update({_id: student._id}, {$inc: {order: -1}});
+      });
+    }
+    //if status id partial_enroll, change status to partially_enrolled, change daysWaitlisted to unchecked days and don't reorder waitlist
+    else if(enrollType=='partial_enroll'){
+      Students.update({_id: studentId}, {$set: {status: "PARTIALLY_ENROLLED", classId: classroom._id, daysEnrolled: daysEnr, daysWaitlisted: totalDays.daysNotChecked}});
+    }
   },
   /**
    *
@@ -123,5 +137,83 @@ Meteor.methods({
     var updatedObj = {parentId:parentId, studentId:studentId};
     return updatedObj;
   },
+  /**
+   *
+   * @param studentId id of student to check
+   * @param days array of days that the student is waitlisted for but were not selected for enrollment.
+   * @returns {Array}
+   */
+  'compareDays': function(studentId, days){
+    var student = Students.findOne({_id:studentId});
+    var daysEnr = [];
+
+    var week = {M: "monday", T: "tuesday", W: "wednesday", TH: "thursday", F: "friday"};
+    days.forEach(function (day) {
+      daysEnr.push({
+        day: week[day].toUpperCase(),
+        flexible: false
+      });
+    });
+    //compare days waitlisted to days selected to enroll
+    //if there are any days waitlisted that are not selected partially enroll
+    var daysNotSelected = [];
+    var daysWaiting = student.daysWaitlisted;
+    var count = 0;
+    var checkDay = false;
+    while(count < daysWaiting.length){
+      var waitlistCount = 0;
+      while(waitlistCount < daysEnr.length){
+        if(daysWaiting[count].day == daysEnr[waitlistCount].day){
+          checkDay=true;
+          break;
+        }
+        waitlistCount++;
+      }
+      if(!checkDay){
+        daysNotSelected.push({
+          day: daysWaiting[count].day,
+          flexible: daysWaiting[count].flexible
+        })
+      }
+      checkDay=false;
+      count++;
+    }
+    return daysNotSelected;
+  },
+
+  /**
+   *
+   * @param studentId
+   * @param newOrder
+   * @param currentOrder
+   */
+  'reOrderWaitlist':function(studentId, newOrder, currentOrder){
+
+    var studentMoved = Students.findOne({_id:studentId});
+    var toBeUpdated;
+    //case if moved higher in waitlist
+    if(newOrder > currentOrder){
+      //decrement student order for students whose order is less than or equal to the students new order AND greater than students current order
+     
+       toBeUpdated = Students.find({$or: [{status:"WAITLIST"}, {status:"PARTIALLY_ENROLLED"}], group:studentMoved.group, $and: [{order: {$lte: newOrder}},{order: {$gt: currentOrder}}]});
+      toBeUpdated.forEach(function (student) {
+        Students.update({_id: student._id}, {$inc: {order: -1}});
+      });
+
+    }
+    //case if moved lower on waitlist
+    else if(newOrder < currentOrder){
+
+      //increment student order for students whose order is greater than or equal to students new order and less than students current order
+       toBeUpdated = Students.find({$or: [{status:"WAITLIST"}, {status:"PARTIALLY_ENROLLED"}], group:studentMoved.group, $and: [{order: {$gte: newOrder}},{order: {$lt: currentOrder}}]});
+      toBeUpdated.forEach(function (student) {
+        Students.update({_id: student._id}, {$inc: {order: 1}});
+      });
+    }
+    Students.update(studentId, {
+      $set: {order: newOrder}});
+
+
+  }
 
 });

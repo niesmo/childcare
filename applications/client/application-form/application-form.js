@@ -1,25 +1,9 @@
 //removes errors if returning to application page
 Template.applicationForm.rendered = function(){
   Errors.remove({type:'validation'});
+  Session.set("secondParent", false);
 };
 
-//detect button click with onClick function rather than event because button was created dynamically with jquery
-$(document).on('click', '#collapse', function() {
-
-  $("#secondParentFirstAndLast").remove();
-  $("#secondParentContact").remove();
-  $("#collapse").replaceWith("<button type=\"button\" class=\"btn btn-primary add\" id=\"addParent\">Add another Parent</button>");
-  Session.set("secondParent", false);
-
-});
-
-$(document).on('click', '#addParent', function(){
-
-  $("#endParent").after(secondParent); //secondParent is global variable containing html string for second parent
-  $("#addParent").replaceWith("<button type=\"button\" class=\"btn btn-primary\" id=\"collapse\">Collapse</button>");
-  Session.set("secondParent", true);
-
-});
 
 Template.applicationForm.events({
   /**
@@ -29,6 +13,10 @@ Template.applicationForm.events({
    */
   "submit form": function(event){
     event.preventDefault();
+
+    // getting the token from the URL 
+    sessionToken = Router.current().params.token;
+
     Errors.remove({type:'validation'});
     //retrieve data from form
     var formValidated=true;
@@ -41,7 +29,7 @@ Template.applicationForm.events({
       Errors.insert({message:'Please check at least two days', seen:false, type:'validation'});
       formValidated=false;
     }
-    if($(event.target).find('input:radio[name=type]:checked').val()==null){
+    if($(event.target).find('input:radio[name=type]:checked').val()==null && $("input:radio[name=type]").length){
       Errors.insert({message:'Please select affiliation', seen:false,type:'validation'});
       formValidated=false;
 
@@ -98,12 +86,34 @@ Template.applicationForm.events({
       Errors.insert({message:'Please enter Start Date', seen:false,type:'validation'});
       formValidated=false;
     }
-if(!formValidated){
-  scroll(0,0);
-  return;
-}
-    var secondParent = Session.get('secondParent'); //returns true if second parent input is activated
-    var parent2={};
+
+    var secondParentObj = {
+      active: false
+    };
+    
+    if(Session.get("secondParent")){
+       secondParentObj = {
+        lastName:event.target['second-plname'].value,
+        firstName:event.target['second-pfname'].value,
+        email:event.target['second-email'].value,
+        address: {
+          street:event.target['second-street'].value,
+          city:event.target['second-city'].value,
+          state:event.target['second-state'].value,
+          zip:event.target['second-zip'].value,
+        },
+        phone:event.target['second-phone-number'].value,
+        active: true
+      };
+      if(!secondParentValidate(secondParentObj)){
+        formValidated=false;
+      }
+    }
+    if(!formValidated){
+      scroll(0,0);
+      return;
+    }
+
 
     var application = {
       // Parent Information
@@ -119,6 +129,8 @@ if(!formValidated){
         phone: event.target['phone-number'].value,
         email: event.target.email.value
       },
+      //second aprent information
+      secondParent: secondParentObj,
       // Student information 
       student:{
         firstName: event.target.fname.value,
@@ -134,30 +146,41 @@ if(!formValidated){
       group: $(event.target).find('input:radio[name=group]:checked').val(),
       flexible: $(event.target).find('input:checkbox[name=flexible]:checked').val(),
       details: event.target.details.value,
+      sessionToken: sessionToken
     };
 
 
-    if(secondParent){
-      var parent2 = {firstName: event.target.secondPfname.value,
-        lastName: event.target.secondPlname.value,
-        email: event.target.secondEmail.value,
-        phone: event.target['second-phone-number'].value,
-        address: application.parent.address,
-        active: true};
-    }
-
-    // console.log(application);
-
-    // var studentObj = ({lname:lname,fname:fname,DOB:DOB,group:group, status:"APPLICATION"});
-    // var parentObj=({plname:plname,pfname:pfname,address:address,email:email,phone:phone});
-    // var detailsObj=({days:days, type:type, details:details,requestedStart:requestedStart,paid:false});
     Errors.remove({});
-    Meteor.call("createApplication", application, parent2, createApplicationCallback);
+    Meteor.call("createApplication", application, createApplicationCallback);
 
     // Clear the form
     scroll(0,0);
     event.target.reset();
-	}
+	},
+
+  /**
+   * [description]
+   * @param  {[type]} event [description]
+   * @return {[type]}       [description]
+   */
+  "click #addParent":function(event){
+    event.preventDefault();
+    $(".hidden").removeClass('hidden');
+    $("#addParent").replaceWith("<button type=\"button\" class=\"btn btn-primary\" id=\"collapse\">Collapse</button>");
+    Session.set("secondParent", true);
+  },
+
+  /**
+   * [description]
+   * @param  {[type]} event [description]
+   * @return {[type]}       [description]
+   */
+  "click #collapse":function(event){
+    event.preventDefault();
+    $("#collapse").replaceWith("<button type=\"button\" class=\"btn btn-primary add\" id=\"addParent\">Add another Parent</button>");
+    $(".secondParentBackground").addClass('hidden');
+    Session.set("secondParent", false);
+  }
 });
 
 /**
@@ -179,4 +202,46 @@ function createApplicationCallback(err, res){
     Router.go("applications");
   }
   return;
+}
+
+/**
+ * [secondParentValidate description]
+ * @param  {[type]} secondParentObj [description]
+ * @return {[type]}                 [description]
+ */
+function secondParentValidate(secondParentObj){
+  var valid=true;
+  if(secondParentObj.firstName==""){
+    Errors.insert({message:'Please enter second parent first name', seen:false,type:'validation'});
+    valid=false;
+  }
+  if(secondParentObj.lastName==""){
+    Errors.insert({message:'Please enter second parent last name', seen:false,type:'validation'});
+    valid=false;
+  }
+  if(secondParentObj.address.street==""){
+    Errors.insert({message:'Please enter second parent street', seen:false,type:'validation'});
+    valid=false;
+  }
+  if(secondParentObj.address.city==""){
+    Errors.insert({message:'Please enter second parent city', seen:false,type:'validation'});
+    valid=false;
+  }
+  if(secondParentObj.address.state==""){
+    Errors.insert({message:'Please enter second parent state', seen:false,type:'validation'});
+    valid=false;
+  }
+  if(secondParentObj.address.zip==""){
+    Errors.insert({message:'Please enter second parent ZIP', seen:false,type:'validation'});
+    valid=false;
+  }
+  if(secondParentObj.phone==""){
+    Errors.insert({message:'Please enter second parent phone number', seen:false,type:'validation'});
+    valid=false;
+  }
+  if(secondParentObj.email==""){
+    Errors.insert({message:'Please enter second parent email', seen:false,type:'validation'});
+    valid=false;
+  }
+  return valid;
 }

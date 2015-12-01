@@ -31,3 +31,4 @@ peppelg:bootstrap-3-modal
 xolvio:cucumber
 mrt:cron
 accounts-ui
+mrt:jquery-ui
