@@ -1,6 +1,5 @@
 Template.waitlistStudentRow.onCreated(function(){
   Meteor.subscribe("waitlistedStudents");
-
 });
 
 Template.waitlistStudentRow.events({
