@@ -197,7 +197,7 @@
                     <label for='dueDate'>If not yet conceived, expected due date?</label>
                     <div class="input-group">
                       <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                      <input class="form-control" type="date" name="dueDate" id="dueDate">
+                      <input class="form-control" type="date" name="dueDate" id="dueDate" disabled>
                     </div>
                   </div>
                   {{/if}}
@@ -317,30 +317,5 @@
       </div>
     </div>
   </div>
-  <script>
-    $('#sel1').change(function(){
-      if($( "#parent1" ).hasClass( "hidden" )){
-          Session.set('parentToEdit', 'parent1');
-        $( "#parent1").removeClass('hidden');
-        $( "#parent2").addClass('hidden');
-      }
-      else{
-        Session.set('parentToEdit', 'parent2');
-        $( "#parent2").removeClass('hidden');
-        $( "#parent1").addClass('hidden');
-      }
-    });
-  </script>
-  {{#if fromWaitlist}}
-  <script>
-    $("#dueDate").prop('disabled', true);
-    var checked = false;
-    $( "#nc" ).change(function() {
-      $("#dueDate").prop('disabled', checked);
-      $("#dob").prop('disabled', !checked);
-      checked = !checked;
 
-    });
-  </script>
-  {{/if}}
 </template>

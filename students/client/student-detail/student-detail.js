@@ -4,6 +4,14 @@ Template.studentDetail.helpers({
     var parentIds = studentParents.map(function(v){return v.parentId;});
     var parents = Parents.find({_id: {$in: parentIds}});
     return parents;
+  },
+  studentChosen:function(){
+    if(Session.get('selectedStudentId') != null){
+      return true
+    }
+    else{
+      return false;
+    }
   }
 });
 

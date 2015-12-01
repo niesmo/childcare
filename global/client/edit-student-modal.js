@@ -4,7 +4,10 @@ Template.editStudentModal.onCreated(function(){
   Meteor.subscribe("studentParents");
   Errors.remove({type:'validation'});
   Session.set('parentToEdit', $( "#sel1").val());
+  $("#dueDate").prop('disabled', true);
+  checked = false;
 });
+
 
 Template.editStudentModal.helpers({
   student: function () {
@@ -234,8 +237,28 @@ if(Session.get('editMode')=='waitlsit') {
     Errors.remove({});
   Meteor.call('EditWaitlist', data, studentId, Session.get('editMode'), EditWaitlistCallback);
     Modal.hide('editStudentModal');
-  }
+  },
+  'change #sel1': function(e,tpl){
 
+    if(tpl.$( "#parent1" ).hasClass( "hidden" )){
+      Session.set('parentToEdit', 'parent1');
+      tpl.$( "#parent1").removeClass('hidden');
+      tpl.$( "#parent2").addClass('hidden');
+    }
+    else{
+      Session.set('parentToEdit', 'parent2');
+      tpl.$( "#parent2").removeClass('hidden');
+      tpl.$( "#parent1").addClass('hidden');
+    }
+  },
+  'change #nc': function(e,tpl){
+
+
+      $("#dueDate").prop('disabled', checked);
+      $("#dob").prop('disabled', !checked);
+      checked = !checked;
+
+    }
 });
 
 function EditWaitlistCallback(err, res){
