@@ -13,18 +13,18 @@
     });
       
     this.When(/^I fill in the description with "([^"]*)"$/, function (arg1,callback) {
-       browser.waitForVisible('#description');
-      browser.setValue('#description', 'Test Item');
+       browser.waitForVisible('.action-item-description');
+      browser.setValue('.action-item-description', 'Test Item');
       pending();
     });
     
     this.When(/^I click the button "Add Task"$/, function (arg1,callback) {
-      browser.click('#add-Task');
+      browser.click('.add-Task');
       pending();
     });
     //this only works as expected if there is one action item
     this.When(/^I click the button "Delete Task"$/, function (arg1,callback) {
-      browser.click('#delete-Task');
+      browser.click('.delete-action-item');
       pending();
     });
     
