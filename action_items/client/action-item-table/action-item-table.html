@@ -8,10 +8,10 @@
         <th>Actions</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody id="action-itemTableBody" class="action-itemTableBody">
       {{#each classActionItems this}}
         <tr id="ai{{_id}}" class="action-item-row {{getTableRowClass}}">
-          <td>{{description}}</td>
+          <td class="task-description" >{{description}}</td>
           <td>{{getCreatedByUser}}</td>
           <td>{{formatDate createdAt "MMM DD, YYYY"}}</td>
           <td>

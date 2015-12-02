@@ -7,6 +7,13 @@ Feature: Adding an Action Item task
     Given I am logged in
     When I fill in the description with "Test Item"
     And I click the button "Add Task"
-    Then I should see a widget named "Test Item"
+    Then I should see an action item named "Test Item"
+    
+  Scenario: Hitting the 'Delete Task' button after having an action item will remove the action item
+    Given I am logged in
+    When I fill in the description with "Test Item"
+    And I click the button "Add Task"
+    And I click the button "Delete Task"
+    Then I should see no action items
     
     
