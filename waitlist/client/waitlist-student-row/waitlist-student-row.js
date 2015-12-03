@@ -1,6 +1,5 @@
 Template.waitlistStudentRow.onCreated(function(){
   Meteor.subscribe("waitlistedStudents");
-
 });
 
 Template.waitlistStudentRow.events({
@@ -20,6 +19,8 @@ Template.waitlistStudentRow.events({
       event.preventDefault();
 
     Session.set('studentToEdit', this._id);
+    //sets editMode to waitlist to differentiate between waitlist and enrolled student edit
+    Session.set('editMode', 'waitlist');
     Modal.show('editStudentModal');
 
   },

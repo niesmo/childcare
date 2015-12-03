@@ -19,7 +19,8 @@
 
 
   <script>
-    //put in script tags because couldn't get it to work in a js file
+
+   //put in script tags because couldn't get it to work in a js file
     this.$('#students').sortable({
       stop: function (e, ui) {
         var el;
@@ -43,6 +44,7 @@
         //Students.update({_id: Blaze.getData(el)._id}, {$set: {order: newRank}})
       }
     })
+
   </script>
 
 </template>

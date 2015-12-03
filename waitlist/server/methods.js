@@ -64,26 +64,8 @@ Meteor.methods({
    * @param studentId
    * @returns {{status: string, studentId: *, parentId: *, studentParentId: *}}
    */
-  'EditWaitlist': function(waitlist, sId, pId){
-    // check to see if they have selected at least one day
-    var student = Students.findOne({_id:sId});
-    var oldOrder=student.order;
-    var newOrder = waitlist.order;
-    var students;
-    if(newOrder < oldOrder){
-      //re order when new order is lower (increment each student order that is greater than or equal to the new order and less than the old order)
-      students = Students.find({$and:[{order:{$gte: newOrder}},{order:{$lte: oldOrder}}]});
-      students.forEach(function(doc){
-        Students.update({_id:doc.id}, {$inc: {order: 1}});
-      });
-    }
-    else if(newOrder > oldOrder){
-      //re order when new order is greater (decrement eache student order that is greater than old order and less than new order
-        students = Students.find({$and:[{order:{$lte: newOrder}},{order:{$gte: oldOrder}}]});
-      students.forEach(function(doc){
-        Students.update({_id:doc.id}, {$inc: {order:-1}});
-      });
-    }
+  'EditWaitlist': function(waitlist, sId, editMode){
+
     if(waitlist.days.length === 0){
       throw new Meteor.error("No day select",
           "You must select at least one day of the week.");
@@ -96,14 +78,23 @@ Meteor.methods({
     }
 
 */
-
-    var parentId = Parents.update(pId,{$set: {
+    var status = Students.findOne({_id:sId}).status;
+    var parentId = Parents.update(waitlist.parent.id,{$set: {
       firstName: waitlist.parent.firstName,
       lastName: waitlist.parent.lastName,
       address: waitlist.parent.address,
       phoneNumber: waitlist.parent.phone,
       email: waitlist.parent.email
     }});
+    if(waitlist.secondParent.active){
+      var secondParentId = Parents.update(waitlist.secondParent.id,{$set: {
+        firstName: waitlist.secondParent.firstName,
+        lastName: waitlist.secondParent.lastName,
+        address: waitlist.secondParent.address,
+        phoneNumber: waitlist.secondParent.phone,
+        email: waitlist.secondParent.email
+      }});
+    }
 
     // constructing the days for the student document
     var days = [];
@@ -120,20 +111,38 @@ Meteor.methods({
     });
 
     // insert the student
-    var studentId = Students.update(sId,{$set: {
-      firstName: waitlist.student.firstName,
-      lastName: waitlist.student.lastName,
-      dateOfBirth: new Date(waitlist.student.dob),
-      group: waitlist.group.toUpperCase(),
-      status: "waitlist".toUpperCase(),
-      type: waitlist.type.toUpperCase(),
-      startDate: waitlist.startDate,
-      order: waitlist.order,
-      details: waitlist.details,
-      daysWaitlisted: days
+    //if edit from waitlist, change days waitlisted
+    if(editMode=='waitlsit') {
+      var studentId = Students.update(sId, {
+        $set: {
+          firstName: waitlist.student.firstName,
+          lastName: waitlist.student.lastName,
+          dateOfBirth: new Date(waitlist.student.dob),
+          group: waitlist.group.toUpperCase(),
+          status: status,
+          type: waitlist.type.toUpperCase(),
+          startDate: waitlist.startDate,
+          order: waitlist.order,
+          details: waitlist.details,
+          daysWaitlisted: days
+        }
+      });
+    }else if(editMode=='enrolled'){
+      var studentId = Students.update(sId, {
+        $set: {
+          firstName: waitlist.student.firstName,
+          lastName: waitlist.student.lastName,
+          dateOfBirth: new Date(waitlist.student.dob),
+          group: waitlist.group.toUpperCase(),
+          status: status,
+          type: waitlist.type.toUpperCase(),
+          startDate: waitlist.startDate,
+          order: waitlist.order,
+          details: waitlist.details,
+          daysEnrolled: days
+        }
+      });
     }
-
-    });
     var updatedObj = {parentId:parentId, studentId:studentId};
     return updatedObj;
   },
@@ -145,6 +154,7 @@ Meteor.methods({
    */
   'compareDays': function(studentId, days){
     var student = Students.findOne({_id:studentId});
+    student.color = "#3498db";
     var daysEnr = [];
 
     var week = {M: "monday", T: "tuesday", W: "wednesday", TH: "thursday", F: "friday"};

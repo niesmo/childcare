@@ -1,6 +1,4 @@
 <template name="actionItems">
-  {{> actionItemDetail selectedActionItem}}
-  <hr />
 
   <div class="row">
     <form class="new-task col-md-6">
@@ -20,12 +18,15 @@
         <textarea id="description" class="form-control" placeholder="Description"></textarea>
       </div>
 
-      <input type="submit" class="btn btn-primary" value="Add Task" />
+      <input type="submit" class="btn btn-primary" id="add-Task" value="Add Task" />
     </form>
   </div>
   
   <br />
   <button type="button" class="btn system-task">Add System Task</button>
+  <hr />
+  {{> actionItemDetail selectedActionItem}}
+  <hr />
   
   <div class="row">
     <div class="col-md-12">
@@ -33,7 +34,7 @@
       <!-- The tab list on top of the page. A tab for each class -->
       <ul class="nav nav-tabs action-item-tabs" role="tablist">
         {{#each actionItemTypes}}
-          <li role="presentation" class="{{isActive @index}}" classroom-id="{{_id}}"><a href="#{{toLower this}}" aria-controls="{{toLower this}}" role="tab" data-toggle="tab">{{toLower this}}</a></li>
+          <li role="presentation" class="tab-classroom-type {{isActive @index}}" classroom-id="{{_id}}"><a href="#{{toLower this}}" aria-controls="{{toLower this}}" role="tab" data-toggle="tab">{{toLower this}}</a></li>
         {{/each}}
       </ul>
 

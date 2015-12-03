@@ -3,8 +3,8 @@ Template.signin.events({
     // preventing the form to get submitted
     e.preventDefault();
 
-    var email = tpl.$("#email").val();
-    var password = tpl.$("#password").val();
+    var email = tpl.$("#login-email").val();
+    var password = tpl.$("#login-password").val();
 
     // Do some validation
     // TODO: VALIDATE()

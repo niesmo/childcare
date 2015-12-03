@@ -5,9 +5,8 @@
   module.exports = function () {
 
     this.Before(function () {
-      console.log('running!');
-      this.server.call('reset');
-      this.server.call('addUser', {email: "bob@example.com"});
+      this.server.call('actionItemReset');
+      this.server.call('addUser', {email: "sam@example.com"});
     });
 
   };
