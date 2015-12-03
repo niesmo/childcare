@@ -154,6 +154,7 @@ Meteor.methods({
    */
   'compareDays': function(studentId, days){
     var student = Students.findOne({_id:studentId});
+    student.color = "#3498db";
     var daysEnr = [];
 
     var week = {M: "monday", T: "tuesday", W: "wednesday", TH: "thursday", F: "friday"};
