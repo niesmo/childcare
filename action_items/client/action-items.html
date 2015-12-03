@@ -34,7 +34,7 @@
       <!-- The tab list on top of the page. A tab for each class -->
       <ul class="nav nav-tabs action-item-tabs" role="tablist">
         {{#each actionItemTypes}}
-          <li role="presentation" class="{{isActive @index}}" classroom-id="{{_id}}"><a href="#{{toLower this}}" aria-controls="{{toLower this}}" role="tab" data-toggle="tab">{{toLower this}}</a></li>
+          <li role="presentation" class="tab-classroom-type {{isActive @index}}" classroom-id="{{_id}}"><a href="#{{toLower this}}" aria-controls="{{toLower this}}" role="tab" data-toggle="tab">{{toLower this}}</a></li>
         {{/each}}
       </ul>
 
