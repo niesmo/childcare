@@ -38,7 +38,7 @@ Template.classroomDetail.helpers({
     var today = this.toString().toUpperCase();
     var numEnrolled=0;
     var studentCursor = Students.find({classId: classId});
-    studentCursor.forEach(student => {
+    studentCursor.forEach(function(student){
       for(var i=0;i<student.daysEnrolled.length;i++){
         if(today == student.daysEnrolled[i].day){
           numEnrolled++;
