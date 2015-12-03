@@ -5,7 +5,9 @@ var checkForStudentsNearTransition= function() {
   //todays date, without the specific time
   currentDate=new Date();
   currentDate.setHours(0,0,0,0);
-  var student
+    //move the month up 2 months to notify 
+  currentDate.setMonth(currentDate.getMonth()+2);
+  var student;
   while (currentStudents.hasNext()) {
     student=currentStudents.next();
     var transDateMinusTime=student.moveDate;
@@ -28,6 +30,9 @@ var checkForWaitlistNearDesired= function() {
   //todays date, without the specific time
   currentDate=new Date();
   currentDate.setHours(0,0,0,0);
+  //move the month up 2 months to notify 
+  currentDate.setMonth(currentDate.getMonth()+2);
+  var student;
   while(waitlistStudents.hasNext()) {
     student=waitlistStudents.next();
     var transDateMinusTime=student.startDate;
