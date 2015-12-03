@@ -65,17 +65,6 @@ Meteor.methods({
 
     imageId = Random.id();
 
-    // color variable to get a unique color for the student
-    var lastUsedColor = Color.findOne().color;
-    var colorIndex = colorArray.lastIndexOf(lastUsedColor);
-    for (i=0;i<=colorIndex;i++) {
-      colorArray.push(colorArray.shift());
-    }
-    var color = colorArray.shift();
-    Color.remove({color: lastUsedColor});
-    Color.insert({color: color});
-    colorArray.push(color);
-
     if (!notConceived) {
       var moveDate;
       var monthsToMoveDate;
@@ -103,7 +92,7 @@ Meteor.methods({
       daysRequested: days,
       image: "http://api.adorable.io/avatars/100/" + imageId + ".png",
       createdAt: new Date(),
-      color: color,
+      color: "#3498db",
       details: application.details,
       conceived: notConceived
     };
@@ -393,8 +382,3 @@ Meteor.methods({
     // });
   }
 });
-
-var colorArray = ["#1abc9c", "#2ecc71", "#3498db", "#9b59b6", "#16a085", "#27ae60", "#2980b9", "#8e44ad", "#f1c40f", "#e67e22", "#e74c3c", "#f39c12", "#d35400", "#c0392b"];
-if (Color.findOne() == null) {
-  Color.insert({color: "#27ae60"});
-}
