@@ -70,10 +70,10 @@ Template.classroomDetail.helpers({
     var currentClassroom = Classrooms.findOne(this._id);
     var numToShowFromWaitlist = 3;
     if (currentClassroom.type == "INFANT") {
-      return Students.find({$and: [{status: "WAITLIST"}, {group: "INFANT"}, {order: {$lte: numToShowFromWaitlist}}]});
+      return Students.find({$or: [{$and: [{status: "WAITLIST"}, {group: "INFANT"}, {order: {$lte: numToShowFromWaitlist}}]}, {$and: [{status: "PARTIALLY_ENROLLED"}, {group: "INFANT"}]}]});
     }
     else if (currentClassroom.type == "TODDLER") {
-      return Students.find({$or: [{$and: [{group: "INFANT"}, {moveDate: {$lte: moveDateRange}}]}, {$and: [{status: "WAITLIST"}, {group: "TODDLER"}, {order: {$lte: numToShowFromWaitlist}}]}]});
+      return Students.find({$or: [{$and: [{group: "INFANT"}, {moveDate: {$lte: moveDateRange}}]}, {$and: [{status: "WAITLIST"}, {group: "TODDLER"}, {order: {$lte: numToShowFromWaitlist}}]}, {$and: [{status: "PARTIALLY_ENROLLED"}, {group: "TODDLER"}]}]});
     }
     //return Students.find({status: "WAITLIST", group: "INFANT"});
   },
