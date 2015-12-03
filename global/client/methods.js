@@ -61,6 +61,10 @@ applicationValidate = function(application){
     Errors.insert({message:'Please enter Date Of Birth or select Not Conceived', seen:false,type:'validation'});
     valid = false;
   }
+  if(application.student.dueDate=="" && application.student.conceived=="NC"){
+    Errors.insert({message:'Please enter estimated due date if not yet conceived checked', seen:false,type:'validation'});
+    valid = false;
+  }
   if(application.startDate==""){
     Errors.insert({message:'Please enter Start Date', seen:false,type:'validation'});
     valid = false;

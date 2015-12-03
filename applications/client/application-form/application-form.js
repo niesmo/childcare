@@ -70,7 +70,8 @@ Template.applicationForm.events({
         firstName: event.target.fname.value,
         lastName: event.target.lname.value,
         dob: event.target.dob.value,
-        conceived: notConceived
+        conceived: notConceived,
+        dueDate: event.target.dueDate.value
       },
 
       // Other details of the application

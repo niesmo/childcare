@@ -190,6 +190,11 @@ Schemas.Student = new SimpleSchema({
     type: String,
     label: "Details",
     optional: true
+  },
+  dueDate:{
+    type: Date,
+    label: 'Due Date',
+    optional: true
   }
 });
 
