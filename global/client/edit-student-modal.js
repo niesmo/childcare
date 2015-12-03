@@ -135,9 +135,6 @@ Template.editStudentModal.events({
 
     //retrieve data from form
     var formValidated=true;
-    if(Session.get('editMode')=='waitlist') {
-      var notConceived = $(event.target).find('input:checkbox[name=notConceived]:checked').val();
-    }
     var days=[];
     $("input:checkbox[name=days]:checked").each(function(){
       days.push($(this).val());
@@ -162,7 +159,10 @@ Template.editStudentModal.events({
 
 
 
-if(Session.get('editMode')=='waitlsit') {
+if(Session.get('editMode')=='waitlist') {
+  if(Session.get('editMode')=='waitlist') {
+    var notConceived = $(event.target).find('input:checkbox[name=notConceived]:checked').val();
+  }
   var data = {
     // Parent Information
     parent: {
@@ -221,7 +221,7 @@ if(Session.get('editMode')=='waitlsit') {
   };
 }
 
-    if(!editValidate(data)){
+    if(!editValidate(data, Students.findOne({_id:studentId}).status)){
       formValidated = false;
     }
     if(!formValidated){

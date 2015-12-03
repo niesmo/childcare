@@ -112,7 +112,7 @@ Meteor.methods({
 
     // insert the student
     //if edit from waitlist, change days waitlisted
-    if(editMode=='waitlsit') {
+    if(editMode=='waitlist') {
       var studentId = Students.update(sId, {
         $set: {
           firstName: waitlist.student.firstName,

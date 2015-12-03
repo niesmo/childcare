@@ -123,11 +123,19 @@ secondParentValidate = function(secondParentObj){
  * @param application
  * @returns {boolean}
  */
-editValidate = function(application){
+editValidate = function(application, status){
   var valid = true;
-  if(application.days.length<2){
-    Errors.insert({message:'Please check at least two days', seen:false, type:'validation'});
-    valid = false;
+  if(status != 'PARTIALLY_ENROLLED') {
+    if (application.days.length < 2) {
+      Errors.insert({message: 'Please check at least two days', seen: false, type: 'validation'});
+      valid = false;
+    }
+  }
+  else{
+    if (application.days.length < 1) {
+      Errors.insert({message: 'Please check at least one days', seen: false, type: 'validation'});
+      valid = false;
+    }
   }
   if(application.type==null && application.student.typeLength){
     Errors.insert({message:'Please select affiliation', seen:false,type:'validation'});
