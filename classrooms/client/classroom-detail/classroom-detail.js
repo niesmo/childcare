@@ -21,11 +21,17 @@ Template.classroomDetail.helpers({
    * @param student
    * @returns {Schemas.Student.color|{type, label}|color|*|string} the color given to the student
    */
-  getColorIfhasClass: function(student){
+  getColorIfHasClass: function(student){
     var today = this.toString().toUpperCase();
     for(var i=0;i<student.daysEnrolled.length;i++){
       if(today === student.daysEnrolled[i].day){
         return student.color || '#43ac6a';
+      }
+    }
+
+    for(var j=0;j<student.daysWaitlisted.length;j++){
+      if(today === student.daysWaitlisted[j].day){
+        return "#e74c3c";
       }
     }
   },
@@ -38,7 +44,7 @@ Template.classroomDetail.helpers({
     var today = this.toString().toUpperCase();
     var numEnrolled=0;
     var studentCursor = Students.find({classId: classId});
-    studentCursor.forEach(student => {
+    studentCursor.forEach(function(student){
       for(var i=0;i<student.daysEnrolled.length;i++){
         if(today == student.daysEnrolled[i].day){
           numEnrolled++;

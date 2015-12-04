@@ -1,8 +1,9 @@
 <template name="classroomDetail">
-  <table class="table table-bordered">
+  <table class="table table-bordered table-responsive">
     <thead>
       <tr>
-        <th>Student</th>
+        <th>Student (Transition Date)</th>
+        <th>Transition Date</th>
         {{#each daysOfWeek}}
           <th>{{this}}</th>
         {{/each}}
@@ -12,13 +13,15 @@
       {{#each student in students}}
         <tr>
           <td>{{student.firstName}} {{student.lastName}}</td>
+          <td>({{ formatDate student.moveDate "MMM DD, YYYY" }})</td>
           {{#each daysOfWeek}}
-            <td style="background-color:{{getColorIfhasClass student}}"></td>
+            <td style="background-color:{{getColorIfHasClass student}}"></td>
           {{/each}}
         </tr>
       {{/each}}
       <tr>
         <td>Daily Ratios</td>
+        <td></td>
         {{#each daysOfWeek}}
           <td>{{numOfStudentsPerDay ../_id}} / {{../capacity}}</td>
         {{/each}}

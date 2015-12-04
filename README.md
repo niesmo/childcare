@@ -4,6 +4,9 @@ This is the repo for our capstone project
 <h3>Google Drive where we share all the documents</h3>
 <a href="https://drive.google.com/folderview?id=0B_wlnD2xTjjNfkdpX0pFRDNVdE5Ca3J5WUc3aXN1SWF0cGFiTVA1dFFabGhYejRGdmhxeG8&usp=sharing">Capstone Folder</a>
 
+<p>Read this for deployment</p>
+<a href="http://stackoverflow.com/questions/25677701/how-to-run-meteor-forever-and-is-it-good-using-3rd-party-database">http://stackoverflow.com/questions/25677701/how-to-run-meteor-forever-and-is-it-good-using-3rd-party-database</a>
+
 <h3>Packages Added</h3>
 <ul>
 	<li><a href="https://atmospherejs.com/aldeed/collection2">Collection2</a></li>
