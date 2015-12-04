@@ -5,7 +5,7 @@ Meteor.publish('waitlistedStudents', function(){
 Meteor.publishComposite('waitlistedStudentsFullInformation', {
   // must return a cursor
   find: function(){
-    return Students.find({status: 'WAITLIST'});
+    return Students.find({$or: [{status:"WAITLIST"}, {status:"PARTIALLY_ENROLLED"}]});
   },
   children:[
     // The classroom
@@ -40,13 +40,13 @@ Meteor.publishComposite('waitlistedStudentsFullInformation', {
 });
 
 Meteor.publish('enrolledStudents', function(){
-  return Students.find({status: "ENROLLED"});
+  return Students.find({$or: [{status:"ENROLLED"}, {status:"PARTIALLY_ENROLLED"}]});
 });
 
 Meteor.publishComposite('enrolledStudentsFullInformation', {
   // must return a cursor
   find: function(){
-    return Students.find({status: 'ENROLLED'});
+    return Students.find({$or: [{status:"ENROLLED"}, {status:"PARTIALLY_ENROLLED"}]});
   },
   children:[
     // The classroom

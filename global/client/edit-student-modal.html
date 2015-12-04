@@ -218,7 +218,18 @@
                 </div>
               </div>
               {{/if}}
-
+              <div class="row">
+                <!--Transition Date -->
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="moveDate">Transition Date</label>
+                    <div class="input-group">
+                      <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                      <input class="form-control" type="date" name="moveDate" id="moveDate" value="{{formatDate student.moveDate "YYYY-MM-DD"}}">
+                    </div>
+                  </div>
+                </div>
+              </div>
               <!-- Days -->
               <div class="form-group">
                 <h4>Days</h4>

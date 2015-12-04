@@ -61,6 +61,10 @@ applicationValidate = function(application){
     Errors.insert({message:'Please enter Date Of Birth or select Not Conceived', seen:false,type:'validation'});
     valid = false;
   }
+  if(application.student.dueDate=="" && application.student.conceived=="NC"){
+    Errors.insert({message:'Please enter estimated due date if not yet conceived checked', seen:false,type:'validation'});
+    valid = false;
+  }
   if(application.startDate==""){
     Errors.insert({message:'Please enter Start Date', seen:false,type:'validation'});
     valid = false;
@@ -123,11 +127,19 @@ secondParentValidate = function(secondParentObj){
  * @param application
  * @returns {boolean}
  */
-editValidate = function(application){
+editValidate = function(application, status){
   var valid = true;
-  if(application.days.length<2){
-    Errors.insert({message:'Please check at least two days', seen:false, type:'validation'});
-    valid = false;
+  if(status != 'PARTIALLY_ENROLLED') {
+    if (application.days.length < 2) {
+      Errors.insert({message: 'Please check at least two days', seen: false, type: 'validation'});
+      valid = false;
+    }
+  }
+  else{
+    if (application.days.length < 1) {
+      Errors.insert({message: 'Please check at least one days', seen: false, type: 'validation'});
+      valid = false;
+    }
   }
   if(application.type==null && application.student.typeLength){
     Errors.insert({message:'Please select affiliation', seen:false,type:'validation'});

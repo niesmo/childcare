@@ -135,9 +135,6 @@ Template.editStudentModal.events({
 
     //retrieve data from form
     var formValidated=true;
-    if(Session.get('editMode')=='waitlist') {
-      var notConceived = $(event.target).find('input:checkbox[name=notConceived]:checked').val();
-    }
     var days=[];
     $("input:checkbox[name=days]:checked").each(function(){
       days.push($(this).val());
@@ -162,7 +159,10 @@ Template.editStudentModal.events({
 
 
 
-if(Session.get('editMode')=='waitlsit') {
+if(Session.get('editMode')=='waitlist') {
+  if(Session.get('editMode')=='waitlist') {
+    var notConceived = $(event.target).find('input:checkbox[name=notConceived]:checked').val();
+  }
   var data = {
     // Parent Information
     parent: {
@@ -189,6 +189,7 @@ if(Session.get('editMode')=='waitlsit') {
     group: $(event.target).find('input:radio[name=group]:checked').val(),
     flexible: $(event.target).find('input:checkbox[name=flexible]:checked').val(),
     details: event.target.details.value,
+    moveDate: event.target.moveDate.value,
   };
 }
     else{
@@ -208,6 +209,7 @@ if(Session.get('editMode')=='waitlsit') {
       firstName: event.target.fname.value,
       lastName: event.target.lname.value,
       dob: event.target.dob.value,
+
     //  conceived: notConceived,
     },
 
@@ -218,10 +220,11 @@ if(Session.get('editMode')=='waitlsit') {
     group: $(event.target).find('input:radio[name=group]:checked').val(),
   //  flexible: $(event.target).find('input:checkbox[name=flexible]:checked').val(),
     details: event.target.details.value,
+    moveDate: event.target.moveDate.value,
   };
 }
 
-    if(!editValidate(data)){
+    if(!editValidate(data, Students.findOne({_id:studentId}).status)){
       formValidated = false;
     }
     if(!formValidated){

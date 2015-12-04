@@ -94,7 +94,8 @@ Meteor.methods({
       createdAt: new Date(),
       color: "#3498db",
       details: application.details,
-      conceived: notConceived
+      conceived: notConceived,
+      dueDate: application.student.dueDate
     };
 
     if(!notConceived) {

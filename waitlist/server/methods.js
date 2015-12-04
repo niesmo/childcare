@@ -112,7 +112,7 @@ Meteor.methods({
 
     // insert the student
     //if edit from waitlist, change days waitlisted
-    if(editMode=='waitlsit') {
+    if(editMode=='waitlist') {
       var studentId = Students.update(sId, {
         $set: {
           firstName: waitlist.student.firstName,
@@ -121,10 +121,11 @@ Meteor.methods({
           group: waitlist.group.toUpperCase(),
           status: status,
           type: waitlist.type.toUpperCase(),
-          startDate: waitlist.startDate,
+          startDate: new Date(waitlist.startDate),
           order: waitlist.order,
           details: waitlist.details,
-          daysWaitlisted: days
+          daysWaitlisted: days,
+          moveDate: new Date(waitlist.moveDate),
         }
       });
     }else if(editMode=='enrolled'){
@@ -136,10 +137,10 @@ Meteor.methods({
           group: waitlist.group.toUpperCase(),
           status: status,
           type: waitlist.type.toUpperCase(),
-          startDate: waitlist.startDate,
           order: waitlist.order,
           details: waitlist.details,
-          daysEnrolled: days
+          daysEnrolled: days,
+          moveDate:new Date(waitlist.moveDate),
         }
       });
     }
