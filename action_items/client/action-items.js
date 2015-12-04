@@ -63,19 +63,7 @@ Template.actionItems.events({
     tpl.$("#type").val("INFANT")
     tpl.$("#description").val("");
   },
-  "click button.system-task": function(e, tpl){
-    e.preventDefault();
-
-    // get the task attributes
-    var task = {
-      description: "System Message",
-      type: "INFANT"
-    }
-
-      createSystemActionItem(task);
-      console.log(task.description);
-    
-  },
+  
   'click tr.action-item-row': function (e,tpl) {
     // find the id of the selected student
     var id = $(e.target).parent().attr('id');
