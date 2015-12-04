@@ -189,6 +189,7 @@ if(Session.get('editMode')=='waitlist') {
     group: $(event.target).find('input:radio[name=group]:checked').val(),
     flexible: $(event.target).find('input:checkbox[name=flexible]:checked').val(),
     details: event.target.details.value,
+    moveDate: event.target.moveDate.value,
   };
 }
     else{
@@ -208,6 +209,7 @@ if(Session.get('editMode')=='waitlist') {
       firstName: event.target.fname.value,
       lastName: event.target.lname.value,
       dob: event.target.dob.value,
+
     //  conceived: notConceived,
     },
 
@@ -218,6 +220,7 @@ if(Session.get('editMode')=='waitlist') {
     group: $(event.target).find('input:radio[name=group]:checked').val(),
   //  flexible: $(event.target).find('input:checkbox[name=flexible]:checked').val(),
     details: event.target.details.value,
+    moveDate: event.target.moveDate.value,
   };
 }
 
