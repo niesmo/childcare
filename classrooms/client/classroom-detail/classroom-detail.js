@@ -70,8 +70,8 @@ Template.classroomDetail.helpers({
   },
 
   studentsTransitioning: function(){
-    var moveDateRange = new Date();
-    moveDateRange.setMonth(moveDateRange.getMonth()+2);
+    var infantMoveAlert = new Date();
+    infantMoveAlert.setMonth(infantMoveAlert.getMonth()+2);
     var currentClassroom = Classrooms.findOne(this._id);
     var numToShowFromWaitlist = 3;
     if (currentClassroom.type == "INFANT") {
@@ -79,7 +79,7 @@ Template.classroomDetail.helpers({
         {$and: [{status: "PARTIALLY_ENROLLED"}, {group: "INFANT"}]}]});
     }
     else if (currentClassroom.type == "TODDLER") {
-      return Students.find({$or: [{$and: [{group: "INFANT"}, {moveDate: {$lte: moveDateRange}}]},
+      return Students.find({$or: [{$and: [{group: "INFANT"}, {moveDate: {$lte: infantMoveAlert}}]},
         {$and: [{status: "WAITLIST"}, {group: "TODDLER"}, {order: {$lte: numToShowFromWaitlist}}]},
         {$and: [{status: "PARTIALLY_ENROLLED"}, {group: "TODDLER"}]}]});
     }
