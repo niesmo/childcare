@@ -92,9 +92,18 @@ Template.classroomDetail.helpers({
    */
   getColorIfRequestsClass: function(student){
     var today = this.toString().toUpperCase();
-    for(var i=0;i<student.daysRequested.length;i++){
-      if(today === student.daysRequested[i].day){
-        return student.color || '#43ac6a';
+    if (student.status === "PARTIALLY_ENROLLED") {
+      for(var j=0;j<student.daysWaitlisted.length;j++){
+        if(today === student.daysWaitlisted[j].day){
+          return student.color || '#43ac6a';
+        }
+      }
+    }
+    else {
+      for(var i=0;i<student.daysRequested.length;i++){
+        if(today === student.daysRequested[i].day){
+          return student.color || '#43ac6a';
+        }
       }
     }
   }

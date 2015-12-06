@@ -88,6 +88,7 @@ Meteor.methods({
     var studentToBeInserted = {
       firstName: application.student.firstName,
       lastName: application.student.lastName,
+      dateOfBirth: dob,
       group: application.group.toUpperCase(),
       status: "application".toUpperCase(),
       paidApplicationFee: false,
@@ -101,10 +102,6 @@ Meteor.methods({
       conceived: notConceived,
       dueDate: application.student.dueDate
     };
-
-    if(!notConceived) {
-      studentToBeInserted.dateOfBirth = new Date(application.student.dob);
-    }
 
     // if the parents filled this out, set the type from the database
     if(application.sessionToken.toLowerCase() !== 'admin'){
