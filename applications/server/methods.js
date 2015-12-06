@@ -32,7 +32,7 @@ Meteor.methods({
       notConceived=false;
     }
     if(!notConceived && application.student.dob == null){
-      throw new Meteor.error("Must either have date of birth picked or not conceived selected");
+      throw new Meteor.error("Must either have date of birth picked or not yet conceived selected");
     }
 
 
@@ -65,19 +65,23 @@ Meteor.methods({
 
     imageId = Random.id();
 
+    var moveDate;
+    var monthsToMoveDate;
+    var dob;
     if (!notConceived) {
-      var moveDate;
-      var monthsToMoveDate;
-      var dob = new Date(application.student.dob);
-      var ageInMonths = moment().diff(dob, 'months') || "";
-      if (ageInMonths < 16) {
-        monthsToMoveDate = 16;
-        moveDate = new Date(new Date(dob).setMonth(dob.getMonth()+monthsToMoveDate));
-      }
-      else {
-        monthsToMoveDate = 36;
-        moveDate = new Date(new Date(dob).setMonth(dob.getMonth()+monthsToMoveDate));
-      }
+      dob = new Date(application.student.dob);
+    }
+    else {
+      dob = new Date(application.student.dueDate);
+    }
+    var ageInMonths = moment().diff(dob, 'months') || "";
+    if (ageInMonths < 16) {
+      monthsToMoveDate = 16;
+      moveDate = new Date(new Date(dob).setMonth(dob.getMonth()+monthsToMoveDate));
+    }
+    else {
+      monthsToMoveDate = 36;
+      moveDate = new Date(new Date(dob).setMonth(dob.getMonth()+monthsToMoveDate));
     }
 
     // insert the student, check if conceived to determine if dob should be inserted
