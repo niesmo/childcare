@@ -69,6 +69,10 @@ Template.classroomDetail.helpers({
     return currentClass.capacity;
   },
 
+  /**
+   * Function to get and show the students that will be transitioning into a classroom.
+   * @returns {*} The students that will be transitioning into the classroom.
+   */
   studentsTransitioning: function(){
     var infantMoveAlert = new Date();
     infantMoveAlert.setMonth(infantMoveAlert.getMonth()+2);
