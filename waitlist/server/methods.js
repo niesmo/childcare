@@ -174,25 +174,25 @@ Meteor.methods({
     while(count < daysWaiting.length){
       var waitlistCount = 0;
       while(waitlistCount < daysEnr.length){
-        if(daysWaiting[count].day == daysEnr[waitlistCount].day){
+   if(daysWaiting[count].day == daysEnr[waitlistCount].day){
           checkDay=true;
           break;
         }
-        waitlistCount++;
-      }
-      if(!checkDay){
+   waitlistCount++;
+   }
+   if(!checkDay){
         daysNotSelected.push({
           day: daysWaiting[count].day,
           flexible: daysWaiting[count].flexible
         })
       }
-      checkDay=false;
-      count++;
-    }
-    return daysNotSelected;
-  },
+   checkDay=false;
+   count++;
+   }
+   return daysNotSelected;
+   },
 
-  /**
+   /**
    *
    * @param studentId
    * @param newOrder

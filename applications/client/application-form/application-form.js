@@ -83,7 +83,7 @@ Template.applicationForm.events({
       details: event.target.details.value,
       sessionToken: sessionToken
     };
-   
+
     if(!applicationValidate(application)){
       formValidated = false;
     }

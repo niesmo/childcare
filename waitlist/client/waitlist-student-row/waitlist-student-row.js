@@ -10,6 +10,7 @@ Template.waitlistStudentRow.events({
   "click .remove": function(event){
     event.preventDefault();
     Meteor.call('removeStudent', this._id);
+
   },
   /**
    *
