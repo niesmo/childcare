@@ -61,8 +61,7 @@ Template.classroomDetail.helpers({
   totalStudentsAllowed: function(){
 
     // console.log(Classrooms.findOne(this._id));
-
-    return 20;
+    return 8;
     //for each type, we need to have a dynamic number that can be accessed
     var currentClass=Session.get("classType");
     var currentClass=Classrooms.findOne({type: currentClass});

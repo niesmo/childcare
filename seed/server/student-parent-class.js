@@ -8,13 +8,13 @@ Meteor.startup(function(){
       {
         name: "Infant Classroom",
         type: "INFANT",
-        capacity: 20,
+        capacity: 8,
         createdAt: new Date()
       },
       {
         name: "Toddler Classroom",
         type: "TODDLER",
-        capacity: 15,
+        capacity: 12,
         createdAt: new Date()
       }
     ].forEach(function (classroom) {
