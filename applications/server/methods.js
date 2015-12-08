@@ -95,11 +95,14 @@ Meteor.methods({
       color: "#3498db",
       details: application.details,
       conceived: notConceived,
-      dueDate: application.student.dueDate
+     // dueDate: new Date(application.student.dueDate)
     };
 
     if(!notConceived) {
       studentToBeInserted.dateOfBirth = new Date(application.student.dob);
+    }
+    else{
+      studentToBeInserted.dueDate = new Date(application.student.dueDate);
     }
 
     // if the parents filled this out, set the type from the database

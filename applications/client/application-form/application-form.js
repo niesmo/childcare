@@ -90,6 +90,7 @@ Template.applicationForm.events({
       scroll(0,0);
       return;
     }
+
     Errors.remove({});
     Meteor.call("createApplication", application, createApplicationCallback);
 

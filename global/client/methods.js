@@ -57,6 +57,10 @@ applicationValidate = function(application){
     Errors.insert({message:'Please enter email', seen:false,type:'validation'});
     valid = false;
   }
+  if(!/^[A-Z0-9'.1234z_%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(application.parent.email)){
+    Errors.insert({message:'Please enter valid email', seen:false,type:'validation'});
+    valid = false;
+  }
   if(application.student.dob=="" && application.student.conceived!="NC"){
     Errors.insert({message:'Please enter Date Of Birth or select Not Conceived', seen:false,type:'validation'});
     valid = false;
@@ -118,6 +122,10 @@ secondParentValidate = function(secondParentObj){
   if(secondParentObj.email==""){
     Errors.insert({message:'Please enter second parent email', seen:false,type:'validation'});
     valid=false;
+  }
+  if(!/^[A-Z0-9'.1234z_%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(secondParentObj.email)){
+    Errors.insert({message:'Please enter valid email', seen:false,type:'validation'});
+    valid = false;
   }
   return valid;
 };
