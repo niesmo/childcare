@@ -225,6 +225,15 @@ Meteor.methods({
       $set: {order: newOrder}});
 
 
+  },
+  'reOrderAfterDelete':function(order) {
+  
+    var students = Students.find({
+      $or: [{status: "WAITLIST"}, {status: "PARTIALLY_ENROLLED"}],
+      order: {$gt: order}
+    });
+    students.forEach(function (student) {
+      Students.update({_id: student._id}, {$inc: {order: -1}});
+    });
   }
-
 });
