@@ -83,6 +83,7 @@ Template.applicationForm.events({
       details: event.target.details.value,
       sessionToken: sessionToken
     };
+
     if(!applicationValidate(application)){
       formValidated = false;
     }
@@ -90,6 +91,7 @@ Template.applicationForm.events({
       scroll(0,0);
       return;
     }
+
     Errors.remove({});
     Meteor.call("createApplication", application, createApplicationCallback);
 

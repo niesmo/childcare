@@ -117,15 +117,15 @@ Meteor.methods({
         $set: {
           firstName: waitlist.student.firstName,
           lastName: waitlist.student.lastName,
-          dateOfBirth: new Date(waitlist.student.dob),
+          dateOfBirth: new Date(moment(waitlist.student.dob)),
           group: waitlist.group.toUpperCase(),
           status: status,
           type: waitlist.type.toUpperCase(),
-          startDate: new Date(waitlist.startDate),
+          startDate: new Date(moment(waitlist.startDate)),
           order: waitlist.order,
           details: waitlist.details,
           daysWaitlisted: days,
-          moveDate: new Date(waitlist.moveDate),
+          moveDate: new Date(moment(waitlist.moveDate)),
         }
       });
     }else if(editMode=='enrolled'){
@@ -133,14 +133,14 @@ Meteor.methods({
         $set: {
           firstName: waitlist.student.firstName,
           lastName: waitlist.student.lastName,
-          dateOfBirth: new Date(waitlist.student.dob),
+          dateOfBirth: new Date(moment(waitlist.student.dob)),
           group: waitlist.group.toUpperCase(),
           status: status,
           type: waitlist.type.toUpperCase(),
           order: waitlist.order,
           details: waitlist.details,
           daysEnrolled: days,
-          moveDate:new Date(waitlist.moveDate),
+          moveDate:new Date(moment(waitlist.moveDate)),
         }
       });
     }
@@ -174,25 +174,25 @@ Meteor.methods({
     while(count < daysWaiting.length){
       var waitlistCount = 0;
       while(waitlistCount < daysEnr.length){
-        if(daysWaiting[count].day == daysEnr[waitlistCount].day){
+   if(daysWaiting[count].day == daysEnr[waitlistCount].day){
           checkDay=true;
           break;
         }
-        waitlistCount++;
-      }
-      if(!checkDay){
+   waitlistCount++;
+   }
+   if(!checkDay){
         daysNotSelected.push({
           day: daysWaiting[count].day,
           flexible: daysWaiting[count].flexible
         })
       }
-      checkDay=false;
-      count++;
-    }
-    return daysNotSelected;
-  },
+   checkDay=false;
+   count++;
+   }
+   return daysNotSelected;
+   },
 
-  /**
+   /**
    *
    * @param studentId
    * @param newOrder
