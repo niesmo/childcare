@@ -226,8 +226,13 @@ Meteor.methods({
 
 
   },
+
+  /**
+   *
+   * @param order order of student deleted
+   */
   'reOrderAfterDelete':function(order) {
-  
+
     var students = Students.find({
       $or: [{status: "WAITLIST"}, {status: "PARTIALLY_ENROLLED"}],
       order: {$gt: order}

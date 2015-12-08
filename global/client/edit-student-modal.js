@@ -261,7 +261,21 @@ if(Session.get('editMode')=='waitlist') {
       $("#dob").prop('disabled', !checked);
       checked = !checked;
 
-    }
+    },
+  'click #show':function(event, tpl){
+    event.preventDefault();
+    tpl.$("#collapse").removeClass('hidden');
+    tpl.$("#parentInfo").removeClass('hidden');
+    tpl.$("#show").addClass("hidden");
+
+
+  },
+  'click #collapse':function(event, tpl){
+    event.preventDefault();
+    tpl.$("#collapse").addClass("hidden");
+    tpl.$("#show").removeClass("hidden");
+    tpl.$("#parentInfo").addClass("hidden");
+  }
 });
 
 function EditWaitlistCallback(err, res){
