@@ -1,4 +1,4 @@
 Router.route("/",{
-  name:"home",
+  name:"actionItems",
   layoutTemplate: 'layout'
 });
