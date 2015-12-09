@@ -65,7 +65,7 @@ Meteor.methods({
    * @returns {{status: string, studentId: *, parentId: *, studentParentId: *}}
    */
   'EditWaitlist': function(waitlist, sId, editMode){
-
+    var student = Students.findOne({_id:sId});
     if(waitlist.days.length === 0){
       throw new Meteor.error("No day select",
           "You must select at least one day of the week.");
@@ -117,15 +117,15 @@ Meteor.methods({
         $set: {
           firstName: waitlist.student.firstName,
           lastName: waitlist.student.lastName,
-          dateOfBirth: new Date(waitlist.student.dob),
+          dateOfBirth: new Date(moment(waitlist.student.dob)),
           group: waitlist.group.toUpperCase(),
           status: status,
           type: waitlist.type.toUpperCase(),
-          startDate: new Date(waitlist.startDate),
+          startDate: new Date(moment(waitlist.startDate)),
           order: waitlist.order,
           details: waitlist.details,
           daysWaitlisted: days,
-          moveDate: new Date(waitlist.moveDate),
+          moveDate: new Date(moment(waitlist.moveDate)),
         }
       });
     }else if(editMode=='enrolled'){
@@ -133,14 +133,15 @@ Meteor.methods({
         $set: {
           firstName: waitlist.student.firstName,
           lastName: waitlist.student.lastName,
-          dateOfBirth: new Date(waitlist.student.dob),
+          dateOfBirth: new Date(moment(waitlist.student.dob)),
           group: waitlist.group.toUpperCase(),
           status: status,
           type: waitlist.type.toUpperCase(),
           order: waitlist.order,
           details: waitlist.details,
           daysEnrolled: days,
-          moveDate:new Date(waitlist.moveDate),
+          moveDate:new Date(moment(waitlist.moveDate)),
+          daysWaitlisted: waitlist.waitlistedDays
         }
       });
     }
@@ -225,6 +226,20 @@ Meteor.methods({
       $set: {order: newOrder}});
 
 
-  }
+  },
 
+  /**
+   *
+   * @param order order of student deleted
+   */
+  'reOrderAfterDelete':function(order) {
+
+    var students = Students.find({
+      $or: [{status: "WAITLIST"}, {status: "PARTIALLY_ENROLLED"}],
+      order: {$gt: order}
+    });
+    students.forEach(function (student) {
+      Students.update({_id: student._id}, {$inc: {order: -1}});
+    });
+  }
 });

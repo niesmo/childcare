@@ -11,7 +11,11 @@
 
           <div class="modal-body">
             {{>errors}}
+
             <form role="form">
+              <span id="show"><button title="Show Parent Info" class="btn btn-circular enroll" id="showParent"><span class="glyphicon glyphicon-plus"></span></button> (Show Parent Info)</span>
+              <span id="collapse" class="hidden"><button title="Collapse Parent Info" class="btn btn-circular enroll" id="showParent"><span class="glyphicon glyphicon-minus"></span></button> (Collapse Parent Info)</span>
+              <div id="parentInfo" class="hidden">
               <div class="row">
                 <div class="col-md-4">
                   <div class="form-group">
@@ -152,6 +156,7 @@
                 </div>
                 </div>
               {{/with}}
+                </div>
 
               <div class="row">
                 <div class="col-md-4">
@@ -317,7 +322,7 @@
 
               <br>
               <div class="modal-footer">
-                <input class="btn btn-primary" type="submit" value="Edit Student" id="submit"/>
+                <input class="btn btn-primary" type="submit" value="Save" id="submit"/>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
               </div>
             </form>

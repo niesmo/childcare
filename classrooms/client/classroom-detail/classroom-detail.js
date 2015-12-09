@@ -1,10 +1,15 @@
+Template.editStudentModal.onCreated(function(){
+  Meteor.subscribe("enrolledStudents");
+  Meteor.subscribe("waitlistedStudents");
+
+});
 Template.classroomDetail.helpers({
   /**
    * All the students in this class
    * @return {Meteor.cursor} cursor to the db
    */
   students: function(){
-    return Students.find({classId: this._id});
+    return Students.find({$or: [{status:"ENROLLED"}, {status:"PARTIALLY_ENROLLED"}], classId: this._id});
   },
   
 
@@ -78,13 +83,19 @@ Template.classroomDetail.helpers({
     var currentClassroom = Classrooms.findOne(this._id);
     var numToShowFromWaitlist = 3;
     if (currentClassroom.type == "INFANT") {
+      return Students.find({$or: [{status:"ENROLLED"}, {status:"PARTIALLY_ENROLLED"}], group:"INFANT", order: {$lte: numToShowFromWaitlist}});
+/*
       return Students.find({$or: [{$and: [{status: "WAITLIST"}, {group: "INFANT"}, {order: {$lte: numToShowFromWaitlist}}]},
         {$and: [{status: "PARTIALLY_ENROLLED"}, {group: "INFANT"}]}]});
+ */
     }
     else if (currentClassroom.type == "TODDLER") {
-      return Students.find({$or: [{$and: [{group: "INFANT"}, {moveDate: {$lte: infantMoveAlert}}]},
+      return Students.find({$or: [{status:"ENROLLED"}, {status:"PARTIALLY_ENROLLED"}], group:"TODDLER", order: {$lte: numToShowFromWaitlist}});
+
+    /*  return Students.find({$or: [{$and: [{group: "INFANT"}, {moveDate: {$lte: infantMoveAlert}}]},
         {$and: [{status: "WAITLIST"}, {group: "TODDLER"}, {order: {$lte: numToShowFromWaitlist}}]},
         {$and: [{status: "PARTIALLY_ENROLLED"}, {group: "TODDLER"}]}]});
+        */
     }
   },
 
@@ -110,4 +121,8 @@ Template.classroomDetail.helpers({
       }
     }
   }
+});
+
+Template.editStudentModal.events({
+
 });

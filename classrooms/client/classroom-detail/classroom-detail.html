@@ -49,7 +49,10 @@
         {{#each daysOfWeek}}
           <td style="background-color:{{getColorIfRequestsClass student}}"></td>
         {{/each}}
+        <td><button title="Move" class="btn btn-success btn-circular enroll" id="move"><span class="glyphicon glyphicon-plus"></span></button>
+          <button title="Move To Waitlist" class="btn btn-circular" id="waitlist"><span class="glyphicon glyphicon-minus"></span></button> </td>
       </tr>
+
     {{/each}}
     </tbody>
   </table>

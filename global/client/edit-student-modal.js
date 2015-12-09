@@ -236,6 +236,16 @@ if(Session.get('editMode')=='waitlist') {
       data.details="";
     }
 
+    Meteor.call('compareDays', studentId, data.days, function(err,res){
+
+      //if from enrolled, make new waitlisted days the days that are still not selected
+      if(Session.get('editMode')=='enrolled'){
+        data.waitlistedDays = res;
+      }
+      Meteor.call('EditWaitlist', data, studentId, Session.get('editMode'), EditWaitlistCallback);
+      Modal.hide('editStudentModal');
+    });
+
 
     Errors.remove({});
   Meteor.call('EditWaitlist', data, studentId, Session.get('editMode'), EditWaitlistCallback);
@@ -261,7 +271,21 @@ if(Session.get('editMode')=='waitlist') {
       $("#dob").prop('disabled', !checked);
       checked = !checked;
 
-    }
+    },
+  'click #show':function(event, tpl){
+    event.preventDefault();
+    tpl.$("#collapse").removeClass('hidden');
+    tpl.$("#parentInfo").removeClass('hidden');
+    tpl.$("#show").addClass("hidden");
+
+
+  },
+  'click #collapse':function(event, tpl){
+    event.preventDefault();
+    tpl.$("#collapse").addClass("hidden");
+    tpl.$("#show").removeClass("hidden");
+    tpl.$("#parentInfo").addClass("hidden");
+  }
 });
 
 function EditWaitlistCallback(err, res){

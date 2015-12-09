@@ -9,7 +9,7 @@ Meteor.publishComposite('classroomsWithStudents', {
   children:[
     {
       find:function(classroom){
-        return Students.find({status: "ENROLLED", classId: classroom._id});
+        return Students.find({$or: [{status:"ENROLLED"}, {status:"PARTIALLY_ENROLLED"}], classId: classroom._id});
       }
     }
   ]

@@ -69,10 +69,10 @@ Meteor.methods({
     var monthsToMoveDate;
     var dob;
     if (!notConceived) {
-      dob = new Date(application.student.dob);
+      dob = new Date(moment(application.student.dob));
     }
     else {
-      dob = new Date(application.student.dueDate);
+      dob = new Date(moment(application.student.dueDate));
     }
     var ageInMonths = moment().diff(dob, 'months') || "";
     if (ageInMonths < 16) {
@@ -92,7 +92,7 @@ Meteor.methods({
       group: application.group.toUpperCase(),
       status: "application".toUpperCase(),
       paidApplicationFee: false,
-      startDate: application.startDate,
+      startDate: new Date(moment(application.startDate)),
       moveDate: moveDate,
       daysRequested: days,
       image: "http://api.adorable.io/avatars/100/" + imageId + ".png",
@@ -100,7 +100,7 @@ Meteor.methods({
       color: "#3498db",
       details: application.details,
       conceived: notConceived,
-      dueDate: application.student.dueDate
+      //dueDate: application.student.dueDate
     };
 
     // if the parents filled this out, set the type from the database
