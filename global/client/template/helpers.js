@@ -204,3 +204,16 @@ Template.registerHelper('partiallyEnrolledClass', function(){
       console.log(e, r);
     });
 }
+
+/**
+ * This function will return the root directory that the app is hosted
+ * For example is app is hosted on localhost:3000/myapp, this function will return 'myapp'
+ * 
+ * @param  {}
+ * @return {String}       The root directory of the app
+ */
+Template.registerHelper('getAppRootDir', function(){
+  return Meteor.settings.public.appRootDir;
+});
+
+
