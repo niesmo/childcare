@@ -12,6 +12,14 @@ Template.studentDetail.helpers({
     else{
       return false;
     }
+  },
+  isInfant:function(){
+    var student = Students.findOne({_id:this._id});
+    if(student.group=='INFANT'){
+      return true;
+    }
+    return false;
+
   }
 });
 
@@ -31,5 +39,11 @@ Template.studentDetail.events({
     Session.set('editMode', 'enrolled');
     Modal.show('editStudentModal');
 
-  }
+  },
+  "click #move":function(event){
+    event.preventDefault();
+    Session.set('studentToAdvance', this._id);
+    Modal.show('toToddler');
+  },
+
 });

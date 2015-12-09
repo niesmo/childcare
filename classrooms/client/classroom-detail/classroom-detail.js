@@ -21,6 +21,7 @@ Template.classroomDetail.helpers({
     return ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
   },
 
+
   /**
    * Used to fill in the student table cell on the days they have class
    * @param student
@@ -120,14 +121,21 @@ Template.classroomDetail.helpers({
         }
       }
     }
-  }
+  },
+  /**
+   * Returns true if student is a toddler
+   * @returns {boolean}
+   */
+
 });
 
-Template.editStudentModal.events({
+Template.classroomDetail.events({
       'click #move': function(event){
         event.preventDefault();
-        Session.set('studentToEnroll', this._id);
+        alert('todo');
 
-        Modal.show('enrollStudent');
+      //  Session.set('studentToEnroll', this._id);
+
+    //    Modal.show('enrollStudent');
       }
 });
