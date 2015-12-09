@@ -190,6 +190,14 @@ Template.registerHelper('partiallyEnrolledClass', function(){
 
 });
 
+Template.registerHelper('getAgeAtTransitionDate', function(dob, moveDate) {
+  var ageInMonths;
+  ageInMonths= (moveDate.getFullYear() - dob.getFullYear()) * 12;
+  ageInMonths -= dob.getMonth();
+  ageInMonths += moveDate.getMonth();
+  return ageInMonths <= 0?0 : ageInMonths + " Months";
+});
+
 /**
  * This function will add a system message to the action items list
  * @param  {String}     @task Contains a description and task type (Infant or toddler)
