@@ -40,7 +40,7 @@ function applicationSentCompleted(err, applicationToken){
   // show the link that they can access the link in the UI
   $("#application-link").text("The application can be accessed here.");
   var applicationLink = $("<a />")
-    .attr("href", "http://localhost:3000/new-application/" + applicationToken)
+    .attr("href", Router.routes['applicationForm'].path({token:applicationToken}))
     .text("link");
 
   $("#application-link").append(applicationLink);
