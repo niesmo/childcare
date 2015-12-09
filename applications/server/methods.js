@@ -76,11 +76,11 @@ Meteor.methods({
     }
     var ageInMonths = moment().diff(dob, 'months') || "";
     if (ageInMonths < 16) {
-      monthsToMoveDate = 16;
+      monthsToMoveDate = Meteor.settings.public.infantTransMonth;
       moveDate = new Date(new Date(dob).setMonth(dob.getMonth()+monthsToMoveDate));
     }
     else {
-      monthsToMoveDate = 30;
+      monthsToMoveDate = Meteor.settings.public.toddlerTransMonth;
       moveDate = new Date(new Date(dob).setMonth(dob.getMonth()+monthsToMoveDate));
     }
 

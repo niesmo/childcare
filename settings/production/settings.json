@@ -1,6 +1,8 @@
 {
   "public": {
     "appName": "olbwaitlist",
-    "appRootDir":"olbwaitlist"
+    "appRootDir":"olbwaitlist",
+    "infantTransMonth": 16,
+    "toddlerTransMonth": 30
   }
 }
