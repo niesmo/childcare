@@ -12,7 +12,7 @@ Template.editStudentModal.helpers({
   isInfant:function(){
     var id=Session.get('actionItemToEdit');
     var actionItem = ActionItems.findOne({_id:id});
-    if(actionItem.group=='INFANT'){
+    if(actionItem.type=='INFANT'){
       return true;
     }
     return false;
@@ -20,7 +20,7 @@ Template.editStudentModal.helpers({
   isToddler:function(){
     var id=Session.get('actionItemToEdit');
     var actionItem = ActionItems.findOne({_id:id});
-    if(actionItem.group=='TODDLER'){
+    if(actionItem.type=='TODDLER'){
       return true;
     }
     return false;
@@ -39,18 +39,11 @@ Template.editActionItemModal.events({
 
 
 
-  if(Session.get('editMode')=='actionItem') {
+
     var data = {
       description: event.target.description.value,
-      group: $(event.target).find('input:radio[name=group]:checked').val(),
+      type: $(event.target).find('input:radio[name=type]:checked').val(),
     };
-  }
-  else{
-    var data = {
-      description: event.target.description.value,
-      group: $(event.target).find('input:radio[name=group]:checked').val(),
-    };
-  }
 
     if(!editValidate(data, ActionItems.findOne({_id:actionItemId}).status)){
       formValidated = false;
@@ -60,13 +53,7 @@ Template.editActionItemModal.events({
       return;
     }
 
-    if(data.details==null){
-      data.details="";
-    }
-
-    Meteor.call('compareDays', studentId, data.days, function(err,res){
-
-      Meteor.call('EditActionItem', data, actionItemId, Session.get('editMode'), EditActionItemCallback);
+      Meteor.call('EditActionItem', data, actionItemId, EditActionItemCallback);
       Modal.hide('editActionItemModal');
     });
 
@@ -74,19 +61,6 @@ Template.editActionItemModal.events({
     Errors.remove({});
   Meteor.call('EditActionItem', data, actionItemId, Session.get('editMode'), EditActionItemCallback);
     Modal.hide('editActionItemModal');
-  },
-  'change #sel1': function(e,tpl){
-
-    if(tpl.$( "#parent1" ).hasClass( "hidden" )){
-      Session.set('parentToEdit', 'parent1');
-      tpl.$( "#parent1").removeClass('hidden');
-      tpl.$( "#parent2").addClass('hidden');
-    }
-    else{
-      Session.set('parentToEdit', 'parent2');
-      tpl.$( "#parent2").removeClass('hidden');
-      tpl.$( "#parent1").addClass('hidden');
-    }
   }
 });
 
