@@ -122,9 +122,20 @@ Template.classActionItemTable.events({
     Session.set('selectedActionItem', id);
   },
 
-  'click button.action-item': function (e, tpl) {
+  'click button.complete-action-item': function (e, tpl) {
     console.log(this._id);
     Meteor.call("completeTask",this._id);
+  },
+  "click button.edit-action-item": function(event){
+    event.preventDefault();
+    Session.set('actionItemToEdit', this._id);
+    //sets editMode to waitlist to differentiate between waitlist and enrolled student edit
+    Session.set('editMode', 'actionItem');
+    Modal.show('editActionItemModal');
+  },
+  'click button.delete-action-item': function (e, tpl) {
+    console.log(this._id);
+    Meteor.call("deleteTask",this._id);
   }
 });
 
