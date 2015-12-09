@@ -27,18 +27,23 @@
 
               </div>
 
-              <!-- Group -->
+              <!-- Type -->
               <div class="form-group">
                 <h4>Group</h4>
                 {{#if isInfant}}
-                <div class="radio-inline"><label for="infant"><input class="radio" type="radio" name="group" value="infant" id="infant" checked> Infant</label></div>
+                <div class="radio-inline"><label for="infant"><input class="radio" type="radio" name="type" value=""INFANT" id="infant" checked> Infant</label></div>
                 {{else}}
-                <div class="radio-inline"><label for="infant"><input class="radio" type="radio" name="group" value="infant" id="infant"> Infant</label></div>
+                <div class="radio-inline"><label for="infant"><input class="radio" type="radio" name="type" value="INFANT" id="infant"> Infant</label></div>
                 {{/if}}
                 {{#if isToddler}}
-                <div class="radio-inline"><label for="toddler"><input class="radio" type="radio" name="group" value="toddler" id="toddler" checked> Toddler</label></div>
+                <div class="radio-inline"><label for="toddler"><input class="radio" type="radio" name="type" value="TODDLER" id="toddler" checked> Toddler</label></div>
                 {{else}}
-                <div class="radio-inline"><label for="toddler"><input class="radio" type="radio" name="group" value="toddler" id="toddler"> Toddler</label></div>
+                <div class="radio-inline"><label for="toddler"><input class="radio" type="radio" name="type" value="TODDLER" id="toddler"> Toddler</label></div>
+                {{/if}}
+                {{#if isMiscellaneous}}
+                <div class="radio-inline"><label for="misc"><input class="radio" type="radio" name="type" value="MISCELLANEOU" id="miscellaneous" checked> Miscellaneous</label></div>
+                {{else}}
+                <div class="radio-inline"><label for="misc"><input class="radio" type="radio" name="type" value="MISCELLANEOUS" id="miscellaneous"> Miscellaneous</label></div>
                 {{/if}}
               </div>
 
