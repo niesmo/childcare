@@ -1,7 +1,9 @@
 /**
  * The router for application page
  */
-Router.route('/applications',{
+Router.route(Meteor.settings.public.appRootDir + '/applications',{
+  template: 'applications',
+  name: 'applications',
   layoutTemplate: 'layout'
 });
 
@@ -9,9 +11,10 @@ Router.route('/applications',{
 /**
  * The router for the application form where the parents fill out the application
  */
-Router.route('/new-application/:token',{
-  name: "applicationForm",
-  path: '/new-application/:token',
+Router.route(Meteor.settings.public.appRootDir + '/new-application/:token',{
+  template:'applicationForm',
+  name: 'applicationForm',
+  path: Meteor.settings.public.appRootDir + '/new-application/:token',
   onBeforeAction: function(){
     var token = this.params.token;
 

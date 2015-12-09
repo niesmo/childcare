@@ -45,7 +45,7 @@ var checkForWaitlistNearDesired= function() {
   }
 }
 
-var cron=new Meteor.Cron( {
+var cron = new Meteor.Cron( {
   events:{
     "1 0 * * *" : checkForStudentsNearTransition,
     "10 0 * * *" : checkForWaitlistNearDesired
