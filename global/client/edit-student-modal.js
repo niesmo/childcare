@@ -220,6 +220,7 @@ if(Session.get('editMode')=='waitlist') {
     group: $(event.target).find('input:radio[name=group]:checked').val(),
   //  flexible: $(event.target).find('input:checkbox[name=flexible]:checked').val(),
     details: event.target.details.value,
+    status: "",
     moveDate: event.target.moveDate.value,
   };
 }
@@ -241,6 +242,9 @@ if(Session.get('editMode')=='waitlist') {
       //if from enrolled, make new waitlisted days the days that are still not selected
       if(Session.get('editMode')=='enrolled'){
         data.waitlistedDays = res;
+        if(res.length==0){
+          data.status = "ENROLLED";
+        }
       }
       Meteor.call('EditWaitlist', data, studentId, Session.get('editMode'), EditWaitlistCallback);
       Modal.hide('editStudentModal');
