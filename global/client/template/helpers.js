@@ -213,7 +213,7 @@ Template.registerHelper('partiallyEnrolledClass', function(){
  * @return {String}       The root directory of the app
  */
 Template.registerHelper('getAppRootDir', function(){
-  return Meteor.settings.public.appRootDir;
+  return (Meteor.settings.public.appRootDir == '') ? '' : '/' + Meteor.settings.public.appRootDir;
 });
 
 
