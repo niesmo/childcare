@@ -12,10 +12,6 @@ Template.studentDetail.helpers({
     else{
       return false;
     }
-  },
-
-  studentSchedule:function() {
-    return this.daysEnrolled;
   }
 });
 
