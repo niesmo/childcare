@@ -120,7 +120,7 @@ Template.registerHelper('getAge', function(dob){
  * @return {[type]}     The abbreviated version of the name: "Nima Esmaili" -> "N.E"
  */
 Template.registerHelper('initials', function(){
-  return (this.firstName[0] + "." + (this.middleName?this.middleName + ".":"") + this.lastName[0]).toUpperCase();
+  return (this.firstName[0] + "." + (this.middleName?this.middleName + ".":"") + this.lastName[0] + ".").toUpperCase();
 });
 
 /**
