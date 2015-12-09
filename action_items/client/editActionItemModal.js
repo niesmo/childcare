@@ -67,7 +67,7 @@ Template.editActionItemModal.events({
 
 
     Errors.remove({});
-  Meteor.call('EditActionItem', data, actionItemId, Session.get('editMode'), EditActionItemCallback);
+  Meteor.call('editActionItem', data, actionItemId, Session.get('editMode'), EditActionItemCallback);
     Modal.hide('editActionItemModal');
   }
 });
