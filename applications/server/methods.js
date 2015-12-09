@@ -80,7 +80,7 @@ Meteor.methods({
       moveDate = new Date(new Date(dob).setMonth(dob.getMonth()+monthsToMoveDate));
     }
     else {
-      monthsToMoveDate = 36;
+      monthsToMoveDate = 30;
       moveDate = new Date(new Date(dob).setMonth(dob.getMonth()+monthsToMoveDate));
     }
 
