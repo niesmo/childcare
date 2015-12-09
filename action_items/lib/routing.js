@@ -1,4 +1,5 @@
-Router.route("/",{
-  name:"actionItems",
+Router.route(Meteor.settings.public.appRootDir + "/",{
+  name:'actionItems',
+  template: 'home',
   layoutTemplate: 'layout'
 });

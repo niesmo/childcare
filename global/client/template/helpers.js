@@ -195,12 +195,23 @@ Template.registerHelper('partiallyEnrolledClass', function(){
  * @param  {String}     @task Contains a description and task type (Infant or toddler)
  * @return {String}     The result of the addition to the action item collection
  */
- createSystemActionItem = function (task){
-    check(task, {
+createSystemActionItem = function (task){
+  check(task, {
     description: String,
     type: String
   });
   return Meteor.call("addSystemTask", task, function(e, r){
-      console.log(e, r);
-    });
+    console.log(e, r);
+  });
 }
+
+/**
+ * This function will return the root directory that the app is hosted
+ * For example is app is hosted on localhost:3000/myapp, this function will return 'myapp'
+ * 
+ * @param  {}
+ * @return {String}       The root directory of the app
+ */
+Template.registerHelper('getAppRootDir', function(){
+  return (Meteor.settings.public.appRootDir == '') ? '' : '/' + Meteor.settings.public.appRootDir;
+});
