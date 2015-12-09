@@ -65,7 +65,7 @@ Meteor.methods({
    * @returns {{status: string, studentId: *, parentId: *, studentParentId: *}}
    */
   'EditWaitlist': function(waitlist, sId, editMode){
-
+    var student = Students.findOne({_id:sId});
     if(waitlist.days.length === 0){
       throw new Meteor.error("No day select",
           "You must select at least one day of the week.");
@@ -141,6 +141,7 @@ Meteor.methods({
           details: waitlist.details,
           daysEnrolled: days,
           moveDate:new Date(moment(waitlist.moveDate)),
+          daysWaitlisted: waitlist.waitlistedDays
         }
       });
     }

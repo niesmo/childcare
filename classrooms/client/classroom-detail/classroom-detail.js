@@ -1,10 +1,15 @@
+Template.editStudentModal.onCreated(function(){
+  Meteor.subscribe("enrolledStudents");
+  Meteor.subscribe("waitlistedStudents");
+
+});
 Template.classroomDetail.helpers({
   /**
    * All the students in this class
    * @return {Meteor.cursor} cursor to the db
    */
   students: function(){
-    return Students.find({classId: this._id});
+    return Students.find({$or: [{status:"ENROLLED"}, {status:"PARTIALLY_ENROLLED"}], classId: this._id});
   },
   
 
@@ -110,4 +115,8 @@ Template.classroomDetail.helpers({
       }
     }
   }
+});
+
+Template.editStudentModal.events({
+
 });
