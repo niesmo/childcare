@@ -34,7 +34,19 @@ Meteor.methods({
       $set: { completedBy:Meteor.userId(), completedAt:new Date(), isCompleted:true}
     });
   },
-
+  editActionItem: function(taskId,task){
+    // Check the different variables passed
+    // Use the Check Package https://atmospherejs.com/meteor/check
+    check(taskId, String);
+    check(task, {
+      description: String,
+      type: String
+    });
+  	//created by
+    return ActionItems.update(taskId,{
+      $set: { description:task.description, type=task.type}
+    });
+  },
 
   /**
    * PUT COMMENTS IN HERE
