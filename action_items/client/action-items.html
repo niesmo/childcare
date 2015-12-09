@@ -9,6 +9,7 @@
           <select class="form-control" id="type">
             <option value="INFANT">Infant</option>
             <option value="TODDLER">Toddler</option>
+            <option value="MISCELLANEOUS">Miscellaneous</option>
           </select>
         </div>
       </div>
@@ -23,10 +24,8 @@
   </div>
 
   <hr />
-  {{> actionItemDetail selectedActionItem}}
-  <hr />
   
-  <div class="row">
+   <div class="row">
     <div class="col-md-12">
       <h3>List of Action Items</h3>
       <!-- The tab list on top of the page. A tab for each class -->
@@ -46,4 +45,9 @@
       </div>
     </div>
   </div>
+  
+  <hr />
+
+  {{> actionItemDetail selectedActionItem}}
+  
 </template>

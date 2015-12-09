@@ -220,6 +220,7 @@ if(Session.get('editMode')=='waitlist') {
     group: $(event.target).find('input:radio[name=group]:checked').val(),
   //  flexible: $(event.target).find('input:checkbox[name=flexible]:checked').val(),
     details: event.target.details.value,
+    status: "",
     moveDate: event.target.moveDate.value,
   };
 }
@@ -235,6 +236,19 @@ if(Session.get('editMode')=='waitlist') {
     if(data.details==null){
       data.details="";
     }
+
+    Meteor.call('compareDays', studentId, data.days, function(err,res){
+
+      //if from enrolled, make new waitlisted days the days that are still not selected
+      if(Session.get('editMode')=='enrolled'){
+        data.waitlistedDays = res;
+        if(res.length==0){
+          data.status = "ENROLLED";
+        }
+      }
+      Meteor.call('EditWaitlist', data, studentId, Session.get('editMode'), EditWaitlistCallback);
+      Modal.hide('editStudentModal');
+    });
 
 
     Errors.remove({});
@@ -261,7 +275,21 @@ if(Session.get('editMode')=='waitlist') {
       $("#dob").prop('disabled', !checked);
       checked = !checked;
 
-    }
+    },
+  'click #show':function(event, tpl){
+    event.preventDefault();
+    tpl.$("#collapse").removeClass('hidden');
+    tpl.$("#parentInfo").removeClass('hidden');
+    tpl.$("#show").addClass("hidden");
+
+
+  },
+  'click #collapse':function(event, tpl){
+    event.preventDefault();
+    tpl.$("#collapse").addClass("hidden");
+    tpl.$("#show").removeClass("hidden");
+    tpl.$("#parentInfo").addClass("hidden");
+  }
 });
 
 function EditWaitlistCallback(err, res){

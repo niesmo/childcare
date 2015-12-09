@@ -7,6 +7,14 @@
         <dt>Age</dt><dd>{{getAge dateOfBirth}}</dd>
         <dt>Transition Date</dt><dd>{{formatDate moveDate "MMM DD, YYYY"}}</dd>
         <dt>Details</dt><dd>{{ details }}</dd>
+        <dt>Schedule</dt>
+        <dd class="capitalize">
+          <ul class="list-unstyled list-inline">
+            {{#each sortedDays daysEnrolled}}
+              <li class="{{flexibleColorClass}}">{{toLower day}}</li>
+            {{/each}}
+          </ul>
+        </dd>
       </dl>
     </div>
     <div class="col-md-6">

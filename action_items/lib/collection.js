@@ -43,7 +43,7 @@ Schemas.ActionItem = new SimpleSchema({
      * Type of the Action Item. Can take the values of:
      * 1. TODDLER
      * 2. INFANT
-     * 3. OTHER
+     * 3. MISC
      */
     type: {
         type: String,

@@ -120,7 +120,7 @@ Template.registerHelper('getAge', function(dob){
  * @return {[type]}     The abbreviated version of the name: "Nima Esmaili" -> "N.E"
  */
 Template.registerHelper('initials', function(){
-  return (this.firstName[0] + "." + (this.middleName?this.middleName + ".":"") + this.lastName[0]).toUpperCase();
+  return (this.firstName[0] + "." + (this.middleName?this.middleName + ".":"") + this.lastName[0] + ".").toUpperCase();
 });
 
 /**
@@ -195,14 +195,14 @@ Template.registerHelper('partiallyEnrolledClass', function(){
  * @param  {String}     @task Contains a description and task type (Infant or toddler)
  * @return {String}     The result of the addition to the action item collection
  */
- createSystemActionItem = function (task){
-    check(task, {
+createSystemActionItem = function (task){
+  check(task, {
     description: String,
     type: String
   });
   return Meteor.call("addSystemTask", task, function(e, r){
-      console.log(e, r);
-    });
+    console.log(e, r);
+  });
 }
 
 /**
@@ -215,5 +215,3 @@ Template.registerHelper('partiallyEnrolledClass', function(){
 Template.registerHelper('getAppRootDir', function(){
   return (Meteor.settings.public.appRootDir == '') ? '' : '/' + Meteor.settings.public.appRootDir;
 });
-
-
