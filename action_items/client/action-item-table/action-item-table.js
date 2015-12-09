@@ -1,6 +1,6 @@
 Template.actionItemTableChooser.helpers({
   isNotCompleted: function (tableType) {
-    if(tableType=="INFANT"||tableType=="TODDLER"){
+    if(tableType=="INFANT"||tableType=="TODDLER"||tableType=="MISCELLANEOUS"){
       return true;
     }else {
       return false;

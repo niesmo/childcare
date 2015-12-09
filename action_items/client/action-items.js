@@ -12,6 +12,9 @@ Template.actionItems.helpers({
   toddlerTasks: function () {
     return ActionItems.find({type:"TODDLER",isCompleted:false}, {sort: {createdAt: 1}});
   },
+  miscTasks: function () {
+    return ActionItems.find({type:"MISCELLANEOUS",isCompleted:false}, {sort: {createdAt: 1}});
+  },
   completedTasks: function () {
     return ActionItems.find({isCompleted:true}, {sort: {createdAt: -1}});
   },
@@ -26,7 +29,7 @@ Template.actionItems.helpers({
     return actionItem;
   },
   actionItemTypes: function(){
-    var itemTypes=["INFANT","TODDLER","COMPLETED"];
+    var itemTypes=["INFANT","TODDLER","MISCELLANEOUS","COMPLETED"];
     return itemTypes;
   },
 
