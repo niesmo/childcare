@@ -75,10 +75,13 @@ Meteor.methods({
  /*   if(new Date(waitlist.startDate) < new Date()){
       throw new Meteor.error("Start date in the past",
           "You must select a start date in the future");
+          "You must select a start date in the future");
     }
 
 */
-    var status = Students.findOne({_id:sId}).status;
+    if(waitlist.status=="") {
+      waitlist.status = Students.findOne({_id: sId}).status;
+    }
     var parentId = Parents.update(waitlist.parent.id,{$set: {
       firstName: waitlist.parent.firstName,
       lastName: waitlist.parent.lastName,
@@ -119,7 +122,7 @@ Meteor.methods({
           lastName: waitlist.student.lastName,
           dateOfBirth: new Date(moment(waitlist.student.dob)),
           group: waitlist.group.toUpperCase(),
-          status: status,
+          status: waitlist.status,
           type: waitlist.type.toUpperCase(),
           startDate: new Date(moment(waitlist.startDate)),
           order: waitlist.order,
@@ -135,7 +138,7 @@ Meteor.methods({
           lastName: waitlist.student.lastName,
           dateOfBirth: new Date(moment(waitlist.student.dob)),
           group: waitlist.group.toUpperCase(),
-          status: status,
+          status: waitlist.status,
           type: waitlist.type.toUpperCase(),
           order: waitlist.order,
           details: waitlist.details,
