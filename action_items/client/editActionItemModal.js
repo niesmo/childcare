@@ -25,6 +25,14 @@ Template.editStudentModal.helpers({
     }
     return false;
   },
+  isMisc:function(){
+    var id=Session.get('actionItemToEdit');
+    var actionItem = ActionItems.findOne({_id:id});
+    if(actionItem.type=='MISCELLANEOUS'){
+      return true;
+    }
+    return false;
+  }
 });
 
 Template.editActionItemModal.events({
