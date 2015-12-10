@@ -32,4 +32,7 @@ xolvio:cucumber
 mrt:cron
 accounts-ui
 mrt:jquery-ui
-dispatch:phoneformat.js
+email
+meteorhacks:ssr
+yogiben:pretty-email
+
