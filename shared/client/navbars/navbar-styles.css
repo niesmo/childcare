@@ -9,3 +9,10 @@
       -o-object-fit: contain;
       object-fit: contain;
     }
+nav.navbar {
+  background-color:#447ab4;
+}
+
+nav.navbar ul.navbar-nav li a:hover {
+  background-color: #4e528b;
+}
