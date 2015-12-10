@@ -43,8 +43,9 @@ Meteor.methods({
     }
     if(enrollType=='enroll') {
 
+
       // enroll the student
-      Students.update({_id: studentId}, {$set: {status: "ENROLLED", classId: classroom._id, daysEnrolled: daysEnr}});
+      Students.update({_id: studentId}, {$set: {status: "ENROLLED", classId: classroom._id, daysEnrolled: daysEnr, daysWaitlisted:[]}});
 
       // fix the order of the waitlist
       var toBeUpdated = Students.find({$or: [{status:"WAITLIST"}, {status:"PARTIALLY_ENROLLED"}], group: student.group, order: {$gt: student.order}});
@@ -244,5 +245,13 @@ Meteor.methods({
     students.forEach(function (student) {
       Students.update({_id: student._id}, {$inc: {order: -1}});
     });
+  },
+  /**
+   * Switches student from partially_enrolled to enrolled
+   * @param studentId id of student to switch
+   */
+  'fullyEnroll':function(studentId){
+    Students.update(studentId, {
+      $set: {status: "ENROLLED", daysWaitlisted:[]}});
   }
 });

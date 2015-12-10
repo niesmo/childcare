@@ -1,7 +1,7 @@
 Template.toToddlerModal.onCreated(function(){
   Meteor.subscribe("enrolledStudents");
-
 });
+
 Template.toToddlerModal.helpers({
   /**
    * [daysEnrolled description]
@@ -103,7 +103,7 @@ Template.toToddlerModal.events({
     };
 
     Meteor.call('moveStudent', id, totalDays, function(err,res){
-      Meteor.call('moveToWaitlist', id, totalDays.daysNotChecked);
+      Meteor.call('moveToWaitlist', id, totalDays.daysNotChecked, "TODDLER", "PARTIALLY_ENROLLED");
     });
   },
 

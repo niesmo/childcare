@@ -45,7 +45,14 @@ Template.studentDetail.events({
    */
   "click .remove": function(event){
     event.preventDefault();
-    Meteor.call('removeStudent', this._id);
+    if(Students.findOne({_id:this._id}).status=="PARTIALLY_ENROLLED"){
+      Session.set('studentId', this._id);
+      Modal.show('deletePartiallyEnrolledStudents');
+    }
+    else{
+      Meteor.call('removeStudent', this._id);
+    }
+
   },
 
   /**
@@ -72,5 +79,11 @@ Template.studentDetail.events({
     Session.set('studentToAdvance', this._id);
     Modal.show('toToddlerModal');
   },
+  "click #waitlist":function(event){
+    event.preventDefault();
+    Session.set('studentToWaitlist', this._id);
+    Modal.show('toWaitlist');
+
+  }
 
 });
