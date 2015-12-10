@@ -77,7 +77,7 @@ Template.enrollStudentModal.events({
           daysChecked: days,
           daysNotChecked: []
         };
-        Meteor.call('enrollStudent', id, totalDays, 'enroll');
+        Meteor.call('enrollStudent', id, totalDays, 'enroll', enrollStudentCallback);
         Modal.hide('enrollStudentModal');
       }
     });
@@ -98,7 +98,7 @@ Template.enrollStudentModal.events({
       daysChecked: daysSelected,
       daysNotChecked: daysNotSelected
     };
-    Meteor.call('enrollStudent', id, totalDays, 'partial_enroll');
+    Meteor.call('enrollStudent', id, totalDays, 'partial_enroll', enrollStudentCallback);
 
   },
 
@@ -116,6 +116,21 @@ Template.enrollStudentModal.events({
       daysChecked: daysSelected,
       daysNotChecked: []
     };
-    Meteor.call('enrollStudent', id, totalDays, 'enroll');
+    Meteor.call('enrollStudent', id, totalDays, 'enroll', enrollStudentCallback);
   }
 });
+
+function enrollStudentCallback(err,res){
+  if(err){
+    Errors.insert({type:'waitlist', message:'Something went wrong', seen:false});
+    // Do some real error checking and let the use know what happned
+    console.log(err);
+    // alert(err);
+  }
+
+  if(res.status === 201){
+
+    Router.go("waitlist");
+  }
+  return;
+}

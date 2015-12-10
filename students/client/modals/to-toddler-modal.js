@@ -81,7 +81,7 @@ Template.toToddlerModal.events({
           daysNotChecked: []
         };
         
-        Meteor.call('moveStudent', id, totalDays);
+        Meteor.call('moveStudent', id, totalDays, moveStudentCallback);
         Modal.hide('toToddlerModal');
       }
     });
@@ -103,7 +103,7 @@ Template.toToddlerModal.events({
     };
 
     Meteor.call('moveStudent', id, totalDays, function(err,res){
-      Meteor.call('moveToWaitlist', id, totalDays.daysNotChecked, "TODDLER", "PARTIALLY_ENROLLED");
+      Meteor.call('moveToWaitlist', id, totalDays.daysNotChecked, "TODDLER", "PARTIALLY_ENROLLED", moveToWaitlistCallback);
     });
   },
 
@@ -121,6 +121,36 @@ Template.toToddlerModal.events({
       daysChecked: daysSelected,
       daysNotChecked: []
     };
-    Meteor.call('moveStudent', id, totalDays);
+    Meteor.call('moveStudent', id, totalDays, moveStudentCallback);
   }
 });
+
+function moveStudentCallback(err,res){
+  if(err){
+    Errors.insert({type:'students', message:'Something went wrong', seen:false});
+    // Do some real error checking and let the use know what happned
+    console.log(err);
+    // alert(err);
+  }
+
+  if(res.status === 201){
+
+    Router.go("students");
+  }
+  return;
+}
+
+function moveToWaitlistCallback(err,res){
+  if(err){
+    Errors.insert({type:'students', message:'Something went wrong', seen:false});
+    // Do some real error checking and let the use know what happned
+    console.log(err);
+    // alert(err);
+  }
+
+  if(res.status === 201){
+
+    Router.go("students");
+  }
+  return;
+}

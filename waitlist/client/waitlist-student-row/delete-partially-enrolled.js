@@ -13,9 +13,9 @@ Template.deletePartiallyEnrolled.events({
   'click #fromSystem':function(event){
     event.preventDefault();
     var order = Students.findOne({_id:Session.get('studentId')}).order;
-    Meteor.call('removeStudent', Session.get('studentId'));
+    Meteor.call('removeStudent', Session.get('studentId'), removeStudentCallback);
 
-    Meteor.call('reOrderAfterDelete', order);
+    Meteor.call('reOrderAfterDelete', order, reOrderAfterDeleteCallback);
 
   },
 

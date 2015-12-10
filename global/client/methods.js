@@ -126,8 +126,8 @@ secondParentValidate = function(secondParentObj){
     valid=false;
   }
   //check if valid phone number
-  if(!/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/.test(secondParentObj.phone && !/^(\()?\d{3}(\))?(-|\s)?\d{3}(-|\s)\d{4}$/.test(secondParentObj.phone))){
-    Errors.insert({message:'Please enter valid phone number in the form of: xxx-xxx-xxxx or xxxxxxxxxx', seen:false,type:'validation'});
+  if(!/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/.test(secondParentObj.phone)){
+    Errors.insert({message:'Please enter valid phone number in the form of: xxx-xxx-xxxx, or xxxxxxxxxx for second parent', seen:false,type:'validation'});
     valid = false;
   }
   if(secondParentObj.email==""){
@@ -194,7 +194,7 @@ editValidate = function(application, status){
     valid = false;
   }
   //check if valid phone number
-  if(!/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/.test(application.parent.phone && !/^(\()?\d{3}(\))?(-|\s)?\d{3}(-|\s)\d{4}$/.test(application.parent.phone))){
+  if(!/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/.test(application.parent.phone)){
     Errors.insert({message:'Please enter valid phone number in the form of: xxx-xxx-xxxx or xxxxxxxxxx', seen:false,type:'validation'});
     valid = false;
   }
@@ -235,7 +235,7 @@ editValidate = function(application, status){
       valid=false;
     }
     //check if valid phone number
-    if(!/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/.test(application.secondParent.phone && !/^(\()?\d{3}(\))?(-|\s)?\d{3}(-|\s)\d{4}$/.test(application.secondParent.phone))){
+    if(!/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/.test(application.secondParent.phone)){
       Errors.insert({message:'Please enter valid phone number in the form of: xxx-xxx-xxxx or xxxxxxxxxx', seen:false,type:'validation'});
       valid = false;
     }

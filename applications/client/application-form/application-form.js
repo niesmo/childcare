@@ -92,13 +92,15 @@ Template.applicationForm.events({
     }
     //formats phone number with dashes
     if(application.parent.phone.indexOf('-')===-1 && application.parent.phone.indexOf('.')===-1){
-   //  application.parent.phone = Phoneformat.formatLocal('US', application.parent.phone);
-      application.parent.phone = application.parent.phone.substring(0,3) + '-' +application.parent.phone.substring(3,6) + '-' + application.parent.phone.substring(6,10);
+  //   application.parent.phone = Phoneformat.formatLocal('US', application.parent.phone);
+   //   application.parent.phone = application.parent.phone.replace(' ','');
+     application.parent.phone = application.parent.phone.substring(0,3) + '-' +application.parent.phone.substring(3,6) + '-' + application.parent.phone.substring(6,10);
     }
     if(Session.get("secondParent")) {
       if(application.secondParent.phone.indexOf('-')===-1 && application.secondParent.phone.indexOf('.')===-1){
-       // application.secondParent.phone = Phoneformat.formatLocal('US', application.secondParent.phone);
-        application.secondParent.phone = application.secondParent.phone.substring(0,3) + '-' +application.secondParent.phone.substring(3,6) + '-' + application.secondParent.phone.substring(6,10);
+      //  application.secondParent.phone = Phoneformat.formatLocal('US', application.secondParent.phone);
+      //  application.secondParent.phone = application.secondParent.phone.replace(' ','');
+       application.secondParent.phone = application.secondParent.phone.substring(0,3) + '-' +application.secondParent.phone.substring(3,6) + '-' + application.secondParent.phone.substring(6,10);
       }
     }
     Errors.remove({});

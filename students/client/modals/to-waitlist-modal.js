@@ -18,7 +18,7 @@ Template.toWaitlistModal.events({
    */
   "click #infantWaitlist": function(event){
     var days = Students.findOne({_id:Session.get('studentToWaitlist')}).daysEnrolled;
-    Meteor.call('moveToWaitlist', Session.get('studentToWaitlist'), days, "INFANT", "WAITLIST");
+    Meteor.call('moveToWaitlist', Session.get('studentToWaitlist'), days, "INFANT", "WAITLIST", moveToWaitlistCallback); //callback function exists in to-toddler-modal.js
   },
 
   /**
@@ -31,9 +31,9 @@ Template.toWaitlistModal.events({
     var group = Students.findOne({_id:Session.get('studentToWaitlist')}).group;
     var order = Students.findOne({_id:Session.get('studentToWaitlist')}).order;
 
-    Meteor.call('moveToWaitlist', Session.get('studentToWaitlist'), days, "TODDLER", "WAITLIST");
+    Meteor.call('moveToWaitlist', Session.get('studentToWaitlist'), days, "TODDLER", "WAITLIST", moveToWaitlistCallback); //callback function exists in to-toddler-modal.js
     if(group=='INFANT'){
-      Meteor.call('reOrderAfterDelete', order, "INFANT");
+      Meteor.call('reOrderAfterDelete', order, "INFANT", reOrderAfterDeleteCallback);
     }
   }
 });
