@@ -10,11 +10,6 @@ Meteor.methods({
     });
   },
 
-  // function to change the password
-  newPassword: function (currentPassword, newPassword) {
-    return Accounts.changePassword(currentPassword, newPassword);
-  },
-
   // function to delete a user
   deleteUser: function (email) {
     var userId = Accounts.findUserByEmail(email);
