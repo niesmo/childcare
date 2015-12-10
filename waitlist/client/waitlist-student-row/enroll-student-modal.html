@@ -21,11 +21,11 @@
           <div class="modal-body toHide">
             <div class="form-group">
               <h4>Days</h4>
-                <div class="checkbox-inline"><label for="m"><input class="checkbox" type="checkbox" name="days" value="M" id="m" checked="{{dayChecked 'MONDAY'}}" /> Monday</label></div>
-                <div class="checkbox-inline"><label for="t"><input class="checkbox" type="checkbox" name="days" value="T" id="t" checked="{{dayChecked 'TUESDAY'}}" /> Tuesday</label></div>
-                <div class="checkbox-inline"><label for="w"><input class="checkbox" type="checkbox" name="days" value="W" id="w" checked="{{dayChecked 'WEDNESDAY'}}" /> Wednesday</label></div>
-                <div class="checkbox-inline"><label for="th"><input class="checkbox" type="checkbox" name="days" value="TH" id="th" checked="{{dayChecked 'THURSDAY'}}" /> Thursday</label></div>
-                <div class="checkbox-inline"><label for="f"><input class="checkbox" type="checkbox" name="days" value="F" id="f" checked="{{dayChecked 'FRIDAY'}}" /> Friday</label></div>
+                <div class="checkbox-inline"><label for="m"><input class="checkbox" type="checkbox" disabled="{{isDisabled 'MONDAY'}}" readonly="{{isReadonly 'MONDAY'}}" name="days" value="M" id="m" checked="{{dayChecked 'MONDAY'}}" /> Monday</label></div>
+                <div class="checkbox-inline"><label for="t"><input class="checkbox" type="checkbox" disabled="{{isDisabled 'TUESDAY'}}" readonly="{{isReadonly 'TUESDAY'}}" name="days" value="T" id="t" checked="{{dayChecked 'TUESDAY'}}" /> Tuesday</label></div>
+                <div class="checkbox-inline"><label for="w"><input class="checkbox" type="checkbox" disabled="{{isDisabled 'WEDNESDAY'}}" readonly="{{isReadonly 'WEDNESDAY'}}" name="days" value="W" id="w" checked="{{dayChecked 'WEDNESDAY'}}" /> Wednesday</label></div>
+                <div class="checkbox-inline"><label for="th"><input class="checkbox" type="checkbox" disabled="{{isDisabled 'THURSDAY'}}" readonly="{{isReadonly 'THURSDAY'}}" name="days" value="TH" id="th" checked="{{dayChecked 'THURSDAY'}}" /> Thursday</label></div>
+                <div class="checkbox-inline"><label for="f"><input class="checkbox" type="checkbox" disabled="{{isDisabled 'FRIDAY'}}" readonly="{{isReadonly 'FRIDAY'}}" name="days" value="F" id="f" checked="{{dayChecked 'FRIDAY'}}" /> Friday</label></div>
             </div>
           </div>
 
@@ -34,7 +34,7 @@
               The below days are waitlisted but not selected. Would you like to keep student on waitlist for these days?
               <ul class="list-unstled list-inline">
                 {{#each sortedDays days}}
-                  <li class="list-group-item-warning">{{toLower day}}</li>
+                  <li class="list-group-item-warning capitalize">{{toLower day}}</li>
                 {{/each}}
               </ul>
 
