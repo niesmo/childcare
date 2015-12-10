@@ -32,22 +32,9 @@ p.large,li.large,a.large{
   outline: none !important;
 }
 
-.secondParentBackground{
-  background-color: #FFFAF0;
-  border-radius: 10px;
-}
-
-/*.hidden{
-  display: none;
-}
-*/
-.partiallyEnrolled{
+.partially-enrolled-bg{
   background-color: #E0FFFF;
 }
 .student{
   cursor: move;
-}
-.center{
-  text-align: center;
-
 }

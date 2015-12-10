@@ -1,26 +1,26 @@
-<template name="enrollStudentModal">
+<template name="toToddlerModal">
   <div class="modal fade">
     <div class="modal-dialog">
       <div class="modal-content">
 
         <div class="modal-header">
-          <h2 class="modal-title">Enroll Student</h2>
+          <h2 class="modal-title">Student To Toddler Transition</h2>
         </div>
 
         <div class="modal-body toHide">
-          <p><b>Days Requested</b></p>
+          <p><b>Days Enrolled</b></p>
 
           <ul class="list-unstyled list-inline capitalize">
-            {{#each sortedDays daysWaitlisted}}
+            {{#each sortedDays daysEnrolled}}
               <li class="{{flexibleColorClass}}">{{toLower day}}</li>
             {{/each}}
           </ul>
         </div>
-
+        
         <form role="form">
           <div class="modal-body toHide">
             <div class="form-group">
-              <h4>Days</h4>
+              <h4>Days To Enroll</h4>
                 <div class="checkbox-inline"><label for="m"><input class="checkbox" type="checkbox" name="days" value="M" id="m" checked="{{dayChecked 'MONDAY'}}" /> Monday</label></div>
                 <div class="checkbox-inline"><label for="t"><input class="checkbox" type="checkbox" name="days" value="T" id="t" checked="{{dayChecked 'TUESDAY'}}" /> Tuesday</label></div>
                 <div class="checkbox-inline"><label for="w"><input class="checkbox" type="checkbox" name="days" value="W" id="w" checked="{{dayChecked 'WEDNESDAY'}}" /> Wednesday</label></div>
@@ -30,27 +30,27 @@
           </div>
 
           <div class="modal-body">
-            <div class="hidden">
-              The below days are waitlisted but not selected. Would you like to keep student on waitlist for these days?
+            <span class="hidden">
+              The below days are currently enrolled but not selected. Would you like to add student to waitlist for these days?
               <ul class="list-unstled list-inline">
                 {{#each sortedDays days}}
                   <li class="list-group-item-warning">{{toLower day}}</li>
                 {{/each}}
               </ul>
 
-            </div>
+            </span>
           </div>
 
           <div class="modal-footer toHide">
             <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-            <button type="button" class="btn btn-success" id="enroll">Confirm Enroll</button>
+            <button type="button" class="btn btn-success" id="advance">Confirm Move</button>
           </div>
           <div class="modal-footer">
-            <div class="hidden">
+            <span class="hidden">
               <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
               <button type="button" class="btn btn-warning" id="no" data-dismiss="modal">No</button>
               <button type="button" class="btn btn-success" id="yes" data-dismiss="modal">Yes</button>
-            </div>
+            </span>
           </div>
         </form>
       </div>

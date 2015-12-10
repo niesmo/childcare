@@ -47,8 +47,6 @@ Template.applicationForm.events({
       };
     }
 
-
-
     var application = {
       // Parent Information
       parent:{
@@ -103,24 +101,32 @@ Template.applicationForm.events({
    * @param  {[type]} event [description]
    * @return {[type]}       [description]
    */
-  "click #addParent":function(event){
+  "click #toggle-second-parent":function(event, tpl){
     event.preventDefault();
-    $(".hidden").removeClass('hidden');
-    $("#addParent").replaceWith("<button type=\"button\" class=\"btn btn-primary\" id=\"collapse\">Collapse</button>");
-    Session.set("secondParent", true);
-  },
+    // if the second parent div hidden, display it
+    if(tpl.$("#second-parent-container").hasClass('hidden')){
+      // show the second parent div
+      tpl.$("#second-parent-container").removeClass('hidden');
 
-  /**
-   * [description]
-   * @param  {[type]} event [description]
-   * @return {[type]}       [description]
-   */
-  "click #collapse":function(event){
-    event.preventDefault();
-    $("#collapse").replaceWith("<button type=\"button\" class=\"btn btn-primary add\" id=\"addParent\">Add another Parent</button>");
-    $(".secondParentBackground").addClass('hidden');
-    Session.set("secondParent", false);
-  }
+      // set the session for second parent
+      Session.set("secondParent", true);
+
+      // change the text in the button to be collapse
+      tpl.$("#toggle-second-parent").text('Collapse');
+    }
+
+    // if the second parent div is already displayed
+    else{
+      // hide the second parent div
+      tpl.$("#second-parent-container").addClass('hidden');
+
+      // set the session for second parent to be false
+      Session.set("secondParent", false);
+
+      // change the text in the button to be add another parent
+      tpl.$("#toggle-second-parent").text('Add another Parent');
+    }
+  },
 });
 
 /**

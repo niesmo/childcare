@@ -1,17 +1,17 @@
-Template.enrollStudentModal.onCreated(function(){
-  Meteor.subscribe("waitlistedStudents");
+Template.toToddlerModal.onCreated(function(){
+  Meteor.subscribe("enrolledStudents");
 
 });
-Template.enrollStudentModal.helpers({
+Template.toToddlerModal.helpers({
   /**
-   * [daysWaitlisted description]
+   * [daysEnrolled description]
    * @return {[type]} [description]
    */
-  daysWaitlisted:function(){
-    var id = Session.get('studentToEnroll');
+  daysEnrolled:function(){
+    var id = Session.get('studentToAdvance');
     var student = Students.findOne({_id:id});
     if(!student) return;
-    return student.daysWaitlisted;
+    return student.daysEnrolled;
   },
 
   /**
@@ -28,31 +28,32 @@ Template.enrollStudentModal.helpers({
    * @return {[type]}     [description]
    */
   dayChecked:function(day){
-    var id=Session.get('studentToEnroll');
+
+    var id=Session.get('studentToAdvance');
     var student = Students.findOne({_id:id});
     var i = 0;
-
-    while(i<student.daysWaitlisted.length) {
-      if(day==student.daysWaitlisted[i].day){
-        return "checked";
+    
+    while(i<student.daysEnrolled.length) {
+      if(day==student.daysEnrolled[i].day){
+        return 'checked';
       }
       i++;
     }
 
     return false;
   }
-
 });
-Template.enrollStudentModal.events({
 
+
+Template.toToddlerModal.events({
   /**
    * [description]
    * @param  {[type]} event [description]
    * @return {[type]}       [description]
    */
-  "click #enroll": function(event) {
+  "click #advance": function(event) {
     event.preventDefault();
-    var id = Session.get('studentToEnroll');
+    var id = Session.get('studentToAdvance');
     var days=[];
 
     $("input:checkbox[name=days]:checked").each(function(){
@@ -62,26 +63,28 @@ Template.enrollStudentModal.events({
 
     var daysNotSelected=[];
     //function returns an array of days that are waitlisted but not selected
-    Meteor.call('compareDays', id, days, function(err,res){
+    Meteor.call('compareDaysEnrolled', id, days, function(err,res){
       if(res.length > 0){
         //sets daysNotSelected session to the return value of compareDays
         Session.set('daysNotSelected',res);
+        
         //shows and hides css classes
         $(".hidden").removeClass('hidden');
         $(".toHide").addClass('hidden');
 
       }
+
       else {
         //created object of days to enroll and days to waitlist, in this case the days to waitlist will be empty
         var totalDays = {
           daysChecked: days,
           daysNotChecked: []
         };
-        Meteor.call('enrollStudent', id, totalDays, 'enroll');
-        Modal.hide('enrollStudentModal');
+        
+        Meteor.call('moveStudent', id, totalDays);
+        Modal.hide('toToddlerModal');
       }
     });
-
   },
 
   /**
@@ -91,15 +94,17 @@ Template.enrollStudentModal.events({
    */
   "click #yes":function(event){
     event.preventDefault();
-    var id = Session.get('studentToEnroll');
+    var id = Session.get('studentToAdvance');
     var daysSelected = Session.get('daysSelected');
     var daysNotSelected = Session.get('daysNotSelected');
     var totalDays = {
       daysChecked: daysSelected,
       daysNotChecked: daysNotSelected
     };
-    Meteor.call('enrollStudent', id, totalDays, 'partial_enroll');
 
+    Meteor.call('moveStudent', id, totalDays, function(err,res){
+      Meteor.call('moveToWaitlist', id, totalDays.daysNotChecked);
+    });
   },
 
   /**
@@ -110,12 +115,12 @@ Template.enrollStudentModal.events({
   "click #no":function(event){
     event.preventDefault();
 
-    var id = Session.get('studentToEnroll');
+    var id = Session.get('studentToAdvance');
     var daysSelected = Session.get('daysSelected');
     var totalDays = {
       daysChecked: daysSelected,
       daysNotChecked: []
     };
-    Meteor.call('enrollStudent', id, totalDays, 'enroll');
+    Meteor.call('moveStudent', id, totalDays);
   }
 });

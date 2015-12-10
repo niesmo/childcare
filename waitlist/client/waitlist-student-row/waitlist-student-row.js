@@ -18,7 +18,7 @@ Template.waitlistStudentRow.events({
    * @param event
    */
   "click .edit": function(event){
-      event.preventDefault();
+    event.preventDefault();
 
     Session.set('studentToEdit', this._id);
     //sets editMode to waitlist to differentiate between waitlist and enrolled student edit
@@ -35,16 +35,6 @@ Template.waitlistStudentRow.events({
    */
   "click button.enroll": function(e, tpl){
     Session.set('studentToEnroll', this._id);
-    Modal.show('enrollStudent');
-
-    // Meteor.call("enrollStudent", this._id, enrollStudentCallback);
+    Modal.show('enrollStudentModal');
   }
 });
-
-// function enrollStudentCallback(err, res){
-//   if(err){
-//     console.log(err);
-//     alert("Something went wrong");
-//   }
-//   return;
-// }

@@ -1,8 +1,8 @@
 Template.classroomDetail.onCreated(function(){
   Meteor.subscribe("enrolledStudents");
   Meteor.subscribe("waitlistedStudents");
-
 });
+
 Template.classroomDetail.helpers({
   /**
    * All the students in this class
@@ -43,9 +43,10 @@ Template.classroomDetail.helpers({
   },
   
   /**
-  *Number of students enrolled in this class type in this day
-  *@return number of students enrolled in that class in that day
-  */
+   * Number of students enrolled in this class type in this day
+   * @param {String} classId The id of the class 
+   * @return number of students enrolled in that class in that day
+   */
   numOfStudentsPerDay: function(classId){
     var today = this.toString().toUpperCase();
     var numEnrolled=0;
@@ -61,20 +62,6 @@ Template.classroomDetail.helpers({
   },
 
   /**
-  *Total number of students allowed to be enrolled in this class type in this day
-  *@return number of students enrolled in that class in that day
-  */
-  totalStudentsAllowed: function(){
-
-    // console.log(Classrooms.findOne(this._id));
-    return 8;
-    //for each type, we need to have a dynamic number that can be accessed
-    var currentClass=Session.get("classType");
-    var currentClass=Classrooms.findOne({type: currentClass});
-    return currentClass.capacity;
-  },
-
-  /**
    * Function to get and show the students that will be transitioning into a classroom.
    * @returns {*} The students that will be transitioning into the classroom.
    */
@@ -83,20 +70,14 @@ Template.classroomDetail.helpers({
     infantMoveAlert.setMonth(infantMoveAlert.getMonth()+2);
     var currentClassroom = Classrooms.findOne(this._id);
     var numToShowFromWaitlist = 3;
+    
     if (currentClassroom.type == "INFANT") {
       return Students.find({$or: [{status:"WAITLIST"}, {status:"PARTIALLY_ENROLLED"}], group:"INFANT", order: {$lte: numToShowFromWaitlist}});
-/*
-      return Students.find({$or: [{$and: [{status: "WAITLIST"}, {group: "INFANT"}, {order: {$lte: numToShowFromWaitlist}}]},
-        {$and: [{status: "PARTIALLY_ENROLLED"}, {group: "INFANT"}]}]});
- */
     }
     else if (currentClassroom.type == "TODDLER") {
-
-
       return Students.find({$or: [{$and: [{group: "INFANT"}, {moveDate: {$lte: infantMoveAlert}}]},
         {$and: [{status: "WAITLIST"}, {group: "TODDLER"}, {order: {$lte: numToShowFromWaitlist}}]},
         {$and: [{status: "PARTIALLY_ENROLLED"}, {group: "TODDLER"}]}]});
-
     }
   },
 
@@ -121,21 +102,15 @@ Template.classroomDetail.helpers({
         }
       }
     }
-  },
-  /**
-   * Returns true if student is a toddler
-   * @returns {boolean}
-   */
-
+  }
 });
 
 Template.classroomDetail.events({
-      'click #move': function(event){
-        event.preventDefault();
-        alert('todo');
+  'click #move-to-class': function(event){
+    event.preventDefault();
+    alert('todo');
 
-      //  Session.set('studentToEnroll', this._id);
-
-    //    Modal.show('enrollStudent');
-      }
+    // Session.set('studentToEnroll', this._id);
+    // Modal.show('enrollStudent');
+  }
 });

@@ -1,10 +1,19 @@
 Template.studentDetail.helpers({
+  /**
+   * [parents description]
+   * @return {[type]} [description]
+   */
   parents:function(){
     var studentParents = StudentParents.find({studentId: this._id});
     var parentIds = studentParents.map(function(v){return v.parentId;});
     var parents = Parents.find({_id: {$in: parentIds}});
     return parents;
   },
+
+  /**
+   * [studentChosen description]
+   * @return {[type]} [description]
+   */
   studentChosen:function(){
     if(Session.get('selectedStudentId') != null){
       return true
@@ -13,6 +22,11 @@ Template.studentDetail.helpers({
       return false;
     }
   },
+
+  /**
+   * [isInfant description]
+   * @return {Boolean} [description]
+   */
   isInfant:function(){
     var student = Students.findOne({_id:this._id});
     if(student.group=='INFANT'){
@@ -24,13 +38,20 @@ Template.studentDetail.helpers({
 });
 
 Template.studentDetail.events({
+  /**
+   * [description]
+   * @param  {[type]} event [description]
+   * @return {[type]}       [description]
+   */
   "click .remove": function(event){
     event.preventDefault();
     Meteor.call('removeStudent', this._id);
   },
+
   /**
-   *
-   * @param event
+   * [description]
+   * @param  {[type]} event [description]
+   * @return {[type]}       [description]
    */
   "click .edit": function(event){
     event.preventDefault();
@@ -40,10 +61,16 @@ Template.studentDetail.events({
     Modal.show('editStudentModal');
 
   },
+
+  /**
+   * [description]
+   * @param  {[type]} event [description]
+   * @return {[type]}       [description]
+   */
   "click #move":function(event){
     event.preventDefault();
     Session.set('studentToAdvance', this._id);
-    Modal.show('toToddler');
+    Modal.show('toToddlerModal');
   },
 
 });
