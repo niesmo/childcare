@@ -26,7 +26,14 @@ Template.studentDetail.helpers({
 Template.studentDetail.events({
   "click .remove": function(event){
     event.preventDefault();
-    Meteor.call('removeStudent', this._id);
+    if(Students.findOne({_id:this._id}).status=="PARTIALLY_ENROLLED"){
+      Session.set('studentId', this._id);
+      Modal.show('deletePartiallyEnrolledStudents');
+    }
+    else{
+      Meteor.call('removeStudent', this._id);
+    }
+
   },
   /**
    *

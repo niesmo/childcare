@@ -10,8 +10,16 @@ Template.waitlistStudentRow.events({
   "click .remove": function(event){
     event.preventDefault();
     var order = Students.findOne({_id:this._id}).order;
-    Meteor.call('removeStudent', this._id);
-    Meteor.call('reOrderAfterDelete', order);
+
+    if(Students.findOne({_id:this._id}).status=="PARTIALLY_ENROLLED"){
+      Session.set('studentId', this._id);
+      Modal.show('deletePartiallyEnrolled');
+    }
+    else{
+      Meteor.call('removeStudent', this._id);
+      Meteor.call('reOrderAfterDelete', order);
+    }
+
   },
   /**
    *

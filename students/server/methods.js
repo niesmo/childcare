@@ -125,5 +125,13 @@ Meteor.methods({
       }
     });
 
+  },
+  /**
+   * Switches student from partially_enrolled to waitslit
+   * @param studentId id of student to switch
+   */
+  'fullyWaitlist':function(studentId){
+    Students.update(studentId, {
+      $set: {status: "WAITLIST", daysEnrolled:[], classId:null}});
   }
 });
