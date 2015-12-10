@@ -96,7 +96,7 @@ Template.applicationForm.events({
     }
     if(Session.get("secondParent")) {
       if(application.secondParent.phone.indexOf('-')===-1 && application.secondParent.phone.indexOf('.')===-1){
-        application.secondParent.phone = application.parent.secondParent.substring(0,3) + '-' +application.secondParent.phone.substring(3,6) + '-' + application.parent.secondParent.substring(6,10);
+        application.secondParent.phone = application.secondParent.phone.substring(0,3) + '-' +application.secondParent.phone.substring(3,6) + '-' + application.secondParent.phone.substring(6,10);
       }
     }
     Errors.remove({});
