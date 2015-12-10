@@ -4,6 +4,7 @@
       <div class="modal-content">
 
         <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
           <h2 class="modal-title">Student To Toddler Transition</h2>
         </div>
 
@@ -29,29 +30,26 @@
             </div>
           </div>
 
-          <div class="modal-body">
-            <span class="hidden">
+          <div class="modal-body hidden">
               The below days are currently enrolled but not selected. Would you like to add student to waitlist for these days?
               <ul class="list-unstled list-inline">
                 {{#each sortedDays days}}
                   <li class="list-group-item-warning">{{toLower day}}</li>
                 {{/each}}
               </ul>
-
-            </span>
           </div>
 
           <div class="modal-footer toHide">
             <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
             <button type="button" class="btn btn-success" id="advance">Confirm Move</button>
           </div>
-          <div class="modal-footer">
-            <span class="hidden">
+
+          <div class="modal-footer hidden">
               <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
               <button type="button" class="btn btn-warning" id="no" data-dismiss="modal">No</button>
               <button type="button" class="btn btn-success" id="yes" data-dismiss="modal">Yes</button>
-            </span>
           </div>
+          
         </form>
       </div>
     </div>

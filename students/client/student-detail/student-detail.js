@@ -29,12 +29,16 @@ Template.studentDetail.helpers({
    */
   isInfant:function(){
     var student = Students.findOne({_id:this._id});
+
+    // check if no student was found
+    if(!student) return;
+
     if(student.group=='INFANT'){
       return true;
     }
     return false;
-
   }
+  
 });
 
 Template.studentDetail.events({
@@ -47,7 +51,7 @@ Template.studentDetail.events({
     event.preventDefault();
     if(Students.findOne({_id:this._id}).status=="PARTIALLY_ENROLLED"){
       Session.set('studentId', this._id);
-      Modal.show('deletePartiallyEnrolledStudents');
+      Modal.show('deletePartiallyEnrolledStudentsModal');
     }
     else{
       Meteor.call('removeStudent', this._id);
@@ -79,11 +83,15 @@ Template.studentDetail.events({
     Session.set('studentToAdvance', this._id);
     Modal.show('toToddlerModal');
   },
+  
+  /**
+   * [description]
+   * @param  {[type]} event [description]
+   * @return {[type]}       [description]
+   */
   "click #waitlist":function(event){
     event.preventDefault();
     Session.set('studentToWaitlist', this._id);
-    Modal.show('toWaitlist');
-
+    Modal.show('toWaitlistModal');
   }
-
 });
