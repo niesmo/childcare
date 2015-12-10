@@ -34,8 +34,8 @@ Template.applicationDetail.events({
    */
   "click button.decline": function(event) {
     event.preventDefault();
-    Session.set('currentStudent', this._id);
-      Modal.show('deleteConfirmApplication')
+    Session.set('studentToDelete', this._id);
+      Modal.show('deleteConfirm');
 //    alert("remove under construction");
   }
 });

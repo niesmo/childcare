@@ -1,9 +1,9 @@
 Meteor.methods({
   /**
-   *
+   * returns array of days that the student is currently enrolled in infant vut not selected to enroll in toddler
    * @param studentId id of student to check
-   * @param days array of days that the student is enrolled for but were not selected for enrollment at toddler.
-   * @returns {Array}
+   * @param days array of days enrolled
+   * @returns {Array}  array of days that the student is enrolled for but were not selected for enrollment at toddler.
    */
   'compareDaysEnrolled': function(studentId, days){
     var student = Students.findOne({_id:studentId});
@@ -43,6 +43,11 @@ Meteor.methods({
     }
     return daysNotSelected;
   },
+  /**
+   * moves student to toddler classroom
+   * @param id id of student to move
+   * @param days days to be enrolled in toddler class
+   */
   'moveStudent':function(id, days){
     var daysEnr = [];
     var week = {M: "monday", T: "tuesday", W: "wednesday", TH: "thursday", F: "friday"};

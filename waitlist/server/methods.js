@@ -59,10 +59,11 @@ Meteor.methods({
     }
   },
   /**
-   *
+   *  Edits waitlist
    * @param waitlist
    * @param parentId
    * @param studentId
+   * @param editMode string determining what page the edit button was clicked from (waitlist page or students page)
    * @returns {{status: string, studentId: *, parentId: *, studentParentId: *}}
    */
   'EditWaitlist': function(waitlist, sId, editMode){
@@ -153,7 +154,7 @@ Meteor.methods({
     return updatedObj;
   },
   /**
-   *
+   *  returns an array of days that the student is waitlisted for but not selected to enroll
    * @param studentId id of student to check
    * @param days array of days that the student is waitlisted for but were not selected for enrollment.
    * @returns {Array}
@@ -198,10 +199,10 @@ Meteor.methods({
   },
 
   /**
-   *
-   * @param studentId
-   * @param newOrder
-   * @param currentOrder
+   *  reorders waitlist when waitlisted students order is changed through drag and drop
+   * @param studentId id of student that has been moved
+   * @param newOrder new order of student being moved
+   * @param currentOrder order of the student being moved before change
    */
   'reOrderWaitlist':function(studentId, newOrder, currentOrder){
 
@@ -233,8 +234,9 @@ Meteor.methods({
   },
 
   /**
-   *
+   *  reorders waitlist after student is removed from waitlist
    * @param order order of student deleted
+   * @param group the group of the student being removed
    */
   'reOrderAfterDelete':function(order, group) {
 

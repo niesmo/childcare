@@ -32,3 +32,4 @@ xolvio:cucumber
 mrt:cron
 accounts-ui
 mrt:jquery-ui
+dispatch:phoneformat.js

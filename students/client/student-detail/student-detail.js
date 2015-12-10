@@ -58,11 +58,12 @@ Template.studentDetail.events({
       Modal.show('deletePartiallyEnrolledStudentsModal');
     }
     else{
-      Meteor.call('removeStudent', this._id);
+      Session.set('studentToDelete', this._id);
+      Modal.show('deleteConfirm');
 
       // Setting the selected student to null because when the move the
       // student, then the action buttons should go away
-      Session.set('selectedStudentId', null);
+        Session.set('selectedStudentId', null);
     }
 
   },
