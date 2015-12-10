@@ -102,6 +102,18 @@ Template.classroomDetail.helpers({
         }
       }
     }
+  },
+
+  /**
+   * Returns the status of the student. Used to format the status of partially enrolled students.
+   * @param student The student in the classrooom.
+   * @returns {*} The status of the student
+   */
+  getStudentStatus: function(student){
+    if (student.status === "PARTIALLY_ENROLLED") {
+      return "Partially Enrolled";
+    }
+    return student.status.toLowerCase();
   }
 });
 
