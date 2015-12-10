@@ -49,7 +49,7 @@ Template.enrollStudentModal.helpers({
 
     while(i<student.daysEnrolled.length) {
       if(day==student.daysEnrolled[i].day){
-        return "disabled";
+        //return "disabled";
       }
       i++;
     }
@@ -64,7 +64,7 @@ Template.enrollStudentModal.helpers({
 
     while(i<student.daysEnrolled.length) {
       if(day==student.daysEnrolled[i].day){
-        return "readonly";
+        //return "readonly";
       }
       i++;
     }
