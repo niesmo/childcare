@@ -194,6 +194,11 @@ Template.editStudentModal.events({
    */
   "submit form":function(event){
     event.preventDefault();
+    alert("Here");
+
+    console.log("Move Date: ", event.target.moveDate.value);
+    return;
+
     Errors.remove({type:'validation'});
     //retrieve data from form
     var studentId = Session.get('studentToEdit');

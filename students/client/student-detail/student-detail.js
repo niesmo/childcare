@@ -59,6 +59,7 @@ Template.studentDetail.events({
     }
     else{
       Meteor.call('removeStudent', this._id);
+      Session.set('selectedStudentId', null);
     }
 
   },
