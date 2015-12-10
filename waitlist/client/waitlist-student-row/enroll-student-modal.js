@@ -39,14 +39,6 @@ Template.enrollStudentModal.helpers({
       i++;
     }
 
-    i = 0;
-    while(i<student.daysEnrolled.length) {
-      if(day==student.daysEnrolled[i].day){
-        return "checked";
-      }
-      i++;
-    }
-
     return false;
   },
 
