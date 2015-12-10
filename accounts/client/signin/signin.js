@@ -30,7 +30,7 @@ function loginResponseHandler(response){
     }
   }
   else{
-    Router.go('home');
+    Router.go('actionItems');
   }
 }
 

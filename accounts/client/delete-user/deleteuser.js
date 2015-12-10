@@ -17,7 +17,7 @@ Template.deleteuser.events({
       // call the method to change the password
       Meteor.call("deleteUser", email, accountsErrorHandler);
       alert("User " + email + " deleted");
-      Router.go('home');
+      Router.go('actionItems');
   }
 });
 
@@ -32,6 +32,6 @@ function accountsErrorHandler(error, result){
         console.log(error);
     }
     else{
-        Router.go('home');
+        Router.go('actionItems');
     }
 }

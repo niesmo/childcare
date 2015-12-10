@@ -59,6 +59,9 @@ Template.studentDetail.events({
     }
     else{
       Meteor.call('removeStudent', this._id);
+
+      // Setting the selected student to null because when the move the
+      // student, then the action buttons should go away
       Session.set('selectedStudentId', null);
     }
 
@@ -86,6 +89,10 @@ Template.studentDetail.events({
   "click #move-to-toddler":function(event){
     event.preventDefault();
     Session.set('studentToAdvance', this._id);
+    // Setting the selected student to null because when the move the
+    // student, then the action buttons should go away
+    Session.set('selectedStudentId', null);
+    
     Modal.show('toToddlerModal');
   },
   
@@ -97,6 +104,11 @@ Template.studentDetail.events({
   "click #move-to-waitlist":function(event){
     event.preventDefault();
     Session.set('studentToWaitlist', this._id);
+
+    // Setting the selected student to null because when the move the
+    // student, then the action buttons should go away
+    Session.set('selectedStudentId', null);
+
     Modal.show('toWaitlistModal');
   }
 });

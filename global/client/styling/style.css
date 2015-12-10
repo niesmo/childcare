@@ -38,3 +38,7 @@ p.large,li.large,a.large{
 .student{
   cursor: move;
 }
+
+.vertically-centered{
+  vertical-align: middle !important;
+}

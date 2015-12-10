@@ -59,6 +59,7 @@ Template.actionItems.events({
     }
 
     Meteor.call("addTask", task, function(e, r){
+      // TODO: Do actual error checking!!
       console.log(e, r);
     });
 
@@ -76,11 +77,11 @@ Template.actionItems.events({
   },
 
   'click button.complete-action-item': function (e, tpl) {
-    console.log(this._id);
+    // console.log(this._id);
     Meteor.call("completeTask",this._id);
   },
   'click button.delete-action-item': function (e, tpl) {
-    console.log(this._id);
+    // console.log(this._id);
     Meteor.call("deleteTask",this._id);
   },
   'click .action-item-tabs li': function () {

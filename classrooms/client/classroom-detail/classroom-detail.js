@@ -106,11 +106,23 @@ Template.classroomDetail.helpers({
 });
 
 Template.classroomDetail.events({
-  'click #move-to-class': function(event){
+  /**
+   * This function is trigerred to move the enroll the student to class
+   * It will open a modal for the user to select the days to be enrolled
+   * @param  {Event} event The event triggered
+   * @param  {Template} tpl   The template at which this event occurs
+   * @return {}
+   */
+  'click .move-to-class': function(event, tpl){
     event.preventDefault();
-    alert('todo');
 
-    // Session.set('studentToEnroll', this._id);
-    // Modal.show('enrollStudent');
+    var id = $(event.target).first().closest('tr').attr('student-id');
+    if(!id){
+      console.warning("No id is set for this row");
+      return;
+    }
+   
+    Session.set('studentToEnroll', id);
+    Modal.show('enrollStudentModal');
   }
 });
