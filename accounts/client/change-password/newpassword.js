@@ -7,14 +7,16 @@ Template.newpassword.events({
         var newPassword = tpl.$('#new-password').val();
         var newPasswordConfirm = tpl.$('#new-password-confirm').val();
 
+      /*
         if(currentPassword !== "test"){
             // TODO: add actual error handling here
             // do not just alert the error
             alert("Incorrect password");
             return;
         }
-        // checking to see if the passwords are the same
+        */
 
+        // checking to see if the passwords are the same
         if(newPassword !== newPasswordConfirm){
             // TODO: add actual error handling here
             // do not just alert the error
@@ -23,10 +25,7 @@ Template.newpassword.events({
         }
 
         // call the method to change the password
-        Meteor.call("newPassword", currentPassword, newPassword, accountsErrorHandler);
-        alert(Meteor.user().password)
-        alert("Password Changed");
-        Router.go('actionItems');
+      Accounts.changePassword(currentPassword, newPassword, accountsErrorHandler);
     }
 });
 
@@ -38,9 +37,11 @@ Template.newpassword.events({
  */
 function accountsErrorHandler(error, result){
     if(error){
-        console.log(error);
+      console.log(error);
+      alert(error);
     }
     else{
-        Router.go('actionItems');
+      alert("Password Changed");
+      Router.go('actionItems');
     }
 }
