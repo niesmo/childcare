@@ -319,7 +319,7 @@ Meteor.methods({
    * @param  {Object} applicationInfo This object contains the email and the type of the application
    * @return {[type]}                 Status of the operation
    */
-  'createNewApplication': function(applicationInfo){
+  'createNewApplicationSession': function(applicationInfo){
     // check if the user is logged in
     if(!Meteor.userId()){
       throw new Meteor.error("User Not Authorized", "User is not logged in. Access Denied!!");
@@ -363,24 +363,28 @@ Meteor.methods({
     
     // Let other method calls from the same client start running,
     // without waiting for the email sending to complete.
-    // this.unblock();
+    this.unblock();
+
+    // var textToBeSent = "Hi,\n\nWe hope you had a good tour at Our Lady of Bethlehem School and Childcare.\n\nPlease fill out the application in the link below.\n\n<a href='"+ Router.routes['applicationForm'].url({token:token}) +"'>Application</a>\n\nPlease fill this application out in the next 2 days as it will expire after that.";
 
     // Email.send({
     //   to: applicationInfo.email,
-    //   from: "olb-application@olb.com",
+    //   from: "childcare-application@ourladyofbethlehem.org",
     //   subject: "Childcare Application",
-    //   text: "Here is the application that you need to fill out and submit.\n Follow the link below to access your application.\n The application will expire in 2 days"
+    //   text: SSR.render('htmlEmail', emailData)
     // });
+
+    PrettyEmail.send('call-to-action', {
+      to: applicationInfo.email,
+      subject: "Childcare Application",
+      heading: 'Childcare Application',
+      message: 'We hope you had a good tour at Our Lady of Bethlehem School and Childcare.\nPlease fill out the application in the link below.',
+      buttonText: 'Application',
+      buttonUrl: Router.routes['applicationForm'].url({token:token}),
+      messageAfterButton: "This application will expire in 2 days",
+    });
+
 
     return token;
-
-
-    // PrettyEmail.send('Basic', {
-    //   from: "olb-application@olb.com",
-    //   to: applicationInfo.email,
-    //   subject: "Childcare Application",
-    //   heading: "Childcare Application",
-    //   message: "Here is the application that you need to fill out and submit.\n Follow the link below to access your application.\n The application will expire in 2 days"
-    // });
   }
 });

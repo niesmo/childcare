@@ -32,3 +32,6 @@ xolvio:cucumber
 mrt:cron
 accounts-ui
 mrt:jquery-ui
+email
+meteorhacks:ssr
+yogiben:pretty-email
