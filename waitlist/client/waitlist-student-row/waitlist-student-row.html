@@ -14,28 +14,40 @@
     <td>{{formatDate moveDate "MMM DD, YYYY"}} ({{getAgeAtTransitionDate dateOfBirth moveDate}})</td>
     <td>{{studentAffiliation type}}</td>
     <td>{{details}}</td>
-    <td><button title="Enroll Student" class="btn btn-success btn-circular enroll"><span class="glyphicon glyphicon-plus"></span></button> <button title="Edit Item" class="btn btn-circular edit"><span class="glyphicon glyphicon-pencil"></span></button> <button title="Remove from waitlist" class="btn btn-danger btn-circular remove"><span class="glyphicon glyphicon-trash"></span></button></td>
+    <td>
+      <button title="Enroll Student" class="btn btn-success btn-circular enroll"><span class="glyphicon glyphicon-log-in"></span></button>
+      <button title="Edit Student Information" class="btn btn-circular btn-primary edit"><span class="glyphicon glyphicon-pencil"></span></button>
+      <button title="Remove from waitlist" class="btn btn-danger btn-circular remove"><span class="glyphicon glyphicon-trash"></span></button>
+    </td>
   </tr>
 
 
   <script>
 
    //put in script tags because couldn't get it to work in a js file
-    this.$('#students').sortable({
+   //resposible for the reordering of the waitlist after drag and drop
+   $('.students').sortable({
       stop: function (e, ui) {
         var el;
         // get the dragged html element
         el = ui.item.get(0);
         var currentOrder = Blaze.getData(el).order;
-        var count = 0;
+        var currentGroup = Blaze.getData(el).group;
+        var groupCount = 0; //use this for reordering
+        var elementCount = 0; //use this for loop
         do{
           //find the location of the element that was moved
-          if(currentOrder==Blaze.getData($('.student')[count]).order){
+          if(currentOrder==Blaze.getData($('.student')[elementCount]).order && currentGroup==Blaze.getData($('.student')[elementCount]).group){
             break;
           }
-          count++;
-        } while(Blaze.getData($('.student')[count]).order != currentOrder);
-        var newOrder = count+1;
+          //only add to the counter used for reorder if student element has same group as student moving
+          if(currentGroup==Blaze.getData($('.student')[elementCount]).group){
+            groupCount++;
+          }
+          elementCount++;
+        } while(Blaze.getData($('.student')[elementCount]).order != currentOrder);
+        var newOrder = groupCount+1;
+
         //if the order has changed, call reOrderWaitlist
         if(newOrder!=currentOrder) {
           Meteor.call('reOrderWaitlist', Blaze.getData(el)._id, newOrder, currentOrder);

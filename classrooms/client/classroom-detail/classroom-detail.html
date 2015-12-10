@@ -29,7 +29,7 @@
     </tbody>
   </table>
 
-  <h4>Students Transitioning Into This Class</h4>
+  <h3>Students Transitioning Into This Class</h3>
   <table class="table table-bordered">
     <thead>
     <tr>
@@ -43,14 +43,17 @@
     </thead>
     <tbody>
     {{#each student in studentsTransitioning}}
-      <tr class="info" style="background-color:#7f8c8d">
-        <td>{{student.firstName}} {{student.lastName}}</td>
-        <td>{{student.status}}</td>
+      <tr class="capitalize" student-id="{{student._id}}">
+        <td class="vertically-centered">{{student.firstName}} {{student.lastName}}</td>
+        <td class="vertically-centered">{{toLower student.status}}</td>
         {{#each daysOfWeek}}
           <td style="background-color:{{getColorIfRequestsClass student}}"></td>
         {{/each}}
-        <td><button title="Move" class="btn btn-success btn-circular enroll" id="move"><span class="glyphicon glyphicon-plus"></span></button>
-          <button title="Move To Waitlist" class="btn btn-circular" id="waitlist"><span class="glyphicon glyphicon-minus"></span></button> </td>
+
+        <td>
+          <button title="Move to Class" class="btn btn-success btn-circular move-to-class"><span class="glyphicon glyphicon-log-in"></span></button>
+          <!-- <button title="Move To Waitlist" class="btn btn-circular" id="move-to-waitlist"><span class="glyphicon glyphicon-log-out"></span></button> -->
+        </td>
       </tr>
 
     {{/each}}

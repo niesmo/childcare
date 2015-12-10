@@ -10,10 +10,19 @@ Template.editStudentModal.onCreated(function(){
 
 
 Template.editStudentModal.helpers({
+  /**
+   * [student description]
+   * @return {[type]} [description]
+   */
   student: function () {
     var id = Session.get('studentToEdit');
     return Students.findOne({_id: id});
   },
+
+  /**
+   * [parent1 description]
+   * @return {[type]} [description]
+   */
   parent1: function () {
     var studentId = Session.get('studentToEdit');
     var studentParent = StudentParents.findOne({studentId: studentId});
@@ -23,6 +32,11 @@ Template.editStudentModal.helpers({
     Session.set('parent1Id', parent._id);
     return parent;
   },
+
+  /**
+   * [parent2 description]
+   * @return {[type]} [description]
+   */
   parent2: function () {
     var studentId = Session.get('studentToEdit');
     var studentParents = StudentParents.find({studentId: studentId});
@@ -37,6 +51,12 @@ Template.editStudentModal.helpers({
     }
     return parent;
   },
+
+  /**
+   * [daysChecked description]
+   * @param  {[type]} day [description]
+   * @return {[type]}     [description]
+   */
   daysChecked:function(day){
 
     var id=Session.get('studentToEdit');
@@ -45,14 +65,16 @@ Template.editStudentModal.helpers({
     if(Session.get('editMode')=='waitlist') {
       while (i < student.daysWaitlisted.length) {
         if (day == student.daysWaitlisted[i].day) {
-          return true;
+          return "checked";
         }
         i++;
       }
-    }else if(Session.get('editMode')=='enrolled'){
+    }
+    
+    else if(Session.get('editMode')=='enrolled'){
       while (i < student.daysEnrolled.length) {
         if (day == student.daysEnrolled[i].day) {
-          return true;
+          return "checked";
         }
         i++;
       }
@@ -60,6 +82,11 @@ Template.editStudentModal.helpers({
 
     return false;
   },
+
+  /**
+   * [isMember description]
+   * @return {Boolean} [description]
+   */
   isMember:function() {
     var id=Session.get('studentToEdit');
     var student = Students.findOne({_id:id});
@@ -68,6 +95,11 @@ Template.editStudentModal.helpers({
     }
     return false;
   },
+
+  /**
+   * [isExisting description]
+   * @return {Boolean} [description]
+   */
   isExisting:function(){
     var id=Session.get('studentToEdit');
     var student = Students.findOne({_id:id});
@@ -76,6 +108,11 @@ Template.editStudentModal.helpers({
     }
     return false;
   },
+
+  /**
+   * [isNew description]
+   * @return {Boolean} [description]
+   */
   isNew:function(){
     var id=Session.get('studentToEdit');
     var student = Students.findOne({_id:id});
@@ -84,6 +121,11 @@ Template.editStudentModal.helpers({
     }
     return false;
   },
+
+  /**
+   * [isInfant description]
+   * @return {Boolean} [description]
+   */
   isInfant:function(){
     var id=Session.get('studentToEdit');
     var student = Students.findOne({_id:id});
@@ -92,6 +134,11 @@ Template.editStudentModal.helpers({
     }
     return false;
   },
+
+  /**
+   * [isToddler description]
+   * @return {Boolean} [description]
+   */
   isToddler:function(){
     var id=Session.get('studentToEdit');
     var student = Students.findOne({_id:id});
@@ -100,6 +147,11 @@ Template.editStudentModal.helpers({
     }
     return false;
   },
+
+  /**
+   * [isFlexible description]
+   * @return {Boolean} [description]
+   */
   isFlexible:function(){
     var id=Session.get('studentToEdit');
     var student = Students.findOne({_id:id});
@@ -108,6 +160,11 @@ Template.editStudentModal.helpers({
     }
     return false;
   },
+
+  /**
+   * [parents description]
+   * @return {[type]} [description]
+   */
   parents: function () {
     var studentId = Session.get('studentToEdit');
     var studentParents = StudentParents.find({studentId: studentId});
@@ -115,6 +172,11 @@ Template.editStudentModal.helpers({
     var parents = Parents.find({_id: {$in: parentIds}}, {sort: {createdAt: 1}});
     return parents;
   },
+
+  /**
+   * [fromWaitlist description]
+   * @return {[type]} [description]
+   */
   fromWaitlist: function(){
     if(Session.get('editMode')=='waitlist'){
       return true;
@@ -125,8 +187,18 @@ Template.editStudentModal.helpers({
 });
 
 Template.editStudentModal.events({
+  /**
+   * [description]
+   * @param  {[type]} event [description]
+   * @return {[type]}       [description]
+   */
   "submit form":function(event){
     event.preventDefault();
+    alert("Here");
+
+    console.log("Move Date: ", event.target.moveDate.value);
+    return;
+
     Errors.remove({type:'validation'});
     //retrieve data from form
     var studentId = Session.get('studentToEdit');
@@ -157,73 +229,71 @@ Template.editStudentModal.events({
 
     }
 
+    if(Session.get('editMode')=='waitlist') {
+      if(Session.get('editMode')=='waitlist') {
+        var notConceived = $(event.target).find('input:checkbox[name=notConceived]:checked').val();
+      }
+      var data = {
+        // Parent Information
+        parent: {
+          firstName: event.target.pfname.value,
+          lastName: event.target.plname.value,
+          address: event.target.address.value,
+          phone: event.target['phone-number'].value,
+          email: event.target.email.value,
+          id: Session.get('parent1Id')
+        },
+        secondParent: secondParentObj,
+        // Student information
+        student: {
+          firstName: event.target.fname.value,
+          lastName: event.target.lname.value,
+          dob: event.target.dob.value,
+          conceived: notConceived,
+        },
 
-
-if(Session.get('editMode')=='waitlist') {
-  if(Session.get('editMode')=='waitlist') {
-    var notConceived = $(event.target).find('input:checkbox[name=notConceived]:checked').val();
-  }
-  var data = {
-    // Parent Information
-    parent: {
-      firstName: event.target.pfname.value,
-      lastName: event.target.plname.value,
-      address: event.target.address.value,
-      phone: event.target['phone-number'].value,
-      email: event.target.email.value,
-      id: Session.get('parent1Id')
-    },
-    secondParent: secondParentObj,
-    // Student information
-    student: {
-      firstName: event.target.fname.value,
-      lastName: event.target.lname.value,
-      dob: event.target.dob.value,
-      conceived: notConceived,
-    },
-
-    // Other details of the application
-    startDate: event.target.sdate.value,
-    days: days,
-    type: $(event.target).find('input:radio[name=type]:checked').val(),
-    group: $(event.target).find('input:radio[name=group]:checked').val(),
-    flexible: $(event.target).find('input:checkbox[name=flexible]:checked').val(),
-    details: event.target.details.value,
-    moveDate: event.target.moveDate.value,
-  };
-}
+        // Other details of the application
+        startDate: event.target.sdate.value,
+        days: days,
+        type: $(event.target).find('input:radio[name=type]:checked').val(),
+        group: $(event.target).find('input:radio[name=group]:checked').val(),
+        flexible: $(event.target).find('input:checkbox[name=flexible]:checked').val(),
+        details: event.target.details.value,
+        moveDate: event.target.moveDate.value,
+      };
+    }
     else{
-  var data = {
-    // Parent Information
-    parent: {
-      firstName: event.target.pfname.value,
-      lastName: event.target.plname.value,
-      address: event.target.address.value,
-      phone: event.target['phone-number'].value,
-      email: event.target.email.value,
-      id: Session.get('parent1Id')
-    },
-    secondParent: secondParentObj,
-    // Student information
-    student: {
-      firstName: event.target.fname.value,
-      lastName: event.target.lname.value,
-      dob: event.target.dob.value,
+      var data = {
+        // Parent Information
+        parent: {
+          firstName: event.target.pfname.value,
+          lastName: event.target.plname.value,
+          address: event.target.address.value,
+          phone: event.target['phone-number'].value,
+          email: event.target.email.value,
+          id: Session.get('parent1Id')
+        },
+        secondParent: secondParentObj,
+        // Student information
+        student: {
+          firstName: event.target.fname.value,
+          lastName: event.target.lname.value,
+          dob: event.target.dob.value,
 
-    //  conceived: notConceived,
-    },
+          // conceived: notConceived,
+        },
 
-    // Other details of the application
-//    startDate: event.target.sdate.value,
-    days: days,
-    type: $(event.target).find('input:radio[name=type]:checked').val(),
-    group: $(event.target).find('input:radio[name=group]:checked').val(),
-  //  flexible: $(event.target).find('input:checkbox[name=flexible]:checked').val(),
-    details: event.target.details.value,
-    status: "",
-    moveDate: event.target.moveDate.value,
-  };
-}
+        // Other details of the application
+        // startDate: event.target.sdate.value,
+        days: days,
+        type: $(event.target).find('input:radio[name=type]:checked').val(),
+        group: $(event.target).find('input:radio[name=group]:checked').val(),
+        // flexible: $(event.target).find('input:checkbox[name=flexible]:checked').val(),
+        details: event.target.details.value,
+        status: "",
+        moveDate: event.target.moveDate.value,
+      };
+    }
 
     if(!editValidate(data, Students.findOne({_id:studentId}).status)){
       formValidated = false;
@@ -252,9 +322,16 @@ if(Session.get('editMode')=='waitlist') {
 
 
     Errors.remove({});
-  Meteor.call('EditWaitlist', data, studentId, Session.get('editMode'), EditWaitlistCallback);
+    Meteor.call('EditWaitlist', data, studentId, Session.get('editMode'), EditWaitlistCallback);
     Modal.hide('editStudentModal');
   },
+
+  /**
+   * [description]
+   * @param  {[type]} e   [description]
+   * @param  {[type]} tpl [description]
+   * @return {[type]}     [description]
+   */
   'change #sel1': function(e,tpl){
 
     if(tpl.$( "#parent1" ).hasClass( "hidden" )){
@@ -268,6 +345,13 @@ if(Session.get('editMode')=='waitlist') {
       tpl.$( "#parent1").addClass('hidden');
     }
   },
+
+  /**
+   * [description]
+   * @param  {[type]} e   [description]
+   * @param  {[type]} tpl [description]
+   * @return {[type]}     [description]
+   */
   'change #nc': function(e,tpl){
 
 
@@ -275,7 +359,14 @@ if(Session.get('editMode')=='waitlist') {
       $("#dob").prop('disabled', !checked);
       checked = !checked;
 
-    },
+  },
+
+  /**
+   * [description]
+   * @param  {[type]} event [description]
+   * @param  {[type]} tpl   [description]
+   * @return {[type]}       [description]
+   */
   'click #show':function(event, tpl){
     event.preventDefault();
     tpl.$("#collapse").removeClass('hidden');
@@ -284,6 +375,13 @@ if(Session.get('editMode')=='waitlist') {
 
 
   },
+
+  /**
+   * [description]
+   * @param  {[type]} event [description]
+   * @param  {[type]} tpl   [description]
+   * @return {[type]}       [description]
+   */
   'click #collapse':function(event, tpl){
     event.preventDefault();
     tpl.$("#collapse").addClass("hidden");
@@ -304,10 +402,3 @@ function EditWaitlistCallback(err, res){
   }
   return;
 }
-
-
-$('#sel1').change(function(){
-  alert('hello');
-
-  alert(Blaze.getData($('#sel1').get(0)));
-});

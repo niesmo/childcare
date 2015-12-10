@@ -17,26 +17,32 @@
         </dd>
       </dl>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-5">
       <ul class="list-unstyled">
         {{#each parents}}
           <li>
             <dl class="dl-horizontal capitalize">
-                <dt>Parent Name</dt><dd>{{firstName}} {{lastName}}</dd>
-                <dt>Address</dt><dd>{{address}}</dd>
-                <dt>Phone Number</dt><dd>{{phoneNumber}}</dd>
-                <dt>Email</dt><dd class="lowercase"><a href="mailto:{{email}}">{{email}}</a></dd>
+              <dt>Parent Name</dt><dd>{{firstName}} {{lastName}}</dd>
+              <dt>Address</dt><dd>{{address}}</dd>
+              <dt>Phone Number</dt><dd>{{phoneNumber}}</dd>
+              <dt>Email</dt><dd class="lowercase"><a href="mailto:{{email}}">{{email}}</a></dd>
             </dl>
           </li>
         {{/each}}
       </ul>
     </div>
+
+    {{#if studentChosen}}
+      <div class="col-md-1 student-detail-action-buttons">
+        <button id="edit-student" title="Edit Student" class="btn btn-circular btn-primary" data-toggle="tooltip" data-placement="right"><span class="glyphicon glyphicon-pencil"></span></button>
+        
+        {{#if isInfant}}
+          <button id="move-to-toddler" title="Move To Toddler" class="btn btn-success btn-circular enroll" data-toggle="tooltip" data-placement="right"><span class="glyphicon glyphicon-education"></span></button>
+        {{/if}}
+
+        <button id="move-to-waitlist" title="Move To Waitlist" class="btn btn-circular btn-warning" data-toggle="tooltip" data-placement="right"><span class="glyphicon glyphicon-log-out"></span></button>
+        <button id="remove-student" title="Remove Student" class="btn btn-danger btn-circular" data-toggle="tooltip" data-placement="right"><span class="glyphicon glyphicon-trash"></span></button>
+      </div>
+    {{/if}}
   </div>
-  {{#if studentChosen}}
-  <div class="row">
-    <div class="container">
-      <button title="Edit Item" class="btn btn-circular edit"><span class="glyphicon glyphicon-pencil"></span></button> <button title="Remove Student" class="btn btn-danger btn-circular remove"><span class="glyphicon glyphicon-trash"></span></button>
-    </div>
-  </div>
-  {{/if}}
 </template>

@@ -15,148 +15,149 @@
             <form role="form">
               <span id="show"><button title="Show Parent Info" class="btn btn-circular enroll" id="showParent"><span class="glyphicon glyphicon-plus"></span></button> (Show Parent Info)</span>
               <span id="collapse" class="hidden"><button title="Collapse Parent Info" class="btn btn-circular enroll" id="showParent"><span class="glyphicon glyphicon-minus"></span></button> (Collapse Parent Info)</span>
+              
               <div id="parentInfo" class="hidden">
-              <div class="row">
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label for="sel1">Parent to edit:</label>
-                    <select class="form-control" id="sel1">
-                      {{#each parents}}
-                          <option>{{firstName}}</option>
-                      {{/each}}
-                    </select>
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="sel1">Parent to edit:</label>
+                      <select class="form-control" id="sel1">
+                        {{#each parents}}
+                        <option>{{firstName}}</option>
+                        {{/each}}
+                      </select>
+                    </div>
                   </div>
                 </div>
-              </div>
-              {{#with parent1}}
-              <div id="parent1">
-                <div class="row">
-                 <div class="col-md-4">
-                  <div class="form-group">
-                    <label for="pfname">Parent First Name</label>
-                      <div class="input-group">
-                      <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
-                        <input type="text" class="form-control" name="pfname" value="{{firstName}}" >
+                {{#with parent1}}
+                <div id="parent1">
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="pfname">Parent First Name</label>
+                        <div class="input-group">
+                          <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                          <input type="text" class="form-control" name="pfname" value="{{firstName}}" >
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="plname">Parent Last Name</label>
+                        <div class="input-group">
+                          <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                          <input type="text" class="form-control" name="plname" id="plname" value="{{lastName}}">
+                        </div>
                       </div>
                     </div>
                   </div>
 
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label for="plname">Parent Last Name</label>
-                    <div class="input-group">
-                      <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
-                      <input type="text" class="form-control" name="plname" id="plname" value="{{lastName}}">
+                  <!-- Parent Address -->
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="address">Address</label>
+                        <div class="input-group">
+                          <span class="input-group-addon"><span class="glyphicon glyphicon-map-marker"></span></span>
+                          <input class="form-control" type="text" name="address" id="address" value="{{address}}">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div class="row">
+                    <!-- Parents Email -->
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <div class="input-group">
+                          <span class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></span>
+                          <input class="form-control" type="email" name="email" id="email" value="{{email}}">
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Parents phone number -->
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="phone-number">Phone Number</label>
+                        <div class="input-group">
+                          <span class="input-group-addon"><span class="glyphicon glyphicon-earphone"></span></span>
+                          <input class="form-control" type="text" name="phone-number" id="phone-number" value="{{phoneNumber}}">
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-
-              <!-- Parent Address -->
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label for="address">Address</label>
-                    <div class="input-group">
-                      <span class="input-group-addon"><span class="glyphicon glyphicon-map-marker"></span></span>
-                      <input class="form-control" type="text" name="address" id="address" value="{{address}}">
-                    </div>
-                  </div>
-                </div>
-              </div>
+                {{/with}}
 
 
-              <div class="row">
-                <!-- Parents Email -->
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label for="email">Email Address</label>
-                    <div class="input-group">
-                      <span class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></span>
-                      <input class="form-control" type="email" name="email" id="email" value="{{email}}">
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Parents phone number -->
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label for="phone-number">Phone Number</label>
-                    <div class="input-group">
-                      <span class="input-group-addon"><span class="glyphicon glyphicon-earphone"></span></span>
-                      <input class="form-control" type="text" name="phone-number" id="phone-number" value="{{phoneNumber}}">
-                    </div>
-                  </div>
-                </div>
-              </div>
-              </div>
-              {{/with}}
-
-
-              {{#with parent2}}
+                {{#with parent2}}
                 <div class="hidden" id="parent2">
-                 <div class="row">
-                  <div class="col-md-4">
-                    <div class="form-group">
-                      <label for="second-pfname">Parent First Name</label>
-                      <div class="input-group">
-                        <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
-                        <input type="text" class="form-control" name="second-pfname" value="{{firstName}}">
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="second-pfname">Parent First Name</label>
+                        <div class="input-group">
+                          <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                          <input type="text" class="form-control" name="second-pfname" value="{{firstName}}">
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="second-plname">Parent Last Name</label>
+                        <div class="input-group">
+                          <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                          <input type="text" class="form-control" name="second-plname" id="second-plname" value="{{lastName}}">
+                        </div>
                       </div>
                     </div>
                   </div>
 
-                  <div class="col-md-4">
-                    <div class="form-group">
-                      <label for="second-plname">Parent Last Name</label>
-                      <div class="input-group">
-                        <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
-                        <input type="text" class="form-control" name="second-plname" id="second-plname" value="{{lastName}}">
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Parent Address -->
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="second-address">Address</label>
-                      <div class="input-group">
-                        <span class="input-group-addon"><span class="glyphicon glyphicon-map-marker"></span></span>
-                        <input class="form-control" type="text" name="second-address" id="second-address" value="{{address}}">
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-
-                <div class="row">
-                  <!-- Parents Email -->
-                  <div class="col-md-4">
-                    <div class="form-group">
-                      <label for="second-email">Email Address</label>
-                      <div class="input-group">
-                        <span class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></span>
-                        <input class="form-control" type="email" name="second-email" id="second-email" value="{{email}}">
+                  <!-- Parent Address -->
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="second-address">Address</label>
+                        <div class="input-group">
+                          <span class="input-group-addon"><span class="glyphicon glyphicon-map-marker"></span></span>
+                          <input class="form-control" type="text" name="second-address" id="second-address" value="{{address}}">
+                        </div>
                       </div>
                     </div>
                   </div>
 
-                  <!-- Parents phone number -->
-                  <div class="col-md-4">
-                    <div class="form-group">
-                      <label for="second-phone-number">Phone Number</label>
-                      <div class="input-group">
-                        <span class="input-group-addon"><span class="glyphicon glyphicon-earphone"></span></span>
-                        <input class="form-control" type="text" name="second-phone-number" id="second-phone-number" value="{{phoneNumber}}">
+
+                  <div class="row">
+                    <!-- Parents Email -->
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="second-email">Email Address</label>
+                        <div class="input-group">
+                          <span class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></span>
+                          <input class="form-control" type="email" name="second-email" id="second-email" value="{{email}}">
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Parents phone number -->
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="second-phone-number">Phone Number</label>
+                        <div class="input-group">
+                          <span class="input-group-addon"><span class="glyphicon glyphicon-earphone"></span></span>
+                          <input class="form-control" type="text" name="second-phone-number" id="second-phone-number" value="{{phoneNumber}}">
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-                </div>
-              {{/with}}
-                </div>
+                {{/with}}
+              </div>
 
               <div class="row">
                 <div class="col-md-4">
@@ -178,7 +179,6 @@
                     </div>
                   </div>
                 </div>
-
               </div>
 
               <div class="row">
@@ -191,7 +191,7 @@
                       <input class="form-control" type="date" name="dob" id="dob"  value="{{formatDate student.dateOfBirth "YYYY-MM-DD"}}">
                     </div>
                   </div>
-                <!-- only if being edited from waitlist -->
+                  <!-- only if being edited from waitlist -->
                   {{#if fromWaitlist}}
                   <div class="form-group">
                     <div class="checkbox-inline">
@@ -223,6 +223,7 @@
                 </div>
               </div>
               {{/if}}
+              
               <div class="row">
                 <!--Transition Date -->
                 <div class="col-md-4">
@@ -235,103 +236,84 @@
                   </div>
                 </div>
               </div>
-              <!-- Days -->
-              <div class="form-group">
-                <h4>Days</h4>
-                {{#if daysChecked 'MONDAY'}}
-                <div class="checkbox-inline"><label for="m"><input class="checkbox" type="checkbox" name="days" value="M" id="m" checked/> Monday</label></div>
-                {{else}}
-                <div class="checkbox-inline"><label for="m"><input class="checkbox" type="checkbox" name="days" value="M" id="m"/> Monday</label></div>
-                {{/if}}
-                {{#if daysChecked 'TUESDAY'}}
-                <div class="checkbox-inline"><label for="t"><input class="checkbox" type="checkbox" name="days" value="T" id="t" checked/> Tuesday</label></div>
-                {{else}}
-                <div class="checkbox-inline"><label for="t"><input class="checkbox" type="checkbox" name="days" value="T" id="t"/> Tuesday</label></div>
-                {{/if}}
-                {{#if daysChecked 'WEDNESDAY'}}
-                <div class="checkbox-inline"><label for="w"><input class="checkbox" type="checkbox" name="days" value="W" id="w" checked/> Wednesday</label></div>
-                {{else}}
-                <div class="checkbox-inline"><label for="w"><input class="checkbox" type="checkbox" name="days" value="W" id="w" /> Wednesday</label></div>
-                {{/if}}
-                {{#if daysChecked 'THURSDAY'}}
-                <div class="checkbox-inline"><label for="th"><input class="checkbox" type="checkbox" name="days" value="TH" id="th" checked/> Thursday</label></div>
-                {{else}}
-                <div class="checkbox-inline"><label for="th"><input class="checkbox" type="checkbox" name="days" value="TH" id="th" /> Thursday</label></div>
-                {{/if}}
-                {{#if daysChecked 'FRIDAY'}}
-                <div class="checkbox-inline"><label for="f"><input class="checkbox" type="checkbox" name="days" value="F" id="f" checked/> Friday</label></div>
-                {{else}}
-                <div class="checkbox-inline"><label for="f"><input class="checkbox" type="checkbox" name="days" value="F" id="f" /> Friday</label></div>
-                {{/if}}
+
+            <!-- Days -->
+            <div class="form-group">
+              <h4>Days</h4>
+              <div class="checkbox-inline"><label for="m"><input class="checkbox" type="checkbox" name="days" value="M" id="m" checked="{{daysChecked 'MONDAY'}}" /> Monday</label></div>
+              <div class="checkbox-inline"><label for="t"><input class="checkbox" type="checkbox" name="days" value="T" id="t" checked="{{daysChecked 'TUESDAY'}}" /> Tuesday</label></div>
+              <div class="checkbox-inline"><label for="w"><input class="checkbox" type="checkbox" name="days" value="W" id="w" checked="{{daysChecked 'WEDNESDAY'}}" /> Wednesday</label></div>
+              <div class="checkbox-inline"><label for="th"><input class="checkbox" type="checkbox" name="days" value="TH" id="th" checked="{{daysChecked 'THURSDAY'}}" /> Thursday</label></div>
+              <div class="checkbox-inline"><label for="f"><input class="checkbox" type="checkbox" name="days" value="F" id="f" checked="{{daysChecked 'FRIDAY'}}" /> Friday</label></div>
+            </div>
+
+            <div class="form-group">
+              {{#if isFlexible}}
+              <div class="checkbox-inline"><label for="flexible"><input class="checkbox" type="checkbox" name="flexible" value="flexible" id="flexible" checked/>
+                Flexible On Days? If so explain in details section</label>
               </div>
-
-              <div class="form-group">
-                {{#if isFlexible}}
-                  <div class="checkbox-inline"><label for="flexible"><input class="checkbox" type="checkbox" name="flexible" value="flexible" id="flexible" checked/>
-                    Flexible On Days? If so explain in details section</label>
-                  </div>
-                    {{else}}
-                <div class="checkbox-inline"><label for="flexible"><input class="checkbox" type="checkbox" name="flexible" value="flexible" id="flexible"/>
-                  Flexible On Days? If so explain in details section</label>
-                </div>
-                {{/if}}
+              {{else}}
+              <div class="checkbox-inline"><label for="flexible"><input class="checkbox" type="checkbox" name="flexible" value="flexible" id="flexible"/>
+                Flexible On Days? If so explain in details section</label>
               </div>
+              {{/if}}
+            </div>
 
-              <!-- Affiliation -->
-              <div class="form-group">
-                <h4>Affiliation</h4>
-                {{#if isMember}}
-                <div class="radio-inline"><label for="member"><input class="radio" type="radio" name="type" value="member" id="member" checked> Child of Employee</label></div>
-                {{else}}
-                <div class="radio-inline"><label for="member"><input class="radio" type="radio" name="type" value="member" id="member"> Child of Employee</label></div>
-                {{/if}}
-                {{#if isExisting}}
-                <div class="radio-inline"><label for="existing"><input class="radio" type="radio" name="type" value="existing" id="existing" checked> Current Family</label></div>
-                {{else}}
-                <div class="radio-inline"><label for="existing"><input class="radio" type="radio" name="type" value="existing" id="existing"> Current Family</label></div>
-                {{/if}}
-                {{#if isNew}}
-                <div class="radio-inline"><label for="regular"><input class="radio" type="radio" name="type" value="regular" id="regular" checked> New Family</label></div>
-                {{else}}
-                <div class="radio-inline"><label for="regular"><input class="radio" type="radio" name="type" value="regular" id="regular"> New Family</label></div>
-                {{/if}}
+            <!-- Affiliation -->
+            <div class="form-group">
+              <h4>Affiliation</h4>
+              {{#if isMember}}
+              <div class="radio-inline"><label for="member"><input class="radio" type="radio" name="type" value="member" id="member" checked> Child of Employee</label></div>
+              {{else}}
+              <div class="radio-inline"><label for="member"><input class="radio" type="radio" name="type" value="member" id="member"> Child of Employee</label></div>
+              {{/if}}
+              {{#if isExisting}}
+              <div class="radio-inline"><label for="existing"><input class="radio" type="radio" name="type" value="existing" id="existing" checked> Current Family</label></div>
+              {{else}}
+              <div class="radio-inline"><label for="existing"><input class="radio" type="radio" name="type" value="existing" id="existing"> Current Family</label></div>
+              {{/if}}
+              {{#if isNew}}
+              <div class="radio-inline"><label for="regular"><input class="radio" type="radio" name="type" value="regular" id="regular" checked> New Family</label></div>
+              {{else}}
+              <div class="radio-inline"><label for="regular"><input class="radio" type="radio" name="type" value="regular" id="regular"> New Family</label></div>
+              {{/if}}
+            </div>
+
+            <!-- Group -->
+            <div class="form-group">
+              <h4>Group</h4>
+              {{#if isInfant}}
+              <div class="radio-inline"><label for="infant"><input class="radio" type="radio" name="group" value="infant" id="infant" checked> Infant</label></div>
+              {{else}}
+              <div class="radio-inline"><label for="infant"><input class="radio" type="radio" name="group" value="infant" id="infant"> Infant</label></div>
+              {{/if}}
+              {{#if isToddler}}
+              <div class="radio-inline"><label for="toddler"><input class="radio" type="radio" name="group" value="toddler" id="toddler" checked> Toddler</label></div>
+              {{else}}
+              <div class="radio-inline"><label for="toddler"><input class="radio" type="radio" name="group" value="toddler" id="toddler"> Toddler</label></div>
+              {{/if}}
+            </div>
+
+            <!-- Details -->
+            <div class="row">
+              <div class="col-md-6">
+                <label for="details">Details</label>
+                <textarea class="form-control" name="details" id="details">{{student.details}}</textarea>
               </div>
+            </div>
 
-              <!-- Group -->
-              <div class="form-group">
-                <h4>Group</h4>
-                {{#if isInfant}}
-                <div class="radio-inline"><label for="infant"><input class="radio" type="radio" name="group" value="infant" id="infant" checked> Infant</label></div>
-                {{else}}
-                <div class="radio-inline"><label for="infant"><input class="radio" type="radio" name="group" value="infant" id="infant"> Infant</label></div>
-                {{/if}}
-                {{#if isToddler}}
-                <div class="radio-inline"><label for="toddler"><input class="radio" type="radio" name="group" value="toddler" id="toddler" checked> Toddler</label></div>
-                {{else}}
-                <div class="radio-inline"><label for="toddler"><input class="radio" type="radio" name="group" value="toddler" id="toddler"> Toddler</label></div>
-                {{/if}}
-              </div>
-
-              <!-- Details -->
-              <div class="row">
-                <div class="col-md-6">
-                  <label for="details">Details</label>
-                  <textarea class="form-control" name="details" id="details">{{student.details}}</textarea>
-                </div>
-              </div>
-
-              <br>
-              <div class="modal-footer">
-                <input class="btn btn-primary" type="submit" value="Save" id="submit"/>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              </div>
-            </form>
-          </div>
-
-
+            <br>
+            <div class="modal-footer">
+              <input class="btn btn-primary" type="submit" value="Save" id="submit"/>
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </form>
         </div>
+
+
       </div>
     </div>
   </div>
+</div>
 
 </template>

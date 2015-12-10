@@ -36,7 +36,7 @@ function accountsErrorHandler(error, result){
     alert("Something went wrong when creating your user name");
   }
   else{
-    Router.go('home');
+    Router.go('actionItems');
   }
 }
 

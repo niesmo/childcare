@@ -26,7 +26,7 @@ Template.newpassword.events({
         Meteor.call("newPassword", currentPassword, newPassword, accountsErrorHandler);
         alert(Meteor.user().password)
         alert("Password Changed");
-        Router.go('home');
+        Router.go('actionItems');
     }
 });
 
@@ -41,6 +41,6 @@ function accountsErrorHandler(error, result){
         console.log(error);
     }
     else{
-        Router.go('home');
+        Router.go('actionItems');
     }
 }

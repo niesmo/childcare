@@ -182,7 +182,7 @@ Template.registerHelper('error', function(){
 
 Template.registerHelper('partiallyEnrolledClass', function(){
   if(this.status=="PARTIALLY_ENROLLED"){
-    return 'partiallyEnrolled';
+    return 'partially-enrolled-bg';
   }
   else{
     return '';

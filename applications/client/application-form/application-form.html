@@ -1,8 +1,8 @@
 <template name="applicationForm">
   <div class="row">
     <div class="col-md-12">
-      <h2 class="center">Wait List Application Form</h2>
-      <p class="center">Thank you for choosing Our Lady Of Bethlehem School and Childcare for your infant or toddler's early care and education!<br>
+      <h2 class="text-center">Wait List Application Form</h2>
+      <p class="text-center">Thank you for choosing Our Lady Of Bethlehem School and Childcare for your infant or toddler's early care and education!<br>
         <i>Our Infant Classroom admits students age 6 weeks through 16-18 months.<br>
           Out Toddler Classroom admits students aged 16-18 months through 30-36 weeks.</i>
       </p>
@@ -13,7 +13,7 @@
 
       {{>errors}}
       <form role="form">
-      <h3>Parent's Information <button type="button" class="btn btn-primary add" id="addParent">Add another Parent</button></h3>
+      <h3>Parent's Information <button type="button" class="btn btn-primary add" id="toggle-second-parent">Add another Parent</button></h3>
       <!-- First name and last name -->
       <div class="row">
 
@@ -97,7 +97,7 @@
       </div>
 
         <!-- hidden class for second parents information when activated -->
-      <div class="secondParentBackground hidden">
+      <div id="second-parent-container" class="hidden">
         <h3>Second Parent's Information</h3>
         <!-- First name and last name -->
         <div class="row">
