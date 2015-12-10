@@ -28,6 +28,12 @@ Template.toWaitlistModal.events({
    */
   "click #toddlerWaitlist": function(event){
     var days = Students.findOne({_id:Session.get('studentToWaitlist')}).daysEnrolled;
+    var group = Students.findOne({_id:Session.get('studentToWaitlist')}).group;
+    var order = Students.findOne({_id:Session.get('studentToWaitlist')}).order;
+   
     Meteor.call('moveToWaitlist', Session.get('studentToWaitlist'), days, "TODDLER", "WAITLIST");
+    if(group=='INFANT'){
+      Meteor.call('reOrderAfterDelete', order, "INFANT");
+    }
   }
 });

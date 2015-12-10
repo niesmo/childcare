@@ -74,7 +74,7 @@ Meteor.methods({
     var order = student.order;
     //if statement to check if student already has appropriate order or if order needt to be calculated
     if(!(student.group == group && student.status=='PARTIALLY_ENROLLED')) {
-       order = 1;
+      order = 1;
       var lastInGroup = Students.findOne({
         $or: [{status: "WAITLIST"}, {status: "PARTIALLY_ENROLLED"}],
         group: group,
@@ -101,14 +101,18 @@ Meteor.methods({
           }
         }
       }
+
+
+      // TODO: Change this to a better efficient way
+      var toBeIncremented = Students.find({
+        $or: [{status: "WAITLIST"}, {status: "PARTIALLY_ENROLLED"}],
+        group: group,
+        order: {$gte: order}
+      });
+      toBeIncremented.forEach(function (student) {
+        Students.update({_id: student._id}, {$inc: {order: 1}});
+      });
     }
-
-    // TODO: Change this to a better efficient way
-    var toBeIncremented = Students.find({$or: [{status: "WAITLIST"},{status:"PARTIALLY_ENROLLED"}], group: group, order: {$gte: order}});
-    toBeIncremented.forEach(function (student) {
-      Students.update({_id: student._id}, {$inc: {order: 1}});
-    });
-
     if(student.status =='WAITLIST' || student.status=="PARTIALLY_ENROLLED" ){
       totalDays = totalDays.concat(student.daysWaitlisted);
     }
@@ -121,7 +125,8 @@ Meteor.methods({
         daysWaitlisted: totalDays,
         status: status,
         order: order,
-        classId: classID
+        classId: classID,
+        group:group
       }
     });
 

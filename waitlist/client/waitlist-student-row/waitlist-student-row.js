@@ -17,7 +17,7 @@ Template.waitlistStudentRow.events({
     }
     else{
       Meteor.call('removeStudent', this._id);
-      Meteor.call('reOrderAfterDelete', order);
+      Meteor.call('reOrderAfterDelete', order, Students.findOne({_id:this._id}).group);
     }
 
   },

@@ -194,10 +194,6 @@ Template.editStudentModal.events({
    */
   "submit form":function(event){
     event.preventDefault();
-    alert("Here");
-
-    console.log("Move Date: ", event.target.moveDate.value);
-    return;
 
     Errors.remove({type:'validation'});
     //retrieve data from form
@@ -316,13 +312,14 @@ Template.editStudentModal.events({
           data.status = "ENROLLED";
         }
       }
+      Errors.remove({});
       Meteor.call('EditWaitlist', data, studentId, Session.get('editMode'), EditWaitlistCallback);
       Modal.hide('editStudentModal');
     });
 
 
     Errors.remove({});
-    Meteor.call('EditWaitlist', data, studentId, Session.get('editMode'), EditWaitlistCallback);
+  //  Meteor.call('EditWaitlist', data, studentId, Session.get('editMode'), EditWaitlistCallback);
     Modal.hide('editStudentModal');
   },
 

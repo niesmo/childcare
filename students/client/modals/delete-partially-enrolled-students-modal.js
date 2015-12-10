@@ -23,6 +23,6 @@ Template.deletePartiallyEnrolledStudentsModal.events({
     event.preventDefault();
     var order = Students.findOne({_id:Session.get('studentId')}).order;
     Meteor.call('removeStudent', Session.get('studentId'));
-    Meteor.call('reOrderAfterDelete', order);
+    Meteor.call('reOrderAfterDelete', order, Students.findOne({_id:Session.get('studentId')}).group);
   }
 });
