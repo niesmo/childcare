@@ -1,3 +1,7 @@
+Template.studentDetail.onRendered(function(){
+  // $('[data-toggle="tooltip"]').tooltip();
+});
+
 Template.studentDetail.helpers({
   /**
    * [parents description]
@@ -47,7 +51,7 @@ Template.studentDetail.events({
    * @param  {[type]} event [description]
    * @return {[type]}       [description]
    */
-  "click .remove": function(event){
+  "click #remove-student": function(event){
     event.preventDefault();
     if(Students.findOne({_id:this._id}).status=="PARTIALLY_ENROLLED"){
       Session.set('studentId', this._id);
@@ -64,7 +68,7 @@ Template.studentDetail.events({
    * @param  {[type]} event [description]
    * @return {[type]}       [description]
    */
-  "click .edit": function(event){
+  "click #edit-student": function(event){
     event.preventDefault();
     Session.set('studentToEdit', Session.get('selectedStudentId'));
     //sets editMode to waitlist to differentiate between waitlist and enrolled student edit
@@ -78,7 +82,7 @@ Template.studentDetail.events({
    * @param  {[type]} event [description]
    * @return {[type]}       [description]
    */
-  "click #move":function(event){
+  "click #move-to-toddler":function(event){
     event.preventDefault();
     Session.set('studentToAdvance', this._id);
     Modal.show('toToddlerModal');
@@ -89,7 +93,7 @@ Template.studentDetail.events({
    * @param  {[type]} event [description]
    * @return {[type]}       [description]
    */
-  "click #waitlist":function(event){
+  "click #move-to-waitlist":function(event){
     event.preventDefault();
     Session.set('studentToWaitlist', this._id);
     Modal.show('toWaitlistModal');

@@ -12,3 +12,7 @@ img.parent-avatar-thumbnail{
 dt.parent-row{
   margin-top: 15px;
 }
+
+.student-detail-action-buttons button{
+  margin-bottom: 5px
+}
