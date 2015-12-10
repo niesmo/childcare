@@ -21,7 +21,7 @@
   <script>
 
    //put in script tags because couldn't get it to work in a js file
-    this.$('#students').sortable({
+   $('.students').sortable({
       stop: function (e, ui) {
         var el;
         // get the dragged html element
@@ -36,6 +36,7 @@
           count++;
         } while(Blaze.getData($('.student')[count]).order != currentOrder);
         var newOrder = count+1;
+        alert(count);
         //if the order has changed, call reOrderWaitlist
         if(newOrder!=currentOrder) {
           Meteor.call('reOrderWaitlist', Blaze.getData(el)._id, newOrder, currentOrder);

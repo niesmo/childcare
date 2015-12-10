@@ -45,5 +45,11 @@ Template.studentDetail.events({
     Session.set('studentToAdvance', this._id);
     Modal.show('toToddler');
   },
+  "click #waitlist":function(event){
+    event.preventDefault();
+    Session.set('studentToWaitlist', this._id);
+    Modal.show('toWaitlist');
+
+  }
 
 });
