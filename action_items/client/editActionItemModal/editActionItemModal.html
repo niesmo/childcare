@@ -1,0 +1,64 @@
+<template name="editActionItemModal">
+  <div class="modal fade">
+    <div class="modal-dialog">
+      <div class="modal-lg">
+
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h2 class="modal-title">Edit Action Items</h2>
+          </div>
+
+          <div class="modal-body">
+            {{>errors}}
+
+            <form role="form">
+
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="fname">Action Item Description</label>
+                    <div class="input-group">
+                      <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                      <input type="text" class="form-control" name="description" id="description"  value="{{actionItem.description}}">
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- Type -->
+              <div class="form-group">
+                <h4>Group</h4>
+                {{#if isInfant}}
+                <div class="radio-inline"><label for="infant"> <input class="radio" type="radio" name="type" value="INFANT" id="infant" checked> Infant</label></div>
+                {{else}}
+                <div class="radio-inline"><label for="infant"><input class="radio" type="radio" name="type" value="INFANT" id="infant"> Infant</label></div>
+                {{/if}}
+                {{#if isToddler}}
+                <div class="radio-inline"><label for="toddler"><input class="radio" type="radio" name="type" value="TODDLER" id="toddler" checked> Toddler</label></div>
+                {{else}}
+                <div class="radio-inline"><label for="toddler"><input class="radio" type="radio" name="type" value="TODDLER" id="toddler"> Toddler</label></div>
+                {{/if}}
+                {{#if isMisc}}
+                <div class="radio-inline"><label for="misc"><input class="radio" type="radio" name="type" value="MISCELLANEOU" id="miscellaneous" checked> Miscellaneous</label></div>
+                {{else}}
+                <div class="radio-inline"><label for="misc"><input class="radio" type="radio" name="type" value="MISCELLANEOUS" id="miscellaneous"> Miscellaneous</label></div>
+                {{/if}}
+              </div>
+
+              <br>
+              <div class="modal-footer">
+                <input class="btn btn-primary" type="submit" value="Save" id="submit"/>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </form>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</template>

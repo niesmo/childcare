@@ -44,7 +44,7 @@ Meteor.methods({
     });
   	//created by
     return ActionItems.update(taskId,{
-      $set: { description:task.description, type=task.type}
+      $set: { description:task.description, type:task.type}
     });
   },
 
