@@ -22,3 +22,49 @@ function studentAndParentDeletionCallback(err, res){
 
   return;
 }
+
+function removeParentCallback(err,res){
+  if(err){
+    Errors.insert({type:'waitlist', message:'Something went wrong', seen:false});
+    // Do some real error checking and let the use know what happned
+    console.log(err);
+    // alert(err);
+  }
+
+  if(res.status === 201){
+
+    Router.go("waitlist");
+  }
+  return;
+}
+
+
+function removeStudentCallback(err,res){
+  if(err){
+    Errors.insert({type:'waitlist', message:'Something went wrong', seen:false});
+    // Do some real error checking and let the use know what happned
+    console.log(err);
+    // alert(err);
+  }
+
+  if(res.status === 201){
+
+    Router.go("waitlist");
+  }
+  return;
+}
+
+function reOrderAfterDeleteCallback(err,res){
+  if(err){
+    Errors.insert({type:'waitlist', message:'Something went wrong', seen:false});
+    // Do some real error checking and let the use know what happned
+    console.log(err);
+    // alert(err);
+  }
+
+  if(res.status === 201){
+
+    Router.go("waitlist");
+  }
+  return;
+}

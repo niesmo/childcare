@@ -193,6 +193,8 @@ Meteor.methods({
     });
 
     // update their order to go down (up the list) by one
-    studentsToMoveUp.collection().update({}, {$inc: {order: -1}}, {multi: true});
+    studentsToMoveUp.forEach(function (student) {
+      Students.update({_id: student._id}, {$inc: {order: -1}});
+    });
   }
 });

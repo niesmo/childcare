@@ -43,6 +43,11 @@ Template.editStudentModal.helpers({
     var parentIds = studentParents.map(function(v){return v.parentId;});
 
     var parent = Parents.findOne({_id: {$in: parentIds}}, {sort: {createdAt: -1}});
+    if(!parent){
+      Session.set('parent2Id', "");
+      return;
+    }
+
     if(parent._id != Session.get('parent1Id')){
       Session.set('parent2Id', parent._id);
     }
