@@ -40,6 +40,36 @@ Template.enrollStudentModal.helpers({
     }
 
     return false;
+  },
+
+  isDisabled:function(day) {
+    var id=Session.get('studentToEnroll');
+    var student = Students.findOne({_id:id});
+    var i = 0;
+
+    while(i<student.daysEnrolled.length) {
+      if(day==student.daysEnrolled[i].day){
+        //return "disabled";
+      }
+      i++;
+    }
+
+    return false;
+  },
+
+  isReadonly:function(day) {
+    var id=Session.get('studentToEnroll');
+    var student = Students.findOne({_id:id});
+    var i = 0;
+
+    while(i<student.daysEnrolled.length) {
+      if(day==student.daysEnrolled[i].day){
+        //return "readonly";
+      }
+      i++;
+    }
+
+    return false;
   }
 
 });

@@ -73,14 +73,6 @@ Meteor.methods({
           "You must select at least one day of the week.");
     }
 
-    // check if the start date is not before today
- /*   if(new Date(waitlist.startDate) < new Date()){
-      throw new Meteor.error("Start date in the past",
-          "You must select a start date in the future");
-          "You must select a start date in the future");
-    }
-
-*/
     if(waitlist.status=="") {
       waitlist.status = Students.findOne({_id: sId}).status;
     }
