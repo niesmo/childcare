@@ -119,7 +119,7 @@ Template.classroomDetail.helpers({
 
 Template.classroomDetail.events({
   /**
-   * This function is trigerred to move the enroll the student to class
+   * This function is triggered to move the enroll the student to class
    * It will open a modal for the user to select the days to be enrolled
    * @param  {Event} event The event triggered
    * @param  {Template} tpl   The template at which this event occurs
@@ -133,7 +133,7 @@ Template.classroomDetail.events({
       console.warning("No id is set for this row");
       return;
     }
-   
+
     Session.set('studentToEnroll', id);
     Modal.show('enrollStudentModal');
   }

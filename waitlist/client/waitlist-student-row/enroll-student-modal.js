@@ -44,6 +44,11 @@ Template.enrollStudentModal.helpers({
     return false;
   },
 
+  /**
+   * Disables the checkbox for a day that a student is already enrolled for.
+   * @param day
+   * @returns {string} disabled
+   */
   isDisabled:function(day) {
     var id=Session.get('studentToEnroll');
     var student = Students.findOne({_id:id});
@@ -52,8 +57,8 @@ Template.enrollStudentModal.helpers({
     if(!student.daysEnrolled) return false;
 
     while(i<student.daysEnrolled.length) {
-      if(day==student.daysEnrolled[i].day){
-        //return "disabled";
+      if(day==student.daysEnrolled[i].day && student.status == "PARTIALLY_ENROLLED"){
+        return "disabled";
       }
       i++;
     }
@@ -61,6 +66,11 @@ Template.enrollStudentModal.helpers({
     return false;
   },
 
+  /**
+   * Sets the checkbox to readonly for a day that a student is already enrolled for.
+   * @param day
+   * @returns {string} readonly
+   */
   isReadonly:function(day) {
     var id=Session.get('studentToEnroll');
     var student = Students.findOne({_id:id});
@@ -69,8 +79,8 @@ Template.enrollStudentModal.helpers({
     if(!student.daysEnrolled) return false;
 
     while(i<student.daysEnrolled.length) {
-      if(day==student.daysEnrolled[i].day){
-        //return "readonly";
+      if(day==student.daysEnrolled[i].day && student.status == "PARTIALLY_ENROLLED"){
+        return "readonly";
       }
       i++;
     }
@@ -89,6 +99,7 @@ Template.enrollStudentModal.events({
   "click #enroll": function(event) {
     event.preventDefault();
     var id = Session.get('studentToEnroll');
+    var student = Students.findOne({_id:id});
     var days=[];
 
     $("input:checkbox[name=days]:checked").each(function(){
