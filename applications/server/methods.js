@@ -234,10 +234,8 @@ Meteor.methods({
    * @param  {[collections of parents]} parents [parents to delete]
    * @return {[type]}    [description]
    */
-  'removeParent': function (parent) {
-
-      Parents.remove(parent);
-
+  'removeParent': function (parentId) {
+      Parents.remove(parentId);
   },
 
 
@@ -270,7 +268,6 @@ Meteor.methods({
       paidApplicationFee:details.paid,
       createdAt: new Date(), // current time
       color: student.color,
-
     });
 
     return id;
@@ -386,5 +383,41 @@ Meteor.methods({
 
 
     return token;
+  },
+
+  /**
+   * This function will remove the information about the application
+   * for this student. This includes all the parents, and the student itself.
+   * 
+   * @param  {String} studentId ID of the student that this application is for
+   * @return {}
+   */
+  'deleteApplication': function(studentId){
+    if(!studentId){
+      throw new Meteor.error("No student passed",
+        "No application is selected to be removed.");      
+    }
+
+    // checking type of input
+    check(studentId, String);
+
+    // find all parents of this student 
+    var studentParents = StudentParents.find({studentId:studentId});
+    var parentIds = studentParents.map(function(v){return v.parentId});
+
+    console.log("ParentIds: ", parentIds);
+
+    var studentParentIds = studentParents.map(function(v){return v.studentId});
+
+    console.log("StudentParentIds: ", studentParentIds);
+
+    // removing all parents
+    Parents.remove({_id:{"$in":parentIds}});
+
+    // removing all StudentParents
+    StudentParents.remove({_id:{"$in": studentParentIds}});
+
+    // remove the student
+    Students.remove(studentId);
   }
 });
