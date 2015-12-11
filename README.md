@@ -22,6 +22,9 @@ This is the repo for our capstone project
 </ul>
 <p>There are more packages that are added to the project, you can see a list of them in the .meteor/packages file</p>
 
+## Meteor Best Practices
+<p>Here is the <a href="https://blog.tableflip.io/large-meteor-projects-best-practices/">link</a></p>
+
 # Meteor Account Information
 username: olb
 email: admin@olb.com
