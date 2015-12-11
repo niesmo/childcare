@@ -45,7 +45,7 @@
     {{#each student in studentsTransitioning}}
       <tr class="capitalize" student-id="{{student._id}}">
         <td class="vertically-centered">{{student.firstName}} {{student.lastName}}</td>
-        <td class="vertically-centered">{{toLower student.status}}</td>
+        <td class="vertically-centered">{{getStudentStatus student}}</td>
         {{#each daysOfWeek}}
           <td style="background-color:{{getColorIfRequestsClass student}}"></td>
         {{/each}}

@@ -81,7 +81,7 @@ Template.registerHelper('sortedDays', function(days){
  * @return {String} The appropriate string to be set as the css class
  */
 Template.registerHelper('flexibleColorClass', function(){
-  return this.flexible?"list-group-item-success": "list-group-item-warning";
+  return this.flexible?"list-group-item-warning": "list-group-item-success";
 });
 
 /**
