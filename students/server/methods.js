@@ -188,7 +188,7 @@ Meteor.methods({
     // get all students that are going to be affected
     var studentsToMoveUp = Students.find({
       $or: [{status: "WAITLIST"}, {status: "PARTIALLY_ENROLLED"}],
-      order: tempStudent.order,
+      order: {$gt: tempStudent.order},
       group: tempStudent.group
     });
 

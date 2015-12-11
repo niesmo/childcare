@@ -32,6 +32,8 @@ Template.enrollStudentModal.helpers({
     var student = Students.findOne({_id:id});
     var i = 0;
 
+    if(!student.daysWaitlisted) return false;
+
     while(i<student.daysWaitlisted.length) {
       if(day==student.daysWaitlisted[i].day){
         return "checked";
@@ -47,6 +49,8 @@ Template.enrollStudentModal.helpers({
     var student = Students.findOne({_id:id});
     var i = 0;
 
+    if(!student.daysEnrolled) return false;
+
     while(i<student.daysEnrolled.length) {
       if(day==student.daysEnrolled[i].day){
         //return "disabled";
@@ -61,6 +65,8 @@ Template.enrollStudentModal.helpers({
     var id=Session.get('studentToEnroll');
     var student = Students.findOne({_id:id});
     var i = 0;
+
+    if(!student.daysEnrolled) return false;
 
     while(i<student.daysEnrolled.length) {
       if(day==student.daysEnrolled[i].day){
@@ -158,9 +164,5 @@ function enrollStudentCallback(err,res){
     // alert(err);
   }
 
-  if(res.status === 201){
-
-    Router.go("waitlist");
-  }
   return;
 }

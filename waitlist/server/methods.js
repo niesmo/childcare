@@ -42,8 +42,6 @@ Meteor.methods({
       daysEnr = daysEnr.concat(student.daysEnrolled);
     }
     if(enrollType=='enroll') {
-
-
       // enroll the student
       Students.update({_id: studentId}, {$set: {status: "ENROLLED", classId: classroom._id, daysEnrolled: daysEnr, daysWaitlisted:[]}});
 
