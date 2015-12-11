@@ -9,7 +9,7 @@ Template.classroomDetail.helpers({
    * @return {Meteor.cursor} cursor to the db
    */
   students: function(){
-    return Students.find({$or: [{status:"ENROLLED"}, {status:"PARTIALLY_ENROLLED"}], classId: this._id});
+    return Students.find({$or: [{status:"ENROLLED"}, {status:"PARTIALLY_ENROLLED"}], classId: this._id},{sort:{moveDate:1}});
   },
   
 
