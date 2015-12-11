@@ -54,7 +54,7 @@ applicationValidate = function(application){
     valid = false;
   }
   //check if valid phone number
-  if(!/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/.test(application.parent.phone)){
+  if(!/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/.test(application.parent.phone) && !/^(\()?\d{3}(\))?(-|\s)?\d{3}(-|\s)\d{4}$/.test(application.parent.phone)){
     Errors.insert({message:'Please enter valid phone number in the form of: xxx-xxx-xxxx or xxxxxxxxxx', seen:false,type:'validation'});
     valid = false;
   }
@@ -127,7 +127,7 @@ secondParentValidate = function(secondParentObj){
   }
   //check if valid phone number
   if(!/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/.test(secondParentObj.phone)){
-    Errors.insert({message:'Please enter valid phone number in the form of: xxx-xxx-xxxx or xxxxxxxxxx', seen:false,type:'validation'});
+    Errors.insert({message:'Please enter valid phone number in the form of: xxx-xxx-xxxx, or xxxxxxxxxx for second parent', seen:false,type:'validation'});
     valid = false;
   }
   if(secondParentObj.email==""){

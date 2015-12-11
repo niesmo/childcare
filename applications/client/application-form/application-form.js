@@ -18,6 +18,8 @@ Template.applicationForm.events({
     sessionToken = Router.current().params.token;
 
     Errors.remove({type:'validation'});
+
+
     //retrieve data from form
     var formValidated=true;
     var notConceived = $(event.target).find('input:checkbox[name=notConceived]:checked').val();
@@ -87,6 +89,21 @@ Template.applicationForm.events({
     if(!formValidated){
       scroll(0,0);
       return;
+    }
+    //formats phone number with dashes
+    if(application.parent.phone.indexOf('-')===-1 && application.parent.phone.indexOf('.')===-1){
+  //   application.parent.phone = Phoneformat.formatLocal('US', application.parent.phone);
+   //   application.parent.phone = application.parent.phone.replace(' ','');
+
+      //used this instead of Phoneformat because I was having trouble validating phone number in that format
+     application.parent.phone = application.parent.phone.substring(0,3) + '-' +application.parent.phone.substring(3,6) + '-' + application.parent.phone.substring(6,10);
+    }
+    if(Session.get("secondParent")) {
+      if(application.secondParent.phone.indexOf('-')===-1 && application.secondParent.phone.indexOf('.')===-1){
+      //  application.secondParent.phone = Phoneformat.formatLocal('US', application.secondParent.phone);
+      //  application.secondParent.phone = application.secondParent.phone.replace(' ','');
+       application.secondParent.phone = application.secondParent.phone.substring(0,3) + '-' +application.secondParent.phone.substring(3,6) + '-' + application.secondParent.phone.substring(6,10);
+      }
     }
     Errors.remove({});
     Meteor.call("createApplication", application, createApplicationCallback);

@@ -32,6 +32,8 @@ Template.enrollStudentModal.helpers({
     var student = Students.findOne({_id:id});
     var i = 0;
 
+    if(!student.daysWaitlisted) return false;
+
     while(i<student.daysWaitlisted.length) {
       if(day==student.daysWaitlisted[i].day){
         return "checked";
@@ -47,6 +49,8 @@ Template.enrollStudentModal.helpers({
     var student = Students.findOne({_id:id});
     var i = 0;
 
+    if(!student.daysEnrolled) return false;
+
     while(i<student.daysEnrolled.length) {
       if(day==student.daysEnrolled[i].day){
         //return "disabled";
@@ -61,6 +65,8 @@ Template.enrollStudentModal.helpers({
     var id=Session.get('studentToEnroll');
     var student = Students.findOne({_id:id});
     var i = 0;
+
+    if(!student.daysEnrolled) return false;
 
     while(i<student.daysEnrolled.length) {
       if(day==student.daysEnrolled[i].day){
@@ -107,7 +113,7 @@ Template.enrollStudentModal.events({
           daysChecked: days,
           daysNotChecked: []
         };
-        Meteor.call('enrollStudent', id, totalDays, 'enroll');
+        Meteor.call('enrollStudent', id, totalDays, 'enroll', enrollStudentCallback);
         Modal.hide('enrollStudentModal');
       }
     });
@@ -128,7 +134,7 @@ Template.enrollStudentModal.events({
       daysChecked: daysSelected,
       daysNotChecked: daysNotSelected
     };
-    Meteor.call('enrollStudent', id, totalDays, 'partial_enroll');
+    Meteor.call('enrollStudent', id, totalDays, 'partial_enroll', enrollStudentCallback);
 
   },
 
@@ -146,6 +152,17 @@ Template.enrollStudentModal.events({
       daysChecked: daysSelected,
       daysNotChecked: []
     };
-    Meteor.call('enrollStudent', id, totalDays, 'enroll');
+    Meteor.call('enrollStudent', id, totalDays, 'enroll', enrollStudentCallback);
   }
 });
+
+function enrollStudentCallback(err,res){
+  if(err){
+    Errors.insert({type:'waitlist', message:'Something went wrong', seen:false});
+    // Do some real error checking and let the use know what happned
+    console.log(err);
+    // alert(err);
+  }
+
+  return;
+}

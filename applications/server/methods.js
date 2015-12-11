@@ -234,10 +234,8 @@ Meteor.methods({
    * @param  {[collections of parents]} parents [parents to delete]
    * @return {[type]}    [description]
    */
-  'removeParent': function (parent) {
-
-      Parents.remove(parent);
-
+  'removeParent': function (parentId) {
+      Parents.remove(parentId);
   },
 
 
@@ -270,7 +268,6 @@ Meteor.methods({
       paidApplicationFee:details.paid,
       createdAt: new Date(), // current time
       color: student.color,
-
     });
 
     return id;
