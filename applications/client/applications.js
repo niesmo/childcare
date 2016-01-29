@@ -29,7 +29,7 @@ Template.applications.events({
   }
 });
 
-function applicationSentCompleted(err, applicationToken){
+function applicationSentCompleted(err, applicationLink){
   if(err){
     // TODO: do actual error handling
     alert("Error, something went wrong");
@@ -39,12 +39,12 @@ function applicationSentCompleted(err, applicationToken){
 
   // show the link that they can access the link in the UI
   $("#application-link").text("The application can be accessed here ");
-  var applicationLink = $("<a />")
-    .attr("href", Router.routes['applicationForm'].url({token:applicationToken}))
+  var applicationLinkTag = $("<a />")
+    .attr("href", applicationLink)
     .text("link");
 
-  $("#application-link").append(applicationLink);
+  $("#application-link").append(applicationLinkTag);
   $("#application-link").removeClass("hidden");
 
-  console.log(applicationToken);
+  console.log(applicationLink);
 }
