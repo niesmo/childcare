@@ -362,22 +362,42 @@ Meteor.methods({
     // without waiting for the email sending to complete.
     this.unblock();
 
-    // var textToBeSent = "Hi,\n\nWe hope you had a good tour at Our Lady of Bethlehem School and Childcare.\n\nPlease fill out the application in the link below.\n\n<a href='"+ Router.routes['applicationForm'].url({token:token}) +"'>Application</a>\n\nPlease fill this application out in the next 2 days as it will expire after that.";
+    // process the url and see if it is correct
+    // NOTE: THIS IS A BUG WHERE WHEN IN PRODUCTION USED, THERE IS AN 
+    // EXTRA TOKEN IN THE URL OF THE APPLICATION ROOT. THIS IS TO FIX
+    // THAT AND REMOVE IT WHEN NECESSARY.
+    // Example: http://ourladyofbethlehem.org/waitlistapp/waitlistapp/new-application/ebt3q8oS64xAxwupF
+    // Expected: http://ourladyofbethlehem.org/waitlistapp/new-application/ebt3q8oS64xAxwupF
+    
+    // Step 1: get the url
+    var emailButtonUrl = Router.routes['applicationForm'].url({token: token});
 
-    // Email.send({
-    //   to: applicationInfo.email,
-    //   from: "childcare-application@ourladyofbethlehem.org",
-    //   subject: "Childcare Application",
-    //   text: SSR.render('htmlEmail', emailData)
-    // });
+    // Step 2: Check to see if there is any Application Root at all
+    if (Meteor.settings.public.appRootDir && Meteor.settings.public.appRootDir !== ''){
+      
+      // tokenizing the temp url
+      var urlTokens = emailButtonUrl.split('/');
 
+      // checking to see if there is the repeated token
+      if (urlTokens.length > 5 && urlTokens[3] == urlTokens[4]){
+
+        // removing the duplicated token
+        urlTokens.splice(3,1);
+
+        // putting the string back together for the button link
+        emailButtonUrl = urlTokens.join('/');
+      }
+    } 
+
+
+    // Sending the actual email    
     PrettyEmail.send('call-to-action', {
       to: applicationInfo.email,
       subject: "Childcare Application",
       heading: 'Childcare Application',
       message: 'We hope you had a good tour at Our Lady of Bethlehem School and Childcare.\nPlease fill out the application in the link below.',
       buttonText: 'Application',
-      buttonUrl: Router.routes['applicationForm'].url({token:token}),
+      buttonUrl: emailButtonUrl,
       messageAfterButton: "This application will expire in 2 days",
     });
 
