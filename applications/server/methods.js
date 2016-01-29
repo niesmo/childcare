@@ -314,7 +314,7 @@ Meteor.methods({
   /**
    * This function will send out the application to the email specified in the applicationInfo
    * @param  {Object} applicationInfo This object contains the email and the type of the application
-   * @return {[type]}                 Status of the operation
+   * @return {[type]}                 The link to the application link
    */
   'createNewApplicationSession': function(applicationInfo){
     // check if the user is logged in
@@ -402,6 +402,6 @@ Meteor.methods({
     });
 
 
-    return token;
+    return emailButtonUrl;
   }
 });
