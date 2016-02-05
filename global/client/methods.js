@@ -5,8 +5,8 @@
  */
 applicationValidate = function(application){
   var valid = true;
-  if(application.days.length<2){
-    Errors.insert({message:'Please check at least two days', seen:false, type:'validation'});
+  if(application.days.length<2 || application.days.length==4){
+    Errors.insert({message:'Please check at 2, 3 or 5 days', seen:false, type:'validation'});
     valid = false;
   }
   if(application.type==null && application.student.typeLength){
