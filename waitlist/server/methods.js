@@ -83,8 +83,10 @@ Meteor.methods({
     }
 
     var order = student.order;
+    var oldOrder=order;
+    var studentGroup = student.group.toUpperCase();
     //if order should be updated
-    if(editMode=="waitlist" && student.group.toUpperCase()!=classType){
+    if(student.group.toUpperCase()!=classType){
 
       order = 1;
       var lastInGroup = Students.findOne({$or: [{status: "WAITLIST"},{status:"PARTIALLY_ENROLLED"}], group: waitlist.group.toUpperCase(), type: waitlist.type}, {sort: {order:-1}});
@@ -179,6 +181,9 @@ Meteor.methods({
           classId:classroomId,
         }
       });
+    }
+    if(student.group.toUpperCase()!=classType && (student.status=="WAITLIST" || student.status=="PARTIALLY_ENROLLED")){
+      Meteor.call('reOrderAfterDelete',oldOrder,studentGroup);
     }
     var updatedObj = {parentId:parentId, studentId:studentId};
     return updatedObj;

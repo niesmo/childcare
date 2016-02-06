@@ -319,8 +319,9 @@ Template.editStudentModal.events({
         }
       }
       Errors.remove({});
-
+     // var studentGroup = Students.findOne({_id:studentId}).group;
       Meteor.call('EditWaitlist', data, studentId, Session.get('editMode'), EditWaitlistCallback);
+
       Modal.hide('editStudentModal');
     });
 
