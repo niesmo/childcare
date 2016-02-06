@@ -246,18 +246,19 @@
               <div class="checkbox-inline"><label for="th"><input class="checkbox" type="checkbox" name="days" value="TH" id="th" checked="{{daysChecked 'THURSDAY'}}" /> Thursday</label></div>
               <div class="checkbox-inline"><label for="f"><input class="checkbox" type="checkbox" name="days" value="F" id="f" checked="{{daysChecked 'FRIDAY'}}" /> Friday</label></div>
             </div>
-
-            <div class="form-group">
-              {{#if isFlexible}}
-              <div class="checkbox-inline"><label for="flexible"><input class="checkbox" type="checkbox" name="flexible" value="flexible" id="flexible" checked/>
-                Flexible On Days? If so explain in details section</label>
+            {{#if fromWaitlist}}
+              <div class="form-group">
+               {{#if isFlexible}}
+               <div class="checkbox-inline"><label for="flexible"><input class="checkbox" type="checkbox" name="flexible" value="flexible" id="flexible" checked/>
+                  Flexible On Days? If so explain in details section</label>
+               </div>
+                {{else}}
+               <div class="checkbox-inline"><label for="flexible"><input class="checkbox" type="checkbox" name="flexible" value="flexible" id="flexible"/>
+                 Flexible On Days? If so explain in details section</label>
+               </div>
+               {{/if}}
               </div>
-              {{else}}
-              <div class="checkbox-inline"><label for="flexible"><input class="checkbox" type="checkbox" name="flexible" value="flexible" id="flexible"/>
-                Flexible On Days? If so explain in details section</label>
-              </div>
-              {{/if}}
-            </div>
+            {{/if}}
 
             <!-- Affiliation -->
             <div class="form-group">

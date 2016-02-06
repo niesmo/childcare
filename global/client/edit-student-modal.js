@@ -261,6 +261,7 @@ Template.editStudentModal.events({
         flexible: $(event.target).find('input:checkbox[name=flexible]:checked').val(),
         details: event.target.details.value,
         moveDate: event.target.moveDate.value,
+        status: "",
       };
     }
     else{
@@ -289,7 +290,7 @@ Template.editStudentModal.events({
         days: days,
         type: $(event.target).find('input:radio[name=type]:checked').val(),
         group: $(event.target).find('input:radio[name=group]:checked').val(),
-        // flexible: $(event.target).find('input:checkbox[name=flexible]:checked').val(),
+        flexible: $(event.target).find('input:checkbox[name=flexible]:checked').val(),
         details: event.target.details.value,
         status: "",
         moveDate: event.target.moveDate.value,
@@ -318,6 +319,7 @@ Template.editStudentModal.events({
         }
       }
       Errors.remove({});
+      
       Meteor.call('EditWaitlist', data, studentId, Session.get('editMode'), EditWaitlistCallback);
       Modal.hide('editStudentModal');
     });

@@ -66,6 +66,9 @@ Meteor.methods({
    */
   'EditWaitlist': function(waitlist, sId, editMode){
     var student = Students.findOne({_id:sId});
+    var classType = waitlist.group.toUpperCase();
+
+    var classroom = Classrooms.findOne({type:classType});
     if(waitlist.days.length === 0){
       throw new Meteor.error("No day select",
           "You must select at least one day of the week.");
@@ -73,6 +76,37 @@ Meteor.methods({
 
     if(waitlist.status=="") {
       waitlist.status = Students.findOne({_id: sId}).status;
+    }
+
+
+    var order = student.order;
+    //if order should be updated
+    if(editMode=="waitlist" && student.group.toUpperCase()!=classType){
+
+      order = 1;
+      var lastInGroup = Students.findOne({$or: [{status: "WAITLIST"},{status:"PARTIALLY_ENROLLED"}], group: waitlist.group.toUpperCase(), type: waitlist.type}, {sort: {order:-1}});
+      if(lastInGroup){
+        order = lastInGroup.order + 1;
+      }
+      else {
+        // if the student is a Staff and there is no one in the staff sub-section
+        if(waitlist.type === "MEMBER"){
+          order = 1;
+        }
+        // if the student is not staff
+        else{
+          var where = {$or: [{status: "WAITLIST"},{status:"PARTIALLY_ENROLLED"}], group: waitlist.group.toUpperCase()};
+          if(waitlist.type === "EXISTING"){
+            where['type'] = "MEMBER";
+          }
+
+          var lastOtherGroup = Students.findOne(where, {sort: {order:-1}});
+          if(lastOtherGroup){
+            order = lastOtherGroup.order + 1;
+          }
+        }
+      }
+
     }
     var parentId = Parents.update(waitlist.parent.id,{$set: {
       firstName: waitlist.parent.firstName,
@@ -117,10 +151,12 @@ Meteor.methods({
           status: waitlist.status,
           type: waitlist.type.toUpperCase(),
           startDate: new Date(moment(waitlist.startDate)),
-          order: waitlist.order,
+         // order: waitlist.order,
           details: waitlist.details,
           daysWaitlisted: days,
           moveDate: new Date(moment(waitlist.moveDate)),
+          order:order,
+          classId: classroom._id,
         }
       });
     }else if(editMode=='enrolled'){
@@ -136,7 +172,8 @@ Meteor.methods({
           details: waitlist.details,
           daysEnrolled: days,
           moveDate:new Date(moment(waitlist.moveDate)),
-          daysWaitlisted: waitlist.waitlistedDays
+          daysWaitlisted: waitlist.waitlistedDays,
+          classId: classroom._id,
         }
       });
     }
