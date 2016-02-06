@@ -73,11 +73,14 @@ Meteor.methods({
       throw new Meteor.error("No day select",
           "You must select at least one day of the week.");
     }
-
+    var classroomId =classroom._id;
     if(waitlist.status=="") {
       waitlist.status = Students.findOne({_id: sId}).status;
     }
 
+    if(waitlist.status=="WAITLIST"){
+      classroomId="";
+    }
 
     var order = student.order;
     //if order should be updated
@@ -156,7 +159,7 @@ Meteor.methods({
           daysWaitlisted: days,
           moveDate: new Date(moment(waitlist.moveDate)),
           order:order,
-          classId: classroom._id,
+          classId: classroomId,
         }
       });
     }else if(editMode=='enrolled'){
@@ -173,7 +176,7 @@ Meteor.methods({
           daysEnrolled: days,
           moveDate:new Date(moment(waitlist.moveDate)),
           daysWaitlisted: waitlist.waitlistedDays,
-          classId: classroom._id,
+          classId:classroomId,
         }
       });
     }
