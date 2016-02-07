@@ -124,6 +124,15 @@ Template.enrollStudentModal.events({
           daysChecked: days,
           daysNotChecked: []
         };
+        if (student.group == "INFANT" && student.status == "ENROLLED") {
+          var classId = Classrooms.findOne({type:"TODDLER"})._id;
+          Students.update(id, {
+            $set: {
+              group: "TODDLER",
+              classId:classId
+            }
+          })
+        }
         Meteor.call('enrollStudent', id, totalDays, 'enroll', enrollStudentCallback);
         Modal.hide('enrollStudentModal');
       }
@@ -139,6 +148,7 @@ Template.enrollStudentModal.events({
   "click #yes":function(event){
     event.preventDefault();
     var id = Session.get('studentToEnroll');
+    var student = Students.findOne({_id:id});
     var daysSelected = Session.get('daysSelected');
     var daysNotSelected = Session.get('daysNotSelected');
     var totalDays = {
