@@ -58,9 +58,13 @@ Meteor.methods({
       });
     });
     var classId = Classrooms.findOne({type:"TODDLER"})._id;
+    var student = Students.findOne({_id:id});
+    var monthsToMoveDate = Meteor.settings.public.toddlerTransMonth;
+    var moveDate = new Date(new Date(student.dateOfBirth).setMonth(student.dateOfBirth.getMonth()+monthsToMoveDate));
     Students.update(id, {
       $set: {
         daysEnrolled: daysEnr,
+        moveDate: moveDate,
         group: "TODDLER",
         classId:classId
       }
