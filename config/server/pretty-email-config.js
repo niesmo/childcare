@@ -9,9 +9,9 @@ PrettyEmail.options = {
   siteName: 'Our Lady of Bethlehem'
 }
 
-// PrettyEmail.style = {
-//   fontFamily: 'Helvetica',
-//   textColor: '#606060',
-//   buttonColor: '#FFFFFF',
-//   buttonBgColor: '#007FFF'
-// }
+PrettyEmail.style = {
+  fontFamily: 'Helvetica',
+  textColor: '#606060',
+  buttonColor: '#FFFFFF',
+  buttonBgColor: '#007FFF'
+}
