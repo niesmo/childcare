@@ -68,6 +68,7 @@ Meteor.methods({
     var moveDate;
     var monthsToMoveDate;
     var dob;
+    /*
     if (!notConceived) {
       dob = new Date(moment(application.student.dob));
     }
@@ -82,6 +83,27 @@ Meteor.methods({
     else {
       monthsToMoveDate = Meteor.settings.public.toddlerTransMonth;
       moveDate = new Date(new Date(dob).setMonth(dob.getMonth()+monthsToMoveDate));
+    }
+    */
+
+    if(notConceived){
+      dob=undefined;
+      moveDate=undefined;
+    }else{
+      if(application.pregnant){
+        dob = new Date(moment(application.student.dueDate));
+      }else{
+        dob = new Date(moment(application.student.dob));
+      }
+      var ageInMonths = moment().diff(dob, 'months') || "";
+      if (ageInMonths < 16) {
+        monthsToMoveDate = Meteor.settings.public.infantTransMonth;
+        moveDate = new Date(new Date(dob).setMonth(dob.getMonth()+monthsToMoveDate));
+      }
+      else {
+        monthsToMoveDate = Meteor.settings.public.toddlerTransMonth;
+        moveDate = new Date(new Date(dob).setMonth(dob.getMonth()+monthsToMoveDate));
+      }
     }
 
     // insert the student, check if conceived to determine if dob should be inserted
