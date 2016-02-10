@@ -17,10 +17,11 @@ Meteor.methods({
     var enrolledCount = Students.find({status: "ENROLLED", classId: classroom._id}).count(); 
 
     // check the capacity of the room and see if it has room
-    if(enrolledCount >= classroom.capacity){
+   /* if(enrolledCount >= classroom.capacity){
       throw new Meteor.error("Classroom is full",
         "This classroom is already at its capacity");
     }
+    */
 
     // check if this person is requesting any days to be enrolled or not
     if(student.daysWaitlisted.length === 0){
