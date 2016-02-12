@@ -182,7 +182,8 @@ function enrollStudentCallback(err,res){
     Errors.insert({type:'waitlist', message:'Something went wrong', seen:false});
     // Do some real error checking and let the use know what happned
     console.log(err);
-    // alert(err);
+
+    alert(err.reason);
   }
 
   return;
