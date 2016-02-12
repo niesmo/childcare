@@ -160,7 +160,7 @@ Meteor.methods({
    */
   'deleteStudentAndParents': function(studentId){
     if(!studentId){
-      throw new Meteor.error("No student passed",
+      throw new Meteor.Error("No student passed",
         "No application is selected to be removed.");      
     }
 
