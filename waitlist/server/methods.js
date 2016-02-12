@@ -19,14 +19,16 @@ Meteor.methods({
 
     // check the capacity of the room and see if it has room
     if(enrolledCount >= classroom.capacity){
+      console.log("We are over capacity", totalDays.daysChecked.length);
       // check and see if we have available spots on the day the student is being enrolled
-      for(var i=0;i<totalDays.length;i++){
+      for(var i=0;i<totalDays.daysChecked.length;i++){
         // calculating the count of students enrolled in a day
-        var tempDayCount = Students.find({status: "ENROLLED", classId: classroom._id, "daysEnrolled.day": week[totalDays[i]].toUpperCase()}).count();
+        var tempDayCount = Students.find({status: "ENROLLED", classId: classroom._id, "daysEnrolled.day": week[totalDays.daysChecked[i]].toUpperCase()}).count();
+        console.log(week[totalDays.daysChecked[i]], tempDayCount);
 
         if(tempDayCount >= classroom.capacity){
           throw new Meteor.error("Classroom is full",
-            "This classroom is already at its capacity on "+ week[totalDays[i]]);
+            "This classroom is already at its capacity on "+ week[totalDays.daysChecked[i]]);
         } 
       }
     }
