@@ -90,20 +90,28 @@ Template.registerHelper('flexibleColorClass', function(){
  * @return {String}        The age in number of months
  */ 
 Template.registerHelper('getAge', function(dob){
+  if(dob==undefined){
+    return "Not Conceived";
+  }
   var ageInMonths = moment().diff(dob, 'months') || "";
   // if we could not parse it for some reason
+
+  var ageInDays = moment().diff(dob, 'days');
   if(ageInMonths == ""){
     // check the baby is less than one month old
-    var ageInDays = moment().diff(dob, 'days');
-    if(ageInDays < 30){
+    //var ageInDays = moment().diff(dob, 'days');
+    if(ageInDays < 30 && ageInDays>=0){
       return "< 1 Month";
     }
-    return "";
+    if(ageInDays <= 0){
+      return "Pregnant";
+    }
+  //  return "";
   }
 
   // if the baby is not born yet
   if(ageInMonths != "" && ageInMonths < 0){
-    return "Not Conceived";
+    return "Pregnant";
   }
 
   // check if the baby is one month old

@@ -12,7 +12,7 @@ Template.classrooms.helpers({
    * @return {Meteor.cursor} the cursor to the db
    */
   classrooms: function(){
-    return Classrooms.find();
+    return Classrooms.find({}, {sort:{type:1}});
   },
 
   /**

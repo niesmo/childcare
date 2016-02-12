@@ -67,11 +67,11 @@ applicationValidate = function(application){
     Errors.insert({message:'Please enter valid email', seen:false,type:'validation'});
     valid = false;
   }
-  if(application.student.dob=="" && application.student.conceived!="NC"){
+  if(application.student.dob=="" && application.student.conceived!="NC" && application.pregnant!="pregnant"){
     Errors.insert({message:'Please enter Date Of Birth or select Not Conceived', seen:false,type:'validation'});
     valid = false;
   }
-  if(application.student.dueDate=="" && application.student.conceived=="NC"){
+  if(application.student.dueDate=="" && application.student.conceived!="NC" && application.student.pregnant=="pregnant"){
     Errors.insert({message:'Please enter estimated due date if not yet conceived checked', seen:false,type:'validation'});
     valid = false;
   }

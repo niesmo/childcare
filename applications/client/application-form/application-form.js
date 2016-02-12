@@ -23,6 +23,8 @@ Template.applicationForm.events({
     //retrieve data from form
     var formValidated=true;
     var notConceived = $(event.target).find('input:checkbox[name=notConceived]:checked').val();
+    var pregnant = $(event.target).find('input:checkbox[name=pregnant]:checked').val();
+
     var days=[];
     $("input:checkbox[name=days]:checked").each(function(){
       days.push($(this).val());
@@ -71,7 +73,8 @@ Template.applicationForm.events({
         lastName: event.target.lname.value,
         dob: event.target.dob.value,
         conceived: notConceived,
-        dueDate: event.target.dueDate.value
+        dueDate: event.target.dueDate.value,
+
       },
 
       // Other details of the application
@@ -81,6 +84,7 @@ Template.applicationForm.events({
       group: $(event.target).find('input:radio[name=group]:checked').val(),
       flexible: $(event.target).find('input:checkbox[name=flexible]:checked').val(),
       details: event.target.details.value,
+      pregnant:pregnant,
       sessionToken: sessionToken
     };
     if(!applicationValidate(application)){

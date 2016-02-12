@@ -211,6 +211,11 @@
         <!-- Student DOB -->
         <div class="col-md-4">
           <div class="form-group">
+            <div class="checkbox-inline">
+              <label for="nc"><input class="checkbox" type="checkbox" name="notConceived" value="NC" id="nc" /> Not Yet Conceived</label>
+            </div>
+          </div>
+          <div class="form-group">
             <label for='dob'>Date Of Birth</label>
             <div class="input-group">
               <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
@@ -219,7 +224,7 @@
           </div>
           <div class="form-group">
             <div class="checkbox-inline">
-              <label for="nc"><input class="checkbox" type="checkbox" name="notConceived" value="NC" id="nc" /> Not Yet Conceived/Born</label>
+              <label for="pregnant"><input class="checkbox" type="checkbox" name="pregnant" value="pregnant" id="pregnant" /> Pregnant</label>
             </div>
           </div>
           <div class="form-group">
@@ -302,11 +307,18 @@
   </div>
   <script>
     $("#dueDate").prop('disabled', true);
-    var checked = false;
-    $( "#nc" ).change(function() {
-      $("#dueDate").prop('disabled', checked);
-      $("#dob").prop('disabled', !checked);
-      checked = !checked;
+
+    var notConceived = false;
+    var pregnant = false;
+    $("#nc").change(function(){
+      notConceived = !notConceived;
+      $("#dueDate").prop('disabled', (notConceived||!pregnant));
+      $("#dob").prop('disabled', (notConceived||pregnant));
+    });
+    $( "#pregnant" ).change(function() {
+      pregnant=!pregnant;
+      $("#dueDate").prop('disabled', (notConceived||!pregnant));
+      $("#dob").prop('disabled', (notConceived||pregnant));
 
     });
 

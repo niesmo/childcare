@@ -35,6 +35,7 @@
     <tr>
       <th>Student</th>
       <th>Current Status</th>
+      <th>Transition Date</th>
       {{#each daysOfWeek}}
         <th>{{this}}</th>
       {{/each}}
@@ -46,6 +47,7 @@
       <tr class="capitalize" student-id="{{student._id}}">
         <td class="vertically-centered">{{student.firstName}} {{student.lastName}}</td>
         <td class="vertically-centered">{{getStudentStatus student}}</td>
+        <td class="vertically-centered">{{formatDate student.moveDate "MMM DD, YYYY"}}</td>
         {{#each daysOfWeek}}
           <td style="background-color:{{getColorIfRequestsClass student}}"></td>
         {{/each}}

@@ -12,13 +12,13 @@ Meteor.methods({
   'createApplication': function(application){
     // check to see if they have selected at least one day
     if(application.days.length === 0){
-      throw new Meteor.error("No day select",
+      throw new Meteor.Error("No day select",
         "You must select at least one day of the week.");
     }
 
     // check if the start date is not before today
     /*if(new Date(application.startDate) < new Date()){
-      throw new Meteor.error("Start date in the past",
+      throw new Meteor.Error("Start date in the past",
         "You must select a start date in the future");
     }
     */
@@ -32,7 +32,7 @@ Meteor.methods({
       notConceived=false;
     }
     if(!notConceived && application.student.dob == null){
-      throw new Meteor.error("Must either have date of birth picked or not yet conceived selected");
+      throw new Meteor.Error("Must either have date of birth picked or not yet conceived selected");
     }
 
 
@@ -68,6 +68,7 @@ Meteor.methods({
     var moveDate;
     var monthsToMoveDate;
     var dob;
+    /*
     if (!notConceived) {
       dob = new Date(moment(application.student.dob));
     }
@@ -82,6 +83,27 @@ Meteor.methods({
     else {
       monthsToMoveDate = Meteor.settings.public.toddlerTransMonth;
       moveDate = new Date(new Date(dob).setMonth(dob.getMonth()+monthsToMoveDate));
+    }
+    */
+
+    if(notConceived){
+      dob=undefined;
+      moveDate=undefined;
+    }else{
+      if(application.pregnant){
+        dob = new Date(moment(application.student.dueDate));
+      }else{
+        dob = new Date(moment(application.student.dob));
+      }
+      var ageInMonths = moment().diff(dob, 'months') || "";
+      if (ageInMonths < 16) {
+        monthsToMoveDate = Meteor.settings.public.infantTransMonth;
+        moveDate = new Date(new Date(dob).setMonth(dob.getMonth()+monthsToMoveDate));
+      }
+      else {
+        monthsToMoveDate = Meteor.settings.public.toddlerTransMonth;
+        moveDate = new Date(new Date(dob).setMonth(dob.getMonth()+monthsToMoveDate));
+      }
     }
 
     // insert the student, check if conceived to determine if dob should be inserted
@@ -319,18 +341,18 @@ Meteor.methods({
   'createNewApplicationSession': function(applicationInfo){
     // check if the user is logged in
     if(!Meteor.userId()){
-      throw new Meteor.error("User Not Authorized", "User is not logged in. Access Denied!!");
+      throw new Meteor.Error("User Not Authorized", "User is not logged in. Access Denied!!");
     }
 
     // validate format
     if(!SimpleSchema.RegEx.Email.test(applicationInfo.email)){
-      throw new Meteor.error("Wrong Email format", "Email does not have the correct format");
+      throw new Meteor.Error("Wrong Email format", "Email does not have the correct format");
     }
 
 
     // valid application type
     if(['regular', 'member', 'existing'].indexOf(applicationInfo.applicationType.toLowerCase()) === -1){
-      throw new Meteor.error("Wrong Application Type", "Application type can only be one of 'Current ', 'Member', or 'existing'");
+      throw new Meteor.Error("Wrong Application Type", "Application type can only be one of 'Current ', 'Member', or 'existing'");
     }
 
     // Creating the expiration date
