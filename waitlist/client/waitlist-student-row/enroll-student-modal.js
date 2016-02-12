@@ -183,7 +183,7 @@ function enrollStudentCallback(err,res){
     // Do some real error checking and let the use know what happned
     console.log(err);
 
-    Errors.throw(err.reason);
+    alert(err.reason);
   }
 
   return;
