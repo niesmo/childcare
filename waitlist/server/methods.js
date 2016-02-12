@@ -15,13 +15,21 @@ Meteor.methods({
 
     // get the count of the student enrolled in this class
     var enrolledCount = Students.find({status: "ENROLLED", classId: classroom._id}).count(); 
+    var week = {M: "monday", T: "tuesday", W: "wednesday", TH: "thursday", F: "friday"};
 
     // check the capacity of the room and see if it has room
-   /* if(enrolledCount >= classroom.capacity){
-      throw new Meteor.error("Classroom is full",
-        "This classroom is already at its capacity");
+    if(enrolledCount >= classroom.capacity){
+      // check and see if we have available spots on the day the student is being enrolled
+      for(var i=0;i<totalDays.length;i++){
+        // calculating the count of students enrolled in a day
+        var tempDayCount = Students.find({status: "ENROLLED", classId: classroom._id, "daysEnrolled.day": week[totalDays[i]].toUpperCase()}).count();
+
+        if(tempDayCount >= classroom.capacity){
+          throw new Meteor.error("Classroom is full",
+            "This classroom is already at its capacity on "+ week[totalDays[i]]);
+        } 
+      }
     }
-    */
 
     // check if this person is requesting any days to be enrolled or not
     if(student.daysWaitlisted.length === 0){
@@ -30,7 +38,6 @@ Meteor.methods({
     }
 
     var daysEnr = [];
-    var week = {M: "monday", T: "tuesday", W: "wednesday", TH: "thursday", F: "friday"};
     totalDays.daysChecked.forEach(function (day) {
       daysEnr.push({
         day: week[day].toUpperCase(),
