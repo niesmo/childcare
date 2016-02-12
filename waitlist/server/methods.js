@@ -27,7 +27,7 @@ Meteor.methods({
         console.log(week[totalDays.daysChecked[i]], tempDayCount);
 
         if(tempDayCount >= classroom.capacity){
-          throw new Meteor.error("Classroom is full",
+          throw new Meteor.Error("Classroom is full",
             "This classroom is already at its capacity on "+ week[totalDays.daysChecked[i]]);
         } 
       }
@@ -35,7 +35,7 @@ Meteor.methods({
 
     // check if this person is requesting any days to be enrolled or not
     if(student.daysWaitlisted.length === 0){
-      throw new Meteor.error("No days waitlisted",
+      throw new Meteor.Error("No days waitlisted",
         "This student is not waitlisted for any days, so they cannot be enrolled in any class");
     }
 
@@ -80,7 +80,7 @@ Meteor.methods({
 
     var classroom = Classrooms.findOne({type:classType});
     if(waitlist.days.length === 0){
-      throw new Meteor.error("No day select",
+      throw new Meteor.Error("No day select",
           "You must select at least one day of the week.");
     }
     var classroomId =classroom._id;
