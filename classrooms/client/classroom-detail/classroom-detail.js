@@ -66,17 +66,13 @@ Template.classroomDetail.helpers({
    * @returns {*} The students that will be transitioning into the classroom.
    */
   studentsTransitioning: function(){
-    var infantMoveAlert = new Date();
-    infantMoveAlert.setMonth(infantMoveAlert.getMonth()+2);
-    var currentClassroom = Classrooms.findOne(this._id);
-    var numToShowFromWaitlist = 3;
-    
-    if (currentClassroom.type == "INFANT") {
-      return Students.find({$or: [{status:"WAITLIST"}, {status:"PARTIALLY_ENROLLED"}], group:"INFANT", order: {$lte: numToShowFromWaitlist}}, {sort: {order:1}});
+
+    if (this.type == "INFANT") {
+      return Students.find({$or: [{status:"WAITLIST"}, {status:"PARTIALLY_ENROLLED"}], group:"INFANT"}, {sort: {order:1}});
     }
-    else if (currentClassroom.type == "TODDLER") {
-      return Students.find({$or: [{$and: [{group: "INFANT"}, {moveDate: {$lte: infantMoveAlert}}]},
-        {$and: [{status: "WAITLIST"}, {group: "TODDLER"}, {order: {$lte: numToShowFromWaitlist}}]},
+    else if (this.type == "TODDLER") {
+      return Students.find({$or: [{group: "INFANT"},
+        {$and: [{status: "WAITLIST"}, {group: "TODDLER"}]},
         {$and: [{status: "PARTIALLY_ENROLLED"}, {group: "TODDLER"}]}]}, {sort: {order:1}});
     }
   },
@@ -88,20 +84,20 @@ Template.classroomDetail.helpers({
    */
   getColorIfRequestsClass: function(student){
     var today = this.toString().toUpperCase();
-    // if (student.status === "PARTIALLY_ENROLLED") {
+    if (student.status === "PARTIALLY_ENROLLED") {
       for(var j=0;j<student.daysWaitlisted.length;j++){
         if(today === student.daysWaitlisted[j].day){
           return student.color || '#43ac6a';
         }
       }
-    // }
-    // else {
-    //   for(var i=0;i<student.daysRequested.length;i++){
-    //     if(today === student.daysRequested[i].day){
-    //       return student.color || '#43ac6a';
-    //     }
-    //   }
-    // }
+    }
+    else {
+      for(var i=0;i<student.daysRequested.length;i++){
+        if(today === student.daysRequested[i].day){
+          return student.color || '#43ac6a';
+        }
+      }
+    }
   },
 
   /**
