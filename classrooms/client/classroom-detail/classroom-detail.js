@@ -73,7 +73,7 @@ Template.classroomDetail.helpers({
     else if (this.type == "TODDLER") {
       return Students.find({$or: [{group: "INFANT"},
         {$and: [{status: "WAITLIST"}, {group: "TODDLER"}]},
-        {$and: [{status: "PARTIALLY_ENROLLED"}, {group: "TODDLER"}]}]}, {sort: {order:1}});
+        {$and: [{status: "PARTIALLY_ENROLLED"}, {group: "TODDLER"}]}]}, {sort: {moveDate:1}});
     }
   },
 
